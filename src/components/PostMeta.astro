@@ -55,7 +55,7 @@ const className = Astro.props.class;
         <div class="flex flex-row flex-nowrap items-center">
             <a href={getCategoryUrl(category)} aria-label={`View all posts in the ${category} category`}
                class="link-lg transition text-50 text-sm font-medium
-                            hover:text-[var(--primary)] dark:hover:text-[var(--primary)] whitespace-nowrap">
+                            hover:text-[var(--primary)] dark:hover:text-[var(--primary)] whitespace-nowrap" {...(category ? {}: { "data-i18n-key": I18nKey.uncategorized })}>
                 {category || i18n(I18nKey.uncategorized)}
             </a>
         </div>

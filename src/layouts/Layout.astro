@@ -72,11 +72,11 @@ const bannerOffsetByPosition = {
 };
 const bannerOffset =
 	bannerOffsetByPosition[siteConfig.banner.position || "center"];
-const pageBgImage = `url("${url("/bg.jpg")}")`;
+// const pageBgImage = `url("${url("/bg.jpg")}")`;
 ---
 
 <!DOCTYPE html>
-<html lang={siteLang} class="bg-[var(--page-bg)] transition text-[14px] md:text-[16px]">
+<html lang={siteLang} class="bg-[var(--page-bg)] transition text-[14px] md:text-[16px]" data-random-bg="h">
 	<head>
 
 		<title>{pageTitle}</title>
@@ -102,6 +102,7 @@ const pageBgImage = `url("${url("/bg.jpg")}")`;
 
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
+		<meta name="referrer" content="same-origin">
 		{favicons.map(favicon => (
 			<link rel="icon"
 				  href={favicon.src.startsWith('/') ? url(favicon.src) : favicon.src}
@@ -138,16 +139,17 @@ const pageBgImage = `url("${url("/bg.jpg")}")`;
 			offset = offset - offset % 4;
 			document.documentElement.style.setProperty('--banner-height-extend', `${offset}px`);
 		</script>
-		<style define:vars={{
+		<!-- <style define:vars={{
 			configHue,
 			'page-width': `${PAGE_WIDTH}rem`,
 			'page-bg-image': pageBgImage,
-		}}></style>  <!-- defines global css variables. This will be applied to <html> <body> and some other elements idk why -->
+		}}></style>  defines global css variables. This will be applied to <html> <body> and some other elements idk why -->
 
 
 		<slot name="head"></slot>
 
 		<link rel="alternate" type="application/rss+xml" title={profileConfig.name} href={absoluteUrl("/rss.xml", Astro.site ?? undefined)}/>
+		<script async type="text/javascript" src="https://pic-eo-1.xcqcoo.top/random.js" data-swup-ignore-script></script>
 
 	</head>
 	<body class=" min-h-screen transition " class:list={[{"lg:is-home": isHomePage, "enable-banner": enableBanner}]}>
@@ -301,9 +303,9 @@ function showBanner() {
 }
 
 function applyPageChromeStyles() {
-	const pageBgImage = `url("${url("/bg.jpg")}")`;
-	document.documentElement.style.setProperty('--page-bg-image', pageBgImage);
-	document.body.style.setProperty('--page-bg-image', pageBgImage);
+	// const pageBgImage = `url("${url("/bg.jpg")}")`;
+	// document.documentElement.style.setProperty('--page-bg-image', pageBgImage);
+	// document.body.style.setProperty('--page-bg-image', pageBgImage);
 }
 
 function forceStyleRepaint() {
@@ -313,7 +315,7 @@ function forceStyleRepaint() {
 
 function init() {
 	// disableAnimation()()		// TODO
-	applyPageChromeStyles();
+	// applyPageChromeStyles();
 	loadTheme();
 	loadHue();
 	applyLanguage(getCurrentLanguage());

@@ -17,8 +17,8 @@ import type {
 import { LinkPreset } from "./types/config";
 
 export const siteConfig: SiteConfig = {
-	title: "Chenxi's Blog",
-	subtitle: "114514",
+	title: "ねおんのBlog",
+	subtitle: "Bonjour!",
 	lang: "zh_CN", // 语言代码, e.g. 'en', 'zh_CN', 'ja', etc.
 	themeColor: {
 		hue: 250, // Default hue for the theme color, from 0 to 360. e.g. red: 0, teal: 200, cyan: 250, pink: 345
@@ -26,7 +26,7 @@ export const siteConfig: SiteConfig = {
 	},
 	banner: {
 		enable: false,
-		src: "/gthlwp0.jpg", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
+		src: "/demo-banner.png", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
 		position: "center", // Equivalent to object-position, only supports 'top', 'center', 'bottom'. 'center' by default
 		credit: {
 			enable: false, // Display the credit text of the banner image
@@ -49,7 +49,7 @@ export const siteConfig: SiteConfig = {
 };
 
 export const BangumiConfig: BangumiConfigType = {
-	enable: true,
+	enable: false,
 	source: "api", // json: 读取 src/data/bangumi.json；api: 构建时请求 B 站接口，目前风控不严重，建议使用 api
 	uid: 3546871542843760,
 	type: 1, // 1: 追番, 2: 追剧
@@ -61,7 +61,7 @@ export const BangumiConfig: BangumiConfigType = {
 };
 
 export const MusicConfig: MusicConfigType = {
-	enable: true,
+	enable: false,
 	source: "json", // json: 读取 src/data/music.json；api: 请求 MusicConfig.apiUrl
 	jsonPath: "src/data/music.json",
 	apiUrl: "",
@@ -90,7 +90,7 @@ export const MomentsConfig: MomentsConfigType = {
 };
 
 export const FollowsConfig: FollowsConfigType = {
-	enable: true,
+	enable: false,
 	source: "json", // json: 读取 src/data/follows.json；api: 构建时请求 B 站接口，容易触发风控失败
 	uid: 3546871542843760, // 即 B 站 vmid
 	pn: 1, // 构建时请求页码
@@ -101,7 +101,7 @@ export const FollowsConfig: FollowsConfigType = {
 };
 
 export const FansConfig: FansConfigType = {
-	enable: true,
+	enable: false,
 	source: "json", // json: 读取 src/data/fans.json；api: 构建时请求 B 站接口，容易触发风控失败
 	uid: 3546871542843760, // 即 B 站 vmid
 	pn: 1, // 构建时请求页码
@@ -112,7 +112,7 @@ export const FansConfig: FansConfigType = {
 };
 
 export const DynamicConfig: DynamicConfigType = {
-	enable: true,
+	enable: false,
 	source: "json", // json: 读取 src/data/dynamic.json；api: 构建时请求 B 站接口，容易触发风控失败
 	uid: 3546871542843760, // 即 B 站 host_mid
 	jsonPath: "src/data/dynamic.json", // B 站 API 原始返回格式，用于对抗风控
@@ -121,7 +121,7 @@ export const DynamicConfig: DynamicConfigType = {
 };
 
 export const FavoritesConfig: FavoritesConfigType = {
-	enable: true,
+	enable: false,
 	uid: 3546871542843760, // 即 B 站 up_mid
 	listSource: "api", // json: 读取 src/data/favorites.json；api: 构建时请求收藏夹列表
 	listJsonPath: "src/data/favorites.json",
@@ -155,108 +155,108 @@ export const navBarConfig: NavBarConfig = {
 };
 
 export const linksConfig: FriendLink[] = [
-	{
-		name: "GitHub",
-		url: "https://github.com",
-		avatar: "https://github.com/github.png",
-		desc: "GitHub 是一个面向开源及私有软件项目的托管平台",
-		descI18nKey: I18nKey.friendGithubDescription,
-	},
-	{
-		name: "OpenAI",
-		url: "https://openai.com",
-		avatar: "https://github.com/openai.png",
-		desc: "ChatGPT",
-		descI18nKey: I18nKey.friendOpenAIDescription,
-	},
-	{
-		name: "哔哩哔哩",
-		url: "https://www.bilibili.com",
-		avatar: "https://www.bilibili.com/favicon.ico",
-		desc: "哔哩哔哩",
-		descI18nKey: I18nKey.friendBilibiliDescription,
-	},
-	{
-		name: "X",
-		url: "https://x.com",
-		avatar: "https://x.com/favicon.ico",
-		desc: "社交平台",
-		descI18nKey: I18nKey.friendXDescription,
-	},
-	{
-		name: "Discord",
-		url: "https://discord.com",
-		avatar:
-			"https://cdn.prod.website-files.com/6257adef93867e50d84d30e2/62fddf0fde45a8baedcc7ee5_847541504914fd33810e70a0ea73177e%20(2)-1.png",
-		desc: "Discord 是一个流行的聊天和社交平台",
-		descI18nKey: I18nKey.friendDiscordDescription,
-	},
-	{
-		name: "Cloudflare",
-		url: "https://cloudflare.com",
-		avatar: "https://cloudflare.com/favicon.ico",
-		desc: "赛博活佛",
-		descI18nKey: I18nKey.friendCloudflareDescription,
-	},
+	// {
+	// 	name: "GitHub",
+	// 	url: "https://github.com",
+	// 	avatar: "https://github.com/github.png",
+	// 	desc: "GitHub 是一个面向开源及私有软件项目的托管平台",
+	// 	descI18nKey: I18nKey.friendGithubDescription,
+	// },
+	// {
+	// 	name: "OpenAI",
+	// 	url: "https://openai.com",
+	// 	avatar: "https://github.com/openai.png",
+	// 	desc: "ChatGPT",
+	// 	descI18nKey: I18nKey.friendOpenAIDescription,
+	// },
+	// {
+	// 	name: "哔哩哔哩",
+	// 	url: "https://www.bilibili.com",
+	// 	avatar: "https://www.bilibili.com/favicon.ico",
+	// 	desc: "哔哩哔哩",
+	// 	descI18nKey: I18nKey.friendBilibiliDescription,
+	// },
+	// {
+	// 	name: "X",
+	// 	url: "https://x.com",
+	// 	avatar: "https://x.com/favicon.ico",
+	// 	desc: "社交平台",
+	// 	descI18nKey: I18nKey.friendXDescription,
+	// },
+	// {
+	// 	name: "Discord",
+	// 	url: "https://discord.com",
+	// 	avatar:
+	// 		"https://cdn.prod.website-files.com/6257adef93867e50d84d30e2/62fddf0fde45a8baedcc7ee5_847541504914fd33810e70a0ea73177e%20(2)-1.png",
+	// 	desc: "Discord 是一个流行的聊天和社交平台",
+	// 	descI18nKey: I18nKey.friendDiscordDescription,
+	// },
+	// {
+	// 	name: "Cloudflare",
+	// 	url: "https://cloudflare.com",
+	// 	avatar: "https://cloudflare.com/favicon.ico",
+	// 	desc: "赛博活佛",
+	// 	descI18nKey: I18nKey.friendCloudflareDescription,
+	// },
 ];
 
 export const profileConfig: ProfileConfig = {
 	avatar: "/avatar.jpg", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
-	name: "Chenxi",
-	bio: "114514",
+	name: "neon",
+	bio: "Bonjour!",
 	links: [
-		{
-			name: "哔哩哔哩",
-			icon: "fa6-brands:bilibili",
-			url: "https://space.bilibili.com/3546871542843760",
-		},
+		// {
+		// 	name: "哔哩哔哩",
+		// 	icon: "fa6-brands:bilibili",
+		// 	url: "https://space.bilibili.com/3546871542843760",
+		// },
 		{
 			name: "GitHub",
 			icon: "fa6-brands:github",
-			url: "https://github.com/zjhcx",
+			url: "https://github.com/neonmz",
 		},
-		{
-			name: "X",
-			icon: "fa6-brands:x-twitter", // Visit https://icones.js.org/ for icon codes
-			// You will need to install the corresponding icon set if it's not already included
-			// `pnpm add @iconify-json/<icon-set-name>`
-			url: "https://x.com/zjhcx",
-		},
-		{
-			name: "Discord",
-			icon: "fa6-brands:discord",
-			url: "https://discord.com/users/1498586217070202910",
-		},
-		{
-			name: "Reddit",
-			icon: "fa6-brands:reddit",
-			url: "https://www.reddit.com/user/zjhcx/",
-		},
-		{
-			name: "YouTube",
-			icon: "fa6-brands:youtube",
-			url: "https://www.youtube.com/@zjhcx",
-		},
-		{
-			name: "TikTok",
-			icon: "fa6-brands:tiktok",
-			url: "https://www.tiktok.com/@zjhcx12",
-		},
-		{
-			name: "Facebook",
-			icon: "fa6-brands:facebook",
-			url: "https://www.facebook.com/profile.php?id=61589201685052",
-		},
-		{
-			name: "Instagram",
-			icon: "fa6-brands:instagram",
-			url: "https://www.instagram.com/zjhcx12/",
-		},
-		{
-			name: "Threads",
-			icon: "fa6-brands:threads",
-			url: "https://www.threads.com/@zjhcx12",
-		},
+		// {
+		// 	name: "X",
+		// 	icon: "fa6-brands:x-twitter", // Visit https://icones.js.org/ for icon codes
+		// 	// You will need to install the corresponding icon set if it's not already included
+		// 	// `pnpm add @iconify-json/<icon-set-name>`
+		// 	url: "https://x.com/zjhcx",
+		// },
+		// {
+		// 	name: "Discord",
+		// 	icon: "fa6-brands:discord",
+		// 	url: "https://discord.com/users/1498586217070202910",
+		// },
+		// {
+		// 	name: "Reddit",
+		// 	icon: "fa6-brands:reddit",
+		// 	url: "https://www.reddit.com/user/zjhcx/",
+		// },
+		// {
+		// 	name: "YouTube",
+		// 	icon: "fa6-brands:youtube",
+		// 	url: "https://www.youtube.com/@zjhcx",
+		// },
+		// {
+		// 	name: "TikTok",
+		// 	icon: "fa6-brands:tiktok",
+		// 	url: "https://www.tiktok.com/@zjhcx12",
+		// },
+		// {
+		// 	name: "Facebook",
+		// 	icon: "fa6-brands:facebook",
+		// 	url: "https://www.facebook.com/profile.php?id=61589201685052",
+		// },
+		// {
+		// 	name: "Instagram",
+		// 	icon: "fa6-brands:instagram",
+		// 	url: "https://www.instagram.com/zjhcx12/",
+		// },
+		// {
+		// 	name: "Threads",
+		// 	icon: "fa6-brands:threads",
+		// 	url: "https://www.threads.com/@zjhcx12",
+		// },
 	],
 };
 

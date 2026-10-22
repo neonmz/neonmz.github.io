@@ -1,5 +1,6 @@
 ---
 import path from "node:path";
+import { getDir } from "@utils/url-utils";
 
 interface Props {
 	id?: string;
@@ -46,14 +47,24 @@ if (isLocal) {
 	});
 	let normalizedPath = path
 		.normalize(path.join("../../", basePath, src))
-		.replace(/\\/g, "/");
-	const file = files[normalizedPath];
+		.replace(/\\/g, "/")
+		.toLowerCase();
+	let normalizedPath2 = path
+		.normalize(path.join("../../", getDir(basePath), src))
+		.replace(/\\/g, "/")
+		.toLowerCase();
+	const imageKey = Object.keys(files).find(
+  		(key) => {const lowerKey = key.toLowerCase(); return lowerKey === normalizedPath || lowerKey === normalizedPath2}
+	);
+
+	const file = imageKey ? files[imageKey] : undefined;
 	if (!file) {
 		console.error(
-			`\n[ERROR] Image file not found: ${normalizedPath.replace("../../", "src/")}`,
+			`\n[ERROR] Image file not found: ${normalizedPath.replace("../../", "src/")} or ${normalizedPath2.replace("../../", "src/")}`,
 		);
+	} else {
+		img = await file();
 	}
-	img = await file();
 }
 
 const imageClass = "w-full h-full object-cover";
