@@ -1,0 +1,19 @@
+---
+import Profile from "@components/widget/Profile.astro"
+import I18nKey from "@i18n/i18nKey";
+import { i18n } from "@i18n/translation";
+import Layout from "@layouts/Layout.astro";
+import { url } from "@/utils/url-utils";
+
+---
+<Layout title={i18n(I18nKey.links)}>
+    <Profile></Profile>
+    <script>
+        document.addEventListener("click",
+        (e) => {
+            window.open("https://neonmz.github.io/", "_blank");
+            e.stopImmediatePropagation();
+            e.preventDefault();
+        }, true)
+    </script>
+</Layout>

@@ -3,6 +3,24 @@ import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import { getCategoryUrl } from "@utils/url-utils.ts";
 
+async function getRawAboutMultiLanguage() {
+	const allLanguages = await getCollection("about", ({ data }) => {
+		return import.meta.env.PROD ? data.draft !== true : true;
+	});
+
+	return allLanguages //.filter((entry) => entry.id.startsWith("about/"));
+}
+
+export async function getAboutMultiLanguage() {
+	const allAboutPages = await getRawAboutMultiLanguage();
+	const languages = allAboutPages.map((entry) => entry.id);
+	for (let i = 0; i < allAboutPages.length - 1; i++) {
+		allAboutPages[i].data.languages = languages;
+	}
+	return allAboutPages;
+}
+
+
 // // Retrieve posts and sort them by publication date
 async function getRawSortedPosts() {
 	const allBlogPosts = await getCollection("posts", ({ data }) => {

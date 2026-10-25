@@ -25,6 +25,25 @@
       "default": "",
       "type": "string"
     },
+    "tagsI18nIDs": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "tag": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "tag",
+          "id"
+        ]
+      }
+    },
     "tags": {
       "default": [],
       "type": "array",
@@ -62,6 +81,13 @@
     "nextSlug": {
       "default": "",
       "type": "string"
+    },
+    "languages": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
     },
     "$schema": {
       "type": "string"

@@ -5,6 +5,14 @@ import Markdown from "@components/misc/Markdown.astro";
 import I18nKey from "../i18n/i18nKey";
 import { i18n } from "../i18n/translation";
 import MainGridLayout from "../layouts/MainGridLayout.astro";
+import { getAboutMultiLanguage } from "@utils/content-utils";
+
+const aboutEntries = await getAboutMultiLanguage();
+const aboutEntriesLanguages = aboutEntries[0].data.languages;
+
+import { siteConfig } from "../config";
+
+const siteLanguage = (siteConfig.lang ?? "en").toLowerCase();
 
 const aboutPost = await getEntry("spec", "about");
 
@@ -22,4 +30,30 @@ const { Content } = await render(aboutPost);
             </Markdown>
         </div>
     </div>
+    <script define:vars={{ aboutEntriesLanguages, siteLanguage }}>
+    (function () {
+        window.pageInfo = {
+            path: location.pathname,
+            languages: aboutEntriesLanguages,
+            siteLanguage: siteLanguage,
+        };
+        // try {
+        //     var lang = localStorage?.getItem('language').toLowerCase() ?? siteLanguage;
+        // } catch (e) { lang = siteLanguage; }
+        // if (!location.pathname.startsWith('/about/' + lang + '/')) {
+        //     // 只处理你支持的语言，避免跳到 /about/null/
+        //     if (lang && aboutEntriesLanguages.indexOf(lang) > -1) {
+        //         console.log("redirect by about");
+        //         window.wait
+        //         if (window.swup && typeof window.swup.navigate === 'function') {
+        //             window.swup.navigate('/about/' + lang + '/');
+        //         } else {
+        //             location.pathname = '/about/' + lang + '/';
+        //         }
+                
+        //     }
+        // }
+        
+    })();
+    </script>
 </MainGridLayout>

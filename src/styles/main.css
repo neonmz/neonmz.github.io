@@ -144,6 +144,9 @@
     .btn-regular-dark.success {
         @apply bg-[oklch(0.75_0.14_var(--hue))] dark:bg-[oklch(0.75_0.14_var(--hue))]
     }
+    .card-base, .btn-card, .license-container, .expressive-code pre {
+        background-color: color-mix(in srgb, var(--page-bg) 60%, transparent) !important;
+    }
 }
 
 .custom-md img, #post-cover img {
@@ -185,6 +188,3 @@
   }
 }
 
-.card-base, .btn-card, .license-container, .expressive-code pre {
-    background-color: color-mix(in srgb, var(--page-bg) 60%, transparent) !important;
-}

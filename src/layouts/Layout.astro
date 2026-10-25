@@ -150,6 +150,29 @@ const bannerOffset =
 
 		<link rel="alternate" type="application/rss+xml" title={profileConfig.name} href={absoluteUrl("/rss.xml", Astro.site ?? undefined)}/>
 		<script async type="text/javascript" src="https://pic-eo-1.xcqcoo.top/random.js" data-swup-ignore-script></script>
+		<!-- <script>
+				if (langCode !== lang.toLowerCase() && (pageInfo.path === location.pathname || !isLangIndexPage && pageInfo.path === [...segments.slice(0, -2),...segments.slice(-1)].join("/"))) {
+		console.log(2)
+
+
+		if (isLangSupported)
+		{
+			if (isLangIndexPage) {
+				segments[segments.length - 1] = lang.toLowerCase();
+				segments[segments.length] = "";
+			} else {
+				segments[segments.length - 2] = lang.toLowerCase();
+			}
+			console.log(segments.join("/"));
+			if (window.swup && typeof window.swup.navigate === 'function') {
+				window.swup.navigate(segments.join("/"));
+
+			} else {
+				// location.pathname = segments.join("/");
+			}
+		}
+	}
+		</script> -->
 
 	</head>
 	<body class=" min-h-screen transition " class:list={[{"lg:is-home": isHomePage, "enable-banner": enableBanner}]}>

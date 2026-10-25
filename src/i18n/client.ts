@@ -12,6 +12,7 @@ import { vi } from "./languages/vi";
 import { zh_CN } from "./languages/zh_CN";
 import { zh_TW } from "./languages/zh_TW";
 import type { Translation } from "./translation";
+import { debug } from "node_modules/astro/dist/core/logger/core";
 
 export const supportedLanguages = [
 	{ code: "zh_CN", label: "简体中文" },
@@ -88,6 +89,35 @@ export function applyLanguage(lang: SupportedLanguage): void {
 		const key = element.dataset.i18nAriaKey as I18nKey | undefined;
 		if (key) {
 			element.setAttribute("aria-label", translate(key, lang));
+		}
+	}
+	console.log(1)
+	const segments = location.pathname.split("/") //.filter(Boolean);
+	// if (segments[segments.length - 1] !== "") segments.push("");
+	// if (segments[0] !== "") segments.unshift("");
+	const langCode = segments[segments.length - 2];
+	const pageInfo = window.pageInfo ?? { path: "", languages: [], siteLanguage: "en" };
+	const isLangIndexPage = pageInfo.languages.indexOf(langCode) < 0;
+	const isLangSupported = pageInfo.languages.indexOf(lang.toLowerCase()) > -1;
+	if (langCode !== lang.toLowerCase() && (pageInfo.path === location.pathname || !isLangIndexPage && pageInfo.path === [...segments.slice(0, -2),...segments.slice(-1)].join("/"))) {
+		console.log(2)
+
+
+		if (isLangSupported)
+		{
+			if (isLangIndexPage) {
+				segments[segments.length - 1] = lang.toLowerCase();
+				segments[segments.length] = "";
+			} else {
+				segments[segments.length - 2] = lang.toLowerCase();
+			}
+			console.log(segments.join("/"));
+			if (window.swup && typeof window.swup.navigate === 'function') {
+				window.swup.navigate(segments.join("/"));
+
+			} else {
+				location.pathname = segments.join("/");
+			}
 		}
 	}
 }
