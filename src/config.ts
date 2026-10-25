@@ -155,6 +155,12 @@ export const navBarConfig: NavBarConfig = {
 };
 
 export const linksConfig: FriendLink[] = [
+	{
+		name: "Mobell",
+		url: "https://mobellling.github.io",
+		avatar: "https://mobellling.github.io/images/photo.jpg",
+		desc: "你好，\n我是 Mobell\n来自西电",
+	},
 	// {
 	// 	name: "GitHub",
 	// 	url: "https://github.com",
