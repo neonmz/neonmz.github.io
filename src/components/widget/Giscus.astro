@@ -20,8 +20,8 @@ const className = Astro.props.class;
 const style = Astro.props.style;
 const github_theme_url = "fro" // import.meta.env.PROD ? absoluteUrl("/styles/github.css"): "fro"
 ---
-
-<WidgetLayout name={i18n(I18nKey.comments)} i18nKey={I18nKey.comments} id="categories" isCollapsed={isCollapsed} collapsedHeight={COLLAPSED_HEIGHT}
+<div class="card-base">
+<WidgetLayout name={i18n(I18nKey.comments)} i18nKey={I18nKey.comments} id="giscus-sidebar" isCollapsed={isCollapsed} collapsedHeight={COLLAPSED_HEIGHT}
                 class={className} style={style}
 >
     <div class="giscus"></div>
@@ -42,3 +42,5 @@ const github_theme_url = "fro" // import.meta.env.PROD ? absoluteUrl("/styles/gi
             async>
     </script>
 </WidgetLayout>
+<br /><div style="opacity: 0;">1</div>
+</div>

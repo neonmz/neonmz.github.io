@@ -16,7 +16,6 @@ for (const heading of headings) {
 }
 
 const className = Astro.props.class;
-const isPostsRoute = Astro.url.pathname.startsWith(url("/posts/"));
 
 const removeTailingHash = (text: string) => {
 	let lastIndexOfHash = text.lastIndexOf("#");
@@ -31,7 +30,6 @@ let heading1Count = 1;
 
 const maxLevel = siteConfig.toc.depth;
 ---
-{isPostsRoute &&
 <table-of-contents class:list={[className, "group"]}>
     {headings.filter((heading) => heading.depth < minDepth + maxLevel).map((heading) =>
             <a href={`#${heading.slug}`} class="px-2 flex gap-2 relative transition w-full min-h-9 rounded-xl
@@ -57,7 +55,7 @@ const maxLevel = siteConfig.toc.depth;
     )}
     <div id="active-indicator" style="opacity: 0" class:list={[{'hidden': headings.length == 0}, "-z-10 absolute bg-[var(--toc-btn-hover)] left-0 right-0 rounded-xl transition-all " +
         "group-hover:bg-transparent border-2 border-[var(--toc-btn-hover)] group-hover:border-[var(--toc-btn-active)] border-dashed"]}></div>
-</table-of-contents>}
+</table-of-contents>
 
 <script>
 class TableOfContents extends HTMLElement {
@@ -95,6 +93,33 @@ class TableOfContents extends HTMLElement {
         this.update();
     };
 
+    // toggleActiveHeading = () => {
+    //     let i = this.active.length - 1;
+    //     let min = this.active.length - 1, max = -1;
+    //     while (i >= 0 && !this.active[i]) {
+    //         this.tocEntries[i].classList.remove(this.visibleClass);
+    //         i--;
+    //     }
+    //     while (i >= 0 && this.active[i]) {
+    //         this.tocEntries[i].classList.add(this.visibleClass);
+    //         min = Math.min(min, i);
+    //         max = Math.max(max, i);
+    //         i--;
+    //     }
+    //     while (i >= 0) {
+    //         this.tocEntries[i].classList.remove(this.visibleClass);
+    //         i--;
+    //     }
+    //     if (min > max) {
+    //         this.activeIndicator?.setAttribute("style", `opacity: 0`);
+    //     } else {
+    //         let parentOffset = this.tocEl?.getBoundingClientRect().top || 0;
+    //         let scrollOffset = this.tocEl?.scrollTop || 0;
+    //         let top = this.tocEntries[min].getBoundingClientRect().top - parentOffset + scrollOffset;
+    //         let bottom = this.tocEntries[max].getBoundingClientRect().bottom - parentOffset + scrollOffset;
+    //         this.activeIndicator?.setAttribute("style", `top: ${top}px; height: ${bottom - top}px`);
+    //     }
+    // };
     toggleActiveHeading = () => {
         let i = this.active.length - 1;
         let min = this.active.length - 1, max = -1;
@@ -112,16 +137,90 @@ class TableOfContents extends HTMLElement {
             this.tocEntries[i].classList.remove(this.visibleClass);
             i--;
         }
+        
         if (min > max) {
             this.activeIndicator?.setAttribute("style", `opacity: 0`);
-        } else {
-            let parentOffset = this.tocEl?.getBoundingClientRect().top || 0;
-            let scrollOffset = this.tocEl?.scrollTop || 0;
-            let top = this.tocEntries[min].getBoundingClientRect().top - parentOffset + scrollOffset;
-            let bottom = this.tocEntries[max].getBoundingClientRect().bottom - parentOffset + scrollOffset;
-            this.activeIndicator?.setAttribute("style", `top: ${top}px; height: ${bottom - top}px`);
         }
+
+        if (min === -1 || max === -1 || !this.activeIndicator || !this.tocEl) {
+            this.activeIndicator?.setAttribute("style", `opacity: 0`);
+            return;
+        }
+
+        // ✅ 用 tocEl 的滚动容器 rect 做基准
+        const containerRect = this.tocEl.getBoundingClientRect();
+
+        // entries 相对于 viewport 的 rect
+        const minRect = this.tocEntries[min].getBoundingClientRect();
+        const maxRect = this.tocEntries[max].getBoundingClientRect();
+
+        // 相对于 tocEl 内容区顶部（包含滚动偏移）
+        const top = minRect.top - containerRect.top + this.tocEl.scrollTop;
+        const bottom = maxRect.bottom - containerRect.top + this.tocEl.scrollTop;
+
+        // ✅ indicator 的 offsetParent 是 table-of-contents
+        // 需要再减去 table-of-contents 相对于 tocEl 的偏移
+        const indicatorOffsetParent = this.activeIndicator.offsetParent;
+        let offsetCorrection = 0;
+        if (indicatorOffsetParent && indicatorOffsetParent !== this.tocEl) {
+            const parentRect = indicatorOffsetParent.getBoundingClientRect();
+            offsetCorrection = parentRect.top - containerRect.top + this.tocEl.scrollTop;
+        }
+
+        const finalTop = top - offsetCorrection;
+        const finalBottom = bottom - offsetCorrection;
+
+        this.activeIndicator.setAttribute(
+            "style",
+            `top: ${finalTop}px; height: ${finalBottom - finalTop}px; opacity: 1`
+        );
     };
+    // toggleActiveHeading = () => {
+    //     let min = -1, max = -1;
+
+    //     for (let i = 0; i < this.active.length; i++) {
+    //         if (this.active[i]) {
+    //         if (min === -1) min = i;
+    //         max = i;
+    //         this.tocEntries[i].classList.add(this.visibleClass);
+    //         } else {
+    //         this.tocEntries[i].classList.remove(this.visibleClass);
+    //         }
+    //     }
+
+    //     if (min === -1 || max === -1 || !this.activeIndicator || !this.tocEl) {
+    //         this.activeIndicator?.setAttribute("style", `opacity: 0`);
+    //         return;
+    //     }
+
+    //     // ✅ 用 tocEl 的滚动容器 rect 做基准
+    //     const containerRect = this.tocEl.getBoundingClientRect();
+
+    //     // entries 相对于 viewport 的 rect
+    //     const minRect = this.tocEntries[min].getBoundingClientRect();
+    //     const maxRect = this.tocEntries[max].getBoundingClientRect();
+
+    //     // 相对于 tocEl 内容区顶部（包含滚动偏移）
+    //     const top = minRect.top - containerRect.top + this.tocEl.scrollTop;
+    //     const bottom = maxRect.bottom - containerRect.top + this.tocEl.scrollTop;
+
+    //     // ✅ indicator 的 offsetParent 是 table-of-contents
+    //     // 需要再减去 table-of-contents 相对于 tocEl 的偏移
+    //     const indicatorOffsetParent = this.activeIndicator.offsetParent;
+    //     let offsetCorrection = 0;
+    //     if (indicatorOffsetParent && indicatorOffsetParent !== this.tocEl) {
+    //         const parentRect = indicatorOffsetParent.getBoundingClientRect();
+    //         offsetCorrection = parentRect.top - containerRect.top + this.tocEl.scrollTop;
+    //     }
+
+    //     const finalTop = top - offsetCorrection;
+    //     const finalBottom = bottom - offsetCorrection;
+
+    //     this.activeIndicator.setAttribute(
+    //         "style",
+    //         `top: ${finalTop}px; height: ${finalBottom - finalTop}px; opacity: 1`
+    //     );
+    // };
 
     scrollToActiveHeading = () => {
         // If the TOC widget can accommodate both the topmost

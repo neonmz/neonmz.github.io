@@ -1,0 +1,76 @@
+---
+import I18nKey from "../../i18n/i18nKey";
+import { i18n } from "../../i18n/translation";
+import { getCategoryList } from "../../utils/content-utils";
+import ButtonLink from "../control/ButtonLink.astro";
+import WidgetLayout from "./WidgetLayout.astro";
+import { absoluteUrl } from "@/utils/url-utils";
+import TOC from "./TOC.astro"
+import { siteConfig } from "@/config";
+import type { MarkdownHeading } from "astro";
+import { url } from "@/utils/url-utils";
+
+
+const COLLAPSED_HEIGHT = "7.5rem";
+const COLLAPSE_THRESHOLD = 5;
+
+const isCollapsed = "".length >= COLLAPSE_THRESHOLD;
+
+interface Props {
+	class?: string;
+	style?: string;
+    headings?: MarkdownHeading[];
+}
+const className = Astro.props.class;
+const {
+    style = "",
+    headings = [],
+    } = Astro.props;
+
+const isPostsRoute = Astro.url.pathname.startsWith(url("/posts/"));
+---
+{isPostsRoute && headings.length > 0 ?
+<div class="card-base" id="TOC-sidebar-wrapper">
+<WidgetLayout name={"Contents"} id="TOC-sidebar" isCollapsed={isCollapsed} collapsedHeight={COLLAPSED_HEIGHT}
+                class={className} style={style}
+>
+    <div class="w-full z-0 hidden 2xl:block">
+    <!-- TOC component -->
+        {siteConfig.toc.enable && <div class="relative w-full"><div style="z-index: 2;" id="toc-wrapper" class:list={["hidden lg:block transition absolute top-0 -right-[var(--toc-width)] w-[var(--toc-width)] items-center",
+            {"toc-hide": siteConfig.banner.enable}]}
+        >
+            <div id="toc-inner-wrapper" class="top-14 w-[var(--toc-width)] h-[calc(100vh_-_20rem)] overflow-y-scroll overflow-x-hidden hide-scrollbar">
+                <div id="toc" class="w-full h-full transition-swup-fade ">
+                    <div class="h-8 w-full"></div>
+                    <TOC headings={headings}></TOC>
+                    <div class="h-8 w-full"></div>
+                </div>
+            </div>
+        </div>
+        <div id="toc-wrapper-placeholder" style="opacity: 0; z-index: 1;" class:list={["transition top-0 -right-[var(--toc-width)] w-[var(--toc-width)] items-center",
+            {"toc-hide": siteConfig.banner.enable}]}></div>
+        <script>
+            const target = document.getElementById("toc-wrapper");
+            const placeholder = document.getElementById("toc-wrapper-placeholder");
+
+            const sync = () => {
+                if (!target || !placeholder) {
+                    return;
+                }
+                const rect = target.getBoundingClientRect();
+                placeholder.style.width = `${rect.width}px`;
+                placeholder.style.height = `${rect.height}px`;
+            };
+
+            sync();
+            window.addEventListener('resize', sync);
+        </script>
+            </div>}
+
+        <!-- #toc needs to exist for Swup to work normally -->
+        {!siteConfig.toc.enable && <div id="toc"></div>}
+    </div>
+</WidgetLayout>
+</div>
+
+:<div style="display: none;" id="TOC-sidebar-wrapper"></div>}
