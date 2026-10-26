@@ -64,13 +64,13 @@
   },
   "devDependencies": {
     "@astrojs/ts-plugin": "^1.10.6",
-    "@biomejs/biome": "2.5.15",
+    "@biomejs/biome": "2.6.2",
     "@types/hast": "^3.0.4",
     "@types/markdown-it": "^14.2.0",
     "@types/mdast": "^4.0.4",
     "@types/sanitize-html": "^2.16.2",
     "postcss-import": "^17.0.1",
-    "rollup": "^4.64.12"
+    "rollup": "^4.65.0"
   },
   "packageManager": "pnpm@9.14.4"
 }
