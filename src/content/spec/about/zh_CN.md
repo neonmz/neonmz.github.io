@@ -19,7 +19,7 @@ neon还在造样式......
 neon主要就是完善~~其实还没完成~~了一下fuwari的i18n，但是还没完成解耦，有点...
 
 ## 0xFF: TODO
-- [ ] 完成 `/about/` 的i18n路由
+- [x] 完成 `/about/` 的i18n路由
 - [ ] 完成 `/posts/` 的i18n路由
 - [ ] 完成 其他page 的i18n路由
 - [ ] 为 Markdown 的 code 块实现在线运行

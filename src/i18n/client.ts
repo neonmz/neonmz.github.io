@@ -91,7 +91,6 @@ export function applyLanguage(lang: SupportedLanguage): void {
 			element.setAttribute("aria-label", translate(key, lang));
 		}
 	}
-	console.log(1)
 	const segments = location.pathname.split("/") //.filter(Boolean);
 	// if (segments[segments.length - 1] !== "") segments.push("");
 	// if (segments[0] !== "") segments.unshift("");
@@ -100,7 +99,6 @@ export function applyLanguage(lang: SupportedLanguage): void {
 	const isLangIndexPage = pageInfo.languages.indexOf(langCode) < 0;
 	const isLangSupported = pageInfo.languages.indexOf(lang.toLowerCase()) > -1;
 	if (langCode !== lang.toLowerCase() && (pageInfo.path === location.pathname || !isLangIndexPage && pageInfo.path === [...segments.slice(0, -2),...segments.slice(-1)].join("/"))) {
-		console.log(2)
 
 
 		if (isLangSupported)

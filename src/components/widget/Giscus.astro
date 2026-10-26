@@ -4,6 +4,8 @@ import { i18n } from "../../i18n/translation";
 import { getCategoryList } from "../../utils/content-utils";
 import ButtonLink from "../control/ButtonLink.astro";
 import WidgetLayout from "./WidgetLayout.astro";
+import github_css from "@/styles/github.css?url"
+import { absoluteUrl } from "@/utils/url-utils";
 
 
 const COLLAPSED_HEIGHT = "7.5rem";
@@ -17,6 +19,7 @@ interface Props {
 }
 const className = Astro.props.class;
 const style = Astro.props.style;
+const github_theme_url = "fro" // import.meta.env.PROD ? absoluteUrl(github_css): "fro"
 ---
 
 <WidgetLayout name={i18n(I18nKey.comments)} i18nKey={I18nKey.comments} id="categories" isCollapsed={isCollapsed} collapsedHeight={COLLAPSED_HEIGHT}
@@ -33,7 +36,7 @@ const style = Astro.props.style;
             data-reactions-enabled="1"
             data-emit-metadata="0"
             data-input-position="top"
-            data-theme="fro"
+            data-theme={github_theme_url}
             data-lang="zh-CN"
             data-loading="lazy"
             crossorigin="anonymous"
