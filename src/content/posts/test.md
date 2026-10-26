@@ -3,9 +3,9 @@ title: test
 published: 2026-10-24
 description: ''
 image: ''
-tags: []
+tags: [test]
 category: ''
-draft: false 
+draft: true 
 lang: ''
 ---
 <iframe src="/profile/card/" height="309" width="300">

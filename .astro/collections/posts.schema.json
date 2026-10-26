@@ -53,13 +53,9 @@
     },
     "category": {
       "default": "",
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
+      "type": [
+        "string",
+        "null"
       ]
     },
     "lang": {

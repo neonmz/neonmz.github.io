@@ -4,9 +4,7 @@ import { i18n } from "@i18n/translation";
 import { getCategoryUrl } from "@utils/url-utils.ts";
 
 async function getRawAboutMultiLanguage() {
-	const allLanguages = await getCollection("about", ({ data }) => {
-		return import.meta.env.PROD ? data.draft !== true : true;
-	});
+	const allLanguages = await getCollection("about");
 
 	return allLanguages //.filter((entry) => entry.id.startsWith("about/"));
 }
@@ -35,7 +33,7 @@ async function getRawSortedPosts() {
 	return sorted;
 }
 
-export async function getSortedPosts() {
+let _getSortedPosts = async () => {
 	const sorted = await getRawSortedPosts();
 
 	for (let i = 1; i < sorted.length; i++) {
@@ -46,9 +44,13 @@ export async function getSortedPosts() {
 		sorted[i].data.prevSlug = sorted[i + 1].id;
 		sorted[i].data.prevTitle = sorted[i + 1].data.title;
 	}
+	if (import.meta.env.PROD)
+		_getSortedPosts = async () => sorted;
 
 	return sorted;
 }
+export async function getSortedPosts() { return await _getSortedPosts(); }
+
 export type PostForList = {
 	slug: string;
 	data: CollectionEntry<"posts">["data"];
