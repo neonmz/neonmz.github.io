@@ -144,7 +144,7 @@
     .btn-regular-dark.success {
         @apply bg-[oklch(0.75_0.14_var(--hue))] dark:bg-[oklch(0.75_0.14_var(--hue))]
     }
-    .card-base, .btn-card, .license-container, .expressive-code pre, .card-github, .btn-regular {
+    .card-base, .btn-card, .license-container, .expressive-code pre, .card-github, .btn-regular, #active-indicator {
         background-color: color-mix(in srgb, var(--page-bg) 60%, transparent) !important;
     }
 }
