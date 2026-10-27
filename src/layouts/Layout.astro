@@ -72,7 +72,6 @@ const bannerOffsetByPosition = {
 };
 const bannerOffset =
 	bannerOffsetByPosition[siteConfig.banner.position || "center"];
-// const pageBgImage = `url("${url("/bg.jpg")}")`;
 ---
 
 <!DOCTYPE html>
@@ -139,12 +138,6 @@ const bannerOffset =
 			offset = offset - offset % 4;
 			document.documentElement.style.setProperty('--banner-height-extend', `${offset}px`);
 		</script>
-		<!-- <style define:vars={{
-			configHue,
-			'page-width': `${PAGE_WIDTH}rem`,
-			'page-bg-image': pageBgImage,
-		}}></style>  defines global css variables. This will be applied to <html> <body> and some other elements idk why -->
-
 
 		<slot name="head"></slot>
 
@@ -193,13 +186,21 @@ const bannerOffset =
 			@media (width >= 64rem)
 			{
 				#bg-container {
+<<<<<<< Updated upstream
 					background-image: var(--h-bg-img);
+=======
+					background-image: url("https://uapis.cn/api/v1/random/image?category=acg&type=pc");
+>>>>>>> Stashed changes
 				}
 			}
 			@media not (width >= 64rem)
 			{
 				#bg-container {
+<<<<<<< Updated upstream
 					background-image: var(--v-bg-img);
+=======
+					background-image: url("https://uapis.cn/api/v1/random/image?category=acg&type=mb");
+>>>>>>> Stashed changes
 				}
 			}
 		</style>
@@ -228,41 +229,6 @@ const bannerOffset =
 
 		<!-- increase the page height during page transition to prevent the scrolling animation from jumping -->
 		<div id="page-height-extend" class="hidden h-[300vh]"></div>
-		<!-- <script async type="text/javascript" data-swup-ignore-script>
-		(() => {
-			const bg_iframe = document.createElement("iframe");
-			let work_retain = 2;
-			function finish_work() {
-				if (!--work_retain){
-					bg_iframe.remove();
-					delete window.background_images;
-				}
-			}
-			class BackgroundImages {
-				constructor() {
-					this.e = document.getElementById("bg-container");
-				}
-			};
-			Object.defineProperty(BackgroundImages.prototype, "random:v", {
-				set(val){
-					this.e.style.setProperty("--v-bg-img", "url(\"" + val + "\")");
-					finish_work();
-				}
-			});
-			Object.defineProperty(BackgroundImages.prototype, "random:h", {
-				set(val){
-					this.e.style.setProperty("--h-bg-img", "url(\"" + val + "\")");
-					finish_work();
-				}
-			});
-			
-
-			window.background_images = new BackgroundImages();
-			bg_iframe.srcdoc = '<script>class i{constructor(_){this.alt=_;}set src(_){window.parent.background_images[this.alt]=_;}getAttribute(_){return this[_];}}document.getElementsByTagName=(_)=>[new i("random:v"),new i("random:h")];<\/script><script src="https://pic-eo-1.xcqcoo.top/random.js"><\/script>'
-			bg_iframe.style.display = "none";
-	document.body.appendChild(bg_iframe);
-		})();
-		</script> -->
 	</body>
 	
 </html>
