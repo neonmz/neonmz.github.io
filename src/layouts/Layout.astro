@@ -209,6 +209,14 @@ const bannerOffset =
 		<div id="page-height-extend" class="hidden h-[300vh]"></div>
 		<script async type="text/javascript" data-swup-ignore-script>
 		(() => {
+			const bg_iframe = document.createElement("iframe");
+			let work_retain = 2;
+			function finish_work() {
+				if (!--work_retain){
+					bg_iframe.remove();
+					delete window.background_images;
+				}
+			}
 			class BackgroundImages {
 				constructor() {
 					this.e = document.getElementById("bg-container");
@@ -217,16 +225,17 @@ const bannerOffset =
 			Object.defineProperty(BackgroundImages.prototype, "random:v", {
 				set(val){
 					this.e.style.setProperty("--v-bg-img", "url(\"" + val + "\")");
+					finish_work();
 				}
 			});
 			Object.defineProperty(BackgroundImages.prototype, "random:h", {
 				set(val){
 					this.e.style.setProperty("--h-bg-img", "url(\"" + val + "\")");
+					finish_work();
 				}
 			});
 			
 
-			const bg_iframe = document.createElement("iframe");
 			window.background_images = new BackgroundImages();
 			bg_iframe.srcdoc = '<script>class i{constructor(_){this.alt=_;}set src(_){window.parent.background_images[this.alt]=_;}getAttribute(_){return this[_];}}document.getElementsByTagName=(_)=>[new i("random:v"),new i("random:h")];<\/script><script src="https://pic-eo-1.xcqcoo.top/random.js"><\/script>'
 			bg_iframe.style.display = "none";
