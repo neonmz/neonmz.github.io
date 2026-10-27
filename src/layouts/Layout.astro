@@ -190,7 +190,8 @@ const bannerOffset =
 			@media (width >= 64rem)
 			{
 				#bg-container {
-					background-image: var(--h-bg-img);
+					/* background-image: var(--h-bg-img); */
+					background-image: url("https://uapis.cn/api/v1/random/image?category=acg&type=pc");
 				}
 			}
 			@media not (width >= 64rem)
@@ -198,7 +199,8 @@ const bannerOffset =
 				#bg-container {
 					/* the api to get vertical background image seems not good */
 					/* background-image: var(--v-bg-img); */
-					background-image: var(--h-bg-img);
+					/* background-image: var(--h-bg-img); */
+					background-image: url("https://uapis.cn/api/v1/random/image?category=acg&type=mb");
 				}
 			}
 		</style>
@@ -207,7 +209,7 @@ const bannerOffset =
 
 		<!-- increase the page height during page transition to prevent the scrolling animation from jumping -->
 		<div id="page-height-extend" class="hidden h-[300vh]"></div>
-		<script async type="text/javascript" data-swup-ignore-script>
+		<!-- <script async type="text/javascript" data-swup-ignore-script>
 		(() => {
 			const bg_iframe = document.createElement("iframe");
 			let work_retain = 2;
@@ -241,7 +243,7 @@ const bannerOffset =
 			bg_iframe.style.display = "none";
 	document.body.appendChild(bg_iframe);
 		})();
-		</script>
+		</script> -->
 	</body>
 	
 </html>
