@@ -175,7 +175,7 @@ const bannerOffset =
 
 	</head>
 	<body class=" min-h-screen transition " class:list={[{"lg:is-home": isHomePage, "enable-banner": enableBanner}]}>
-		<div id="bg-container"></div>
+		<div id="bg-container" class="static"></div>
 		<style>
 			#bg-container {
 				height: 100vh;
@@ -186,24 +186,43 @@ const bannerOffset =
 				background-size: cover;
 				background-position: center;
 				background-repeat: no-repeat;
+				--h-bg-img: url(https://uapis.cn/api/v1/random/image?category=acg&type=pc);
+				--v-bg-img: url(https://uapis.cn/api/v1/random/image?category=acg&type=mb);
+				display: none;
 			}
 			@media (width >= 64rem)
 			{
 				#bg-container {
-					/* background-image: var(--h-bg-img); */
-					background-image: url("https://uapis.cn/api/v1/random/image?category=acg&type=pc");
+					background-image: var(--h-bg-img);
 				}
 			}
 			@media not (width >= 64rem)
 			{
 				#bg-container {
-					/* the api to get vertical background image seems not good */
-					/* background-image: var(--v-bg-img); */
-					/* background-image: var(--h-bg-img); */
-					background-image: url("https://uapis.cn/api/v1/random/image?category=acg&type=mb");
+					background-image: var(--v-bg-img);
 				}
 			}
 		</style>
+		<script is:inline type="text/javascript">
+			(() => {
+				const baseUrl = {
+					pc: "https://uapis.cn/api/v1/random/image?category=acg&type=pc",
+					mb: "https://uapis.cn/api/v1/random/image?category=acg&type=mb",
+				};
+				const el = document.getElementById("bg-container");
+				if (!el) return;
+				window.is_force_refresh = false;
+				window.refreshBackGroundImage = (force_refresh = window?.is_force_refresh) => {
+					if (force_refresh) {
+						let suffix = '&_t=' + Date.now();
+						el.style.setProperty("--h-bg-img", 'url("' + baseUrl.pc + suffix + '")');
+						el.style.setProperty("--v-bg-img", 'url("' + baseUrl.mb + suffix + '")');
+					}
+					el.style.display = "block";
+				};
+				window.refreshBackGroundImage();
+			})();
+		</script>
 		<ConfigCarrier></ConfigCarrier>
 		<slot />
 
