@@ -76,7 +76,7 @@ const bannerOffset =
 ---
 
 <!DOCTYPE html>
-<html lang={siteLang} class="bg-[var(--page-bg)] transition text-[14px] md:text-[16px]" data-random-bg="h">
+<html lang={siteLang} class="bg-[var(--page-bg)] transition text-[14px] md:text-[16px]">
 	<head>
 
 		<title>{pageTitle}</title>
@@ -149,7 +149,7 @@ const bannerOffset =
 		<slot name="head"></slot>
 
 		<link rel="alternate" type="application/rss+xml" title={profileConfig.name} href={absoluteUrl("/rss.xml", Astro.site ?? undefined)}/>
-		<script async type="text/javascript" src="https://pic-eo-1.xcqcoo.top/random.js" data-swup-ignore-script></script>
+		<!-- <script async type="text/javascript" src="https://pic-eo-1.xcqcoo.top/random.js" data-swup-ignore-script></script> -->
 		<!-- <script>
 				if (langCode !== lang.toLowerCase() && (pageInfo.path === location.pathname || !isLangIndexPage && pageInfo.path === [...segments.slice(0, -2),...segments.slice(-1)].join("/"))) {
 
@@ -175,12 +175,66 @@ const bannerOffset =
 
 	</head>
 	<body class=" min-h-screen transition " class:list={[{"lg:is-home": isHomePage, "enable-banner": enableBanner}]}>
+		<div id="bg-container"></div>
+		<style>
+			#bg-container {
+				height: 100vh;
+				size: 100dvh;
+				position: fixed;
+  				inset: 0;
+				z-index: -1;
+				background-size: cover;
+				background-position: center;
+				background-repeat: no-repeat;
+			}
+			@media (width >= 64rem)
+			{
+				#bg-container {
+					background-image: var(--h-bg-img);
+				}
+			}
+			@media not (width >= 64rem)
+			{
+				#bg-container {
+					/* the api to get vertical background image seems not good */
+					/* background-image: var(--v-bg-img); */
+					background-image: var(--h-bg-img);
+				}
+			}
+		</style>
 		<ConfigCarrier></ConfigCarrier>
 		<slot />
 
 		<!-- increase the page height during page transition to prevent the scrolling animation from jumping -->
 		<div id="page-height-extend" class="hidden h-[300vh]"></div>
+		<script async type="text/javascript" data-swup-ignore-script>
+		(() => {
+			class BackgroundImages {
+				constructor() {
+					this.e = document.getElementById("bg-container");
+				}
+			};
+			Object.defineProperty(BackgroundImages.prototype, "random:v", {
+				set(val){
+					this.e.style.setProperty("--v-bg-img", "url(\"" + val + "\")");
+				}
+			});
+			Object.defineProperty(BackgroundImages.prototype, "random:h", {
+				set(val){
+					this.e.style.setProperty("--h-bg-img", "url(\"" + val + "\")");
+				}
+			});
+			
+
+			const bg_iframe = document.createElement("iframe");
+			window.background_images = new BackgroundImages();
+			bg_iframe.srcdoc = '<script>class i{constructor(_){this.alt=_;}set src(_){window.parent.background_images[this.alt]=_;}getAttribute(_){return this[_];}}document.getElementsByTagName=(_)=>[new i("random:v"),new i("random:h")];<\/script><script src="https://pic-eo-1.xcqcoo.top/random.js"><\/script>'
+			bg_iframe.style.display = "none";
+	document.body.appendChild(bg_iframe);
+		})();
+		</script>
 	</body>
+	
 </html>
 
 <style is:global define:vars={{
