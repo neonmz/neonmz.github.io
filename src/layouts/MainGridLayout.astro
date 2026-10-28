@@ -14,7 +14,7 @@ import {
 	MAIN_PANEL_OVERLAPS_BANNER_HEIGHT,
 } from "../constants/constants";
 import Layout from "./Layout.astro";
-import Giscus from "@components/widget/Giscus.astro";
+import Twikoo from "@components/widget/Twikoo.astro";
 
 interface Props {
 	title?: string;
@@ -92,7 +92,7 @@ const mainPanelTop = siteConfig.banner.enable
                     <!-- make id different from windows.swup global property -->
                     <slot></slot>
                     <br />
-                    <Giscus></Giscus>
+                    <Twikoo></Twikoo>
                     <div class="footer col-span-2 onload-animation hidden lg:block">
                         <Footer></Footer>
                     </div>

@@ -169,19 +169,28 @@ const bannerOffset =
 	</head>
 	<body class=" min-h-screen transition " class:list={[{"lg:is-home": isHomePage, "enable-banner": enableBanner}]}>
 		<div id="bg-container" class="static"></div>
+		<div class="dark:bg-black/50 bg-container-cover"></div>
 		<style>
-			#bg-container {
+			.bg-container-cover {
 				height: 100vh;
 				size: 100dvh;
 				position: fixed;
   				inset: 0;
 				z-index: -1;
+				/* background-color: color-mix(in srgb, #000 %50, transparent); */
+			}
+			#bg-container {
+				height: 100vh;
+				size: 100dvh;
+				position: fixed;
+  				inset: 0;
+				z-index: -2;
 				background-size: cover;
 				background-position: center;
 				background-repeat: no-repeat;
-				--h-bg-img: url(https://uapis.cn/api/v1/random/image?category=acg&type=pc);
+				/* --h-bg-img: url(https://uapis.cn/api/v1/random/image?category=acg&type=pc);
 				--v-bg-img: url(https://uapis.cn/api/v1/random/image?category=acg&type=mb);
-				display: none;
+				display: none; */
 			}
 			@media (width >= 64rem)
 			{
@@ -196,7 +205,7 @@ const bannerOffset =
 				}
 			}
 		</style>
-		<script is:inline type="text/javascript">
+		<!-- <script is:inline type="text/javascript">
 			(() => {
 				const baseUrl = {
 					pc: "https://uapis.cn/api/v1/random/image?category=acg&type=pc",
@@ -215,7 +224,7 @@ const bannerOffset =
 				};
 				window.refreshBackGroundImage();
 			})();
-		</script>
+		</script> -->
 		<ConfigCarrier></ConfigCarrier>
 		<slot />
 

@@ -27,6 +27,19 @@ export const supportedLanguages = [
 	{ code: "id", label: "Indonesia" },
 ] as const;
 
+const langCodeMapTwikoo = {
+	"zh_CN": "zh-CN",
+	"zh_TW": "zh-TW",
+	"en": "en",
+	"ja": "ja-JP",
+	"ko": "ko-KR",
+	"es": undefined,
+	"th": undefined,
+	"vi": "vi-VN",
+	"tr": undefined,
+	"id": "id-ID",
+};
+
 export type SupportedLanguage = (typeof supportedLanguages)[number]["code"];
 
 const translations: Record<SupportedLanguage, Translation> = {
@@ -117,6 +130,10 @@ export function applyLanguage(lang: SupportedLanguage): void {
 				location.pathname = segments.join("/");
 			}
 		}
+	}
+	if (window.twikoo && window.twikoo.reInit) {
+		window.twikoo.twikooOptions.lang = langCodeMapTwikoo[lang];
+		window.twikoo.reInit();
 	}
 }
 
