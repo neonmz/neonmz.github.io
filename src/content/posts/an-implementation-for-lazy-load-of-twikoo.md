@@ -4,7 +4,7 @@ published: 2026-10-29
 description: ''
 image: ''
 tags: [HTML,Typescript]
-category: ''
+category: Web'
 draft: false 
 lang: 'zh-CN'
 ---
@@ -278,7 +278,7 @@ export function resetLazyLoadStatus() {
 
 在`main.ts`下添加swup相关代码：
 
-```js
+```ts
 export const twikooOptions: TwikooOptions = {
   envId: "您的环境 id", // 腾讯云环境填 envId；Vercel 环境填地址（https://xxx.vercel.app）
   el: "#tcomment", // 容器元素

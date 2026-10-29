@@ -3,8 +3,8 @@ title: MoeCTF 2026 Ultato Polosion Xptra Writeup
 published: 2026-10-21
 description: 'Writeup for MoeCTF 2026'
 image: './res/upx_success.png'
-tags: [CTF]
-category: ''
+tags: [Reverse]
+category: 'CTF'
 draft: false
 lang: 'zh_CN'
 ---
