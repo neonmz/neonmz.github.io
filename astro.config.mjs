@@ -14,6 +14,7 @@ import remarkDirective from "remark-directive";/* Handle directives */
 import remarkGithubAdmonitionsToDirectives from "remark-github-admonitions-to-directives";
 import remarkMath from "remark-math";
 import remarkSectionize from "remark-sectionize";
+import rehypeExternalLinks from 'rehype-external-links';
 import { expressiveCodeConfig } from "./src/config.ts";
 import { pluginCustomCopyButton } from "./src/plugins/expressive-code/custom-copy-button.js";
 import { pluginLanguageBadge } from "./src/plugins/expressive-code/language-badge.ts";
@@ -124,6 +125,10 @@ export default defineConfig({
             parseDirectiveNode,
         ],
         rehypePlugins: [
+            [rehypeExternalLinks, {
+                target: '_blank',
+                rel: ['noopener', 'noreferrer'],
+            }],
             rehypeKatex,
             rehypeSlug,
             [
