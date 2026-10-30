@@ -38,15 +38,8 @@ function onShowAdminEntry(show: unknown): void {
   showAdminEntry.value = show === true;
 }
 
-function setLanguage(lang: string): void {
-  twikooOptions.lang = lang;
-  document.getElementById("twikoo")?.remove();
-  
-}
-
 onMounted(() => {
   resetLazyLoadStatus(location.pathname);
-  window.twikoo = { setLanguage: (lang: string) => twikooOptions.lang = lang };
   busOn(EVENT_SHOW_ADMIN_ENTRY, onShowAdminEntry);
 });
 
