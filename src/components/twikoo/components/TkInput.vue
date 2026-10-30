@@ -31,7 +31,7 @@
       class="tk-input__inner tk-textarea__inner"
       :name="name"
       :value="modelValue"
-      :placeholder="placeholder.value"
+      :placeholder="resolvedPlaceholder"
       :rows="rows"
       :disabled="disabled"
       :readonly="readonly"
@@ -48,7 +48,7 @@
       :type="type"
       :name="name"
       :value="modelValue"
-      :placeholder="placeholder.value"
+      :placeholder="resolvedPlaceholder"
       :disabled="disabled"
       :readonly="readonly"
       :maxlength="maxlength"
@@ -80,6 +80,7 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, ref, useSlots, watch } from "vue";
 import TkIcon from "./TkIcon.vue";
+import { unref } from "vue";
 import type { ComputedRef } from "vue";
 
 /** 组件属性 */
@@ -89,7 +90,7 @@ const props = withDefaults(
     modelValue?: string | number;
     /** 输入形态（`textarea` 走多行） */
     type?: string;
-    placeholder?: ComputedRef<string>;
+    placeholder?: ComputedRef<string> | string | { prefix: ComputedRef<string>, ph: string};
     /** textarea 行数（autosize 时作为最小行数） */
     rows?: number;
     /** 自适应高度（true 或用 `{ minRows }` 指定最小行数） */
@@ -129,6 +130,11 @@ const props = withDefaults(
     max: undefined,
   },
 );
+
+const resolvedPlaceholder = computed(() => {
+  const ph = props.placeholder;
+  return typeof ph === 'string'? ph: ("prefix" in ph? unref(ph.prefix) + ph.ph: ph.value);
+})
 
 /** 组件事件 */
 const emit = defineEmits<{

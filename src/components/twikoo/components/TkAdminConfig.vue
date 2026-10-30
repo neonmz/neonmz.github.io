@@ -104,19 +104,20 @@ import { EVENT_CONFIG_UPDATED, emit as busEmit, off as busOff, on as busOn } fro
 import { vLoading } from "../utils/directives";
 import { customImageBedServices } from "../i18n/constants";
 import type { ServerConfig } from "../types";
+import type { ComputedRef } from "vue";
 
 /** 配置项定义（1.x settings 表的项结构） */
 interface SettingItem {
   /** 配置键 */
   key: string;
   /** 说明文案 */
-  desc: string;
+  desc: ComputedRef<string> | string;
   /** 输入框占位提示 */
-  ph: string;
+  ph: { prefix: ComputedRef<string>, ph: string} | string;
   /** 当前值 */
   value: string;
   /** 下拉选项（存在则渲染 select） */
-  options?: Array<{ value: string; label: string }>;
+  options?: Array<{ value: string; label: ComputedRef<string> | string }>;
   /** 特殊输入形态 */
   type?: "textarea";
   /** 是否密码型输入 */
@@ -128,7 +129,7 @@ interface SettingItem {
 /** 配置分组 */
 interface SettingGroup {
   /** 分组标题 */
-  name: string;
+  name: ComputedRef<string> | string;
   /** 组内配置项 */
   items: SettingItem[];
 }
@@ -172,14 +173,15 @@ function showCaptchaProvider(provider: string): (get: GetValue) => boolean {
   return (get: GetValue) => get("CAPTCHA_PROVIDER") === provider;
 }
 
-/** 示例值前缀（1.x 用同一前缀拼出占位提示） */
-const EXAMPLE = () => t("ADMIN_CONFIG_EXAMPLE");
+const EXAMPLE= t("ADMIN_CONFIG_EXAMPLE");
 
 /**
  * 构建配置项表单（1.x TkAdminConfig data().settings 的等价物）。
  * @returns 配置分组
  */
 function createSettings(): SettingGroup[] {
+  /** 示例值前缀（1.x 用同一前缀拼出占位提示） */
+
   return [
     {
       name: t("ADMIN_CONFIG_CATEGORY_COMMON"),
@@ -187,98 +189,98 @@ function createSettings(): SettingGroup[] {
         {
           key: "SITE_NAME",
           desc: t("ADMIN_CONFIG_ITEM_SITE_NAME"),
-          ph: `${EXAMPLE()}虹墨空间站`,
+          ph: { prefix: EXAMPLE, ph: "虹墨空间站" },
           value: "",
         },
         {
           key: "SITE_URL",
           desc: t("ADMIN_CONFIG_ITEM_SITE_URL"),
-          ph: `${EXAMPLE()}https://www.imaegoo.com`,
+          ph: { prefix: EXAMPLE, ph: "https://www.imaegoo.com" },
           value: "",
         },
         {
           key: "CORS_ALLOW_ORIGIN",
           desc: t("ADMIN_CONFIG_ITEM_CORS_ALLOW_ORIGIN"),
-          ph: `${EXAMPLE()}https://www.imaegoo.com`,
+          ph: { prefix: EXAMPLE, ph: "https://www.imaegoo.com" },
           value: "",
         },
         {
           key: "BLOGGER_NICK",
           desc: t("ADMIN_CONFIG_ITEM_BLOGGER_NICK"),
-          ph: `${EXAMPLE()}iMaeGoo`,
+          ph: { prefix: EXAMPLE, ph: "iMaeGoo" },
           value: "",
         },
         {
           key: "BLOGGER_EMAIL",
           desc: t("ADMIN_CONFIG_ITEM_BLOGGER_EMAIL"),
-          ph: `${EXAMPLE()}12345@qq.com`,
+          ph: { prefix: EXAMPLE, ph: "12345@qq.com" },
           value: "",
         },
         {
           key: "COMMENT_PAGE_SIZE",
           desc: t("ADMIN_CONFIG_ITEM_COMMENT_PAGE_SIZE"),
-          ph: `${EXAMPLE()}8`,
+          ph: { prefix: EXAMPLE, ph: "8" },
           value: "",
         },
         {
           key: "MASTER_TAG",
           desc: t("ADMIN_CONFIG_ITEM_MASTER_TAG"),
-          ph: `${EXAMPLE()}站长`,
+          ph: { prefix: EXAMPLE, ph: "站长" },
           value: "",
         },
         { key: "COMMENT_BG_IMG", desc: t("ADMIN_CONFIG_ITEM_COMMENT_BG_IMG"), ph: "", value: "" },
         {
           key: "GRAVATAR_CDN",
           desc: t("ADMIN_CONFIG_ITEM_GRAVATAR_CDN"),
-          ph: `${EXAMPLE()}sdn.geekzu.org`,
+          ph: { prefix: EXAMPLE, ph: "sdn.geekzu.org" },
           value: "",
         },
         {
           key: "DEFAULT_GRAVATAR",
           desc: t("ADMIN_CONFIG_ITEM_DEFAULT_GRAVATAR"),
-          ph: `${EXAMPLE()}mp`,
+          ph: { prefix: EXAMPLE, ph: "mp" },
           value: "",
         },
         {
           key: "COMMENT_PLACEHOLDER",
           desc: t("ADMIN_CONFIG_ITEM_COMMENT_PLACEHOLDER"),
-          ph: `${EXAMPLE()}`,
+          ph: { prefix: EXAMPLE, ph: "" },
           value: "",
         },
         {
           key: "SHOW_ORDER",
           desc: t("ADMIN_CONFIG_ITEM_SHOW_ORDER"),
-          ph: `${EXAMPLE()}true`,
+          ph: { prefix: EXAMPLE, ph: "true" },
           value: "",
         },
         {
           key: "SHOW_DISLIKE",
           desc: t("ADMIN_CONFIG_ITEM_SHOW_DISLIKE"),
-          ph: `${EXAMPLE()}true`,
+          ph: { prefix: EXAMPLE, ph: "true" },
           value: "",
         },
         {
           key: "DISPLAYED_FIELDS",
           desc: t("ADMIN_CONFIG_ITEM_DISPLAYED_FIELDS"),
-          ph: `${EXAMPLE()}nick,mail,link`,
+          ph: { prefix: EXAMPLE, ph: "nick,mail,link" },
           value: "",
         },
         {
           key: "REQUIRED_FIELDS",
           desc: t("ADMIN_CONFIG_ITEM_REQUIRED_FIELDS"),
-          ph: `${EXAMPLE()}nick,mail,link`,
+          ph: { prefix: EXAMPLE, ph: "nick,mail,link" },
           value: "",
         },
         {
           key: "HIDE_ADMIN_CRYPT",
           desc: t("ADMIN_CONFIG_ITEM_HIDE_ADMIN_CRYPT"),
-          ph: `${EXAMPLE()}admin`,
+          ph: { prefix: EXAMPLE, ph: "admin" },
           value: "",
         },
         {
           key: "QQ_API_KEY",
           desc: t("ADMIN_CONFIG_ITEM_QQ_API_KEY"),
-          ph: `${EXAMPLE()}your_api_key`,
+          ph: { prefix: EXAMPLE, ph: "your_api_key" },
           value: "",
         },
       ],
@@ -306,28 +308,28 @@ function createSettings(): SettingGroup[] {
         {
           key: "IMAGE_CDN_URL",
           desc: t("ADMIN_CONFIG_ITEM_IMAGE_CDN_URL"),
-          ph: `${EXAMPLE()}https://piclist.example.com`,
+          ph: { prefix: EXAMPLE, ph: "https://piclist.example.com" },
           value: "",
           showIf: showImageCdnUrl,
         },
         {
           key: "IMAGE_CDN_TOKEN",
           desc: t("ADMIN_CONFIG_ITEM_IMAGE_CDN_TOKEN"),
-          ph: `${EXAMPLE()}example`,
+          ph: { prefix: EXAMPLE, ph: "example" },
           value: "",
           showIf: showImageCdnToken,
         },
         {
           key: "S3_REGION",
           desc: t("ADMIN_CONFIG_ITEM_S3_REGION"),
-          ph: `${EXAMPLE()}us-east-1`,
+          ph: { prefix: EXAMPLE, ph: "us-east-1" },
           value: "",
           showIf: showS3,
         },
         {
           key: "S3_BUCKET",
           desc: t("ADMIN_CONFIG_ITEM_S3_BUCKET"),
-          ph: `${EXAMPLE()}my-bucket`,
+          ph: { prefix: EXAMPLE, ph: "my-bucket" },
           value: "",
           showIf: showS3,
         },
@@ -336,7 +338,7 @@ function createSettings(): SettingGroup[] {
           desc: t("ADMIN_CONFIG_ITEM_S3_ACCESS_KEY_ID"),
           // 打码示例值：不写完整示例串，避免客户端产物（twikoo.all.min.js）被下游仓库
           // 收进 git 时触发 GitHub 推送保护（secrets 误报，见 #793）
-          ph: `${EXAMPLE()}AKIA****************`,
+          ph: { prefix: EXAMPLE, ph: "AKIA****************" },
           value: "",
           showIf: showS3,
         },
@@ -344,7 +346,7 @@ function createSettings(): SettingGroup[] {
           key: "S3_SECRET_ACCESS_KEY",
           desc: t("ADMIN_CONFIG_ITEM_S3_SECRET_ACCESS_KEY"),
           // 同上：打码示例值，避免下游仓库触发 secrets 误报（#793）
-          ph: `${EXAMPLE()}wJal********************************EKEY`,
+          ph: { prefix: EXAMPLE, ph: "wJal********************************EKEY" },
           value: "",
           secret: true,
           showIf: showS3,
@@ -352,72 +354,72 @@ function createSettings(): SettingGroup[] {
         {
           key: "S3_ENDPOINT",
           desc: t("ADMIN_CONFIG_ITEM_S3_ENDPOINT"),
-          ph: `${EXAMPLE()}https://xxx.r2.cloudflarestorage.com`,
+          ph: { prefix: EXAMPLE, ph: "https://xxx.r2.cloudflarestorage.com" },
           value: "",
           showIf: showS3,
         },
         {
           key: "S3_FORCE_PATH_STYLE",
           desc: t("ADMIN_CONFIG_ITEM_S3_FORCE_PATH_STYLE"),
-          ph: `${EXAMPLE()}true`,
+          ph: { prefix: EXAMPLE, ph: "true" },
           value: "",
           showIf: showS3,
         },
         {
           key: "S3_CDN_URL",
           desc: t("ADMIN_CONFIG_ITEM_S3_CDN_URL"),
-          ph: `${EXAMPLE()}https://cdn.example.com`,
+          ph: { prefix: EXAMPLE, ph: "https://cdn.example.com" },
           value: "",
           showIf: showS3,
         },
         {
           key: "S3_PATH_PREFIX",
           desc: t("ADMIN_CONFIG_ITEM_S3_PATH_PREFIX"),
-          ph: `${EXAMPLE()}images/twikoo`,
+          ph: { prefix: EXAMPLE, ph: "images/twikoo" },
           value: "",
           showIf: showS3,
         },
         {
           key: "NSFW_API_URL",
           desc: t("ADMIN_CONFIG_ITEM_NSFW_API_URL"),
-          ph: `${EXAMPLE()}https://nsfw.example.com`,
+          ph: { prefix: EXAMPLE, ph: "https://nsfw.example.com" },
           value: "",
         },
         {
           key: "NSFW_THRESHOLD",
           desc: t("ADMIN_CONFIG_ITEM_NSFW_THRESHOLD"),
-          ph: `${EXAMPLE()}0.5`,
+          ph: { prefix: EXAMPLE, ph: "0.5" },
           value: "",
         },
         {
           key: "SHOW_EMOTION",
           desc: t("ADMIN_CONFIG_ITEM_SHOW_EMOTION"),
-          ph: `${EXAMPLE()}false`,
+          ph: { prefix: EXAMPLE, ph: "false" },
           value: "",
         },
         { key: "EMOTION_CDN", desc: t("ADMIN_CONFIG_ITEM_EMOTION_CDN"), ph: "", value: "" },
         {
           key: "HIGHLIGHT",
           desc: t("ADMIN_CONFIG_ITEM_HIGHLIGHT"),
-          ph: `${EXAMPLE()}false`,
+          ph: { prefix: EXAMPLE, ph: "false" },
           value: "",
         },
         {
           key: "HIGHLIGHT_THEME",
           desc: t("ADMIN_CONFIG_ITEM_HIGHLIGHT_THEME"),
-          ph: `${EXAMPLE()}tomorrow`,
+          ph: { prefix: EXAMPLE, ph: "tomorrow" },
           value: "",
         },
         {
           key: "HIGHLIGHT_PLUGIN",
           desc: t("ADMIN_CONFIG_ITEM_HIGHLIGHT_PLUGIN"),
-          ph: `${EXAMPLE()}showLanguage`,
+          ph: { prefix: EXAMPLE, ph: "showLanguage" },
           value: "",
         },
         {
           key: "LIGHTBOX",
           desc: t("ADMIN_CONFIG_ITEM_LIGHTBOX"),
-          ph: `${EXAMPLE()}true`,
+          ph: { prefix: EXAMPLE, ph: "true" },
           value: "",
         },
       ],
@@ -428,13 +430,13 @@ function createSettings(): SettingGroup[] {
         {
           key: "SHOW_UA",
           desc: t("ADMIN_CONFIG_ITEM_SHOW_UA"),
-          ph: `${EXAMPLE()}false`,
+          ph: { prefix: EXAMPLE, ph: "false" },
           value: "",
         },
         {
           key: "SHOW_REGION",
           desc: t("ADMIN_CONFIG_ITEM_SHOW_REGION"),
-          ph: `${EXAMPLE()}true`,
+          ph: { prefix: EXAMPLE, ph: "true" },
           value: "",
         },
       ],
@@ -445,68 +447,68 @@ function createSettings(): SettingGroup[] {
         {
           key: "AKISMET_KEY",
           desc: t("ADMIN_CONFIG_ITEM_AKISMET_KEY"),
-          ph: `${EXAMPLE()}8651783edxxx`,
+          ph: { prefix: EXAMPLE, ph: "8651783edxxx" },
           value: "",
         },
         {
           key: "QCLOUD_SECRET_ID",
           desc: t("ADMIN_CONFIG_ITEM_QCLOUD_SECRET_ID"),
-          ph: `${EXAMPLE()}AKI******************************IHw`,
+          ph: { prefix: EXAMPLE, ph: "AKI******************************IHw" },
           value: "",
         },
         {
           key: "QCLOUD_SECRET_KEY",
           desc: t("ADMIN_CONFIG_ITEM_QCLOUD_SECRET_KEY"),
-          ph: `${EXAMPLE()}Xrk**************************3D7`,
+          ph: { prefix: EXAMPLE, ph: "Xrk**************************3D7" },
           value: "",
           secret: true,
         },
         {
           key: "QCLOUD_CMS_BIZTYPE",
           desc: t("ADMIN_CONFIG_ITEM_QCLOUD_CMS_BIZTYPE"),
-          ph: `${EXAMPLE()}1787728329856520192`,
+          ph: { prefix: EXAMPLE, ph: "1787728329856520192" },
           value: "",
         },
         {
           key: "LIMIT_PER_MINUTE",
           desc: t("ADMIN_CONFIG_ITEM_LIMIT_PER_MINUTE"),
-          ph: `${EXAMPLE()}5`,
+          ph: { prefix: EXAMPLE, ph: "5" },
           value: "",
         },
         {
           key: "LIMIT_PER_MINUTE_ALL",
           desc: t("ADMIN_CONFIG_ITEM_LIMIT_PER_MINUTE_ALL"),
-          ph: `${EXAMPLE()}5`,
+          ph: { prefix: EXAMPLE, ph: "5" },
           value: "",
         },
         {
           key: "LIMIT_LENGTH",
           desc: t("ADMIN_CONFIG_ITEM_LIMIT_LENGTH"),
-          ph: `${EXAMPLE()}100`,
+          ph: { prefix: EXAMPLE, ph: "100" },
           value: "",
         },
         {
           key: "FORBIDDEN_WORDS",
           desc: t("ADMIN_CONFIG_ITEM_FORBIDDEN_WORDS"),
-          ph: `${EXAMPLE()}快递,空包`,
+          ph: { prefix: EXAMPLE, ph: "快递,空包" },
           value: "",
         },
         {
           key: "BLOCKED_WORDS",
           desc: t("ADMIN_CONFIG_ITEM_BLOCKED_WORDS"),
-          ph: `${EXAMPLE()}快递,空包`,
+          ph: { prefix: EXAMPLE, ph: "快递,空包" },
           value: "",
         },
         {
           key: "NOTIFY_SPAM",
           desc: t("ADMIN_CONFIG_ITEM_NOTIFY_SPAM"),
-          ph: `${EXAMPLE()}false`,
+          ph: { prefix: EXAMPLE, ph: "false" },
           value: "",
         },
         {
           key: "HIDE_SPAM",
           desc: t("ADMIN_CONFIG_ITEM_HIDE_SPAM"),
-          ph: `${EXAMPLE()}true`,
+          ph: { prefix: EXAMPLE, ph: "true" },
           value: "",
         },
         {
@@ -599,14 +601,14 @@ function createSettings(): SettingGroup[] {
         {
           key: "TURNSTILE_SITE_KEY",
           desc: t("ADMIN_CONFIG_ITEM_TURNSTILE_SITE_KEY"),
-          ph: `${EXAMPLE()}0x4AAAAAAAPLTtpBr_T12345`,
+          ph: { prefix: EXAMPLE, ph: "0x4AAAAAAAPLTtpBr_T12345" },
           value: "",
           showIf: showCaptchaProvider("Turnstile"),
         },
         {
           key: "TURNSTILE_SECRET_KEY",
           desc: t("ADMIN_CONFIG_ITEM_TURNSTILE_SECRET_KEY"),
-          ph: `${EXAMPLE()}0x4AAAAAAAPLTmBm6gHmOnOqC1iwmU12345`,
+          ph: { prefix: EXAMPLE, ph: "0x4AAAAAAAPLTmBm6gHmOnOqC1iwmU12345" },
           value: "",
           secret: true,
           showIf: showCaptchaProvider("Turnstile"),
@@ -614,14 +616,14 @@ function createSettings(): SettingGroup[] {
         {
           key: "GEETEST_CAPTCHA_ID",
           desc: t("ADMIN_CONFIG_ITEM_GEETEST_CAPTCHA_ID"),
-          ph: `${EXAMPLE()}your_captcha_id`,
+          ph: { prefix: EXAMPLE, ph: "your_captcha_id" },
           value: "",
           showIf: showCaptchaProvider("Geetest"),
         },
         {
           key: "GEETEST_CAPTCHA_KEY",
           desc: t("ADMIN_CONFIG_ITEM_GEETEST_CAPTCHA_KEY"),
-          ph: `${EXAMPLE()}your_captcha_key`,
+          ph: { prefix: EXAMPLE, ph: "your_captcha_key" },
           value: "",
           secret: true,
           showIf: showCaptchaProvider("Geetest"),
@@ -629,14 +631,14 @@ function createSettings(): SettingGroup[] {
         {
           key: "CAP_API_ENDPOINT",
           desc: t("ADMIN_CONFIG_ITEM_CAP_API_ENDPOINT"),
-          ph: `${EXAMPLE()}https://cap.example.com/d9256640cb53/（留空=内嵌，无需外部服务）`,
+          ph: { prefix: EXAMPLE, ph: "https://cap.example.com/d9256640cb53/（留空=内嵌，无需外部服务）" },
           value: "",
           showIf: showCaptchaProvider("Cap"),
         },
         {
           key: "CAP_SECRET_KEY",
           desc: t("ADMIN_CONFIG_ITEM_CAP_SECRET_KEY"),
-          ph: `${EXAMPLE()}仅外部 Cap 需要；内嵌模式可留空`,
+          ph: { prefix: EXAMPLE, ph: "仅外部 Cap 需要；内嵌模式可留空" },
           value: "",
           secret: true,
           showIf: showCaptchaProvider("Cap"),
@@ -649,19 +651,19 @@ function createSettings(): SettingGroup[] {
         {
           key: "PUSHOO_CHANNEL",
           desc: t("ADMIN_CONFIG_ITEM_PUSHOO_CHANNEL"),
-          ph: `${EXAMPLE()}pushdeer`,
+          ph: { prefix: EXAMPLE, ph: "pushdeer" },
           value: "",
         },
         {
           key: "PUSHOO_TOKEN",
           desc: t("ADMIN_CONFIG_ITEM_PUSHOO_TOKEN"),
-          ph: `${EXAMPLE()}PDU431TfFHZICvR6lJrFBswSRN1cJ*****zzFvR`,
+          ph: { prefix: EXAMPLE, ph: "PDU431TfFHZICvR6lJrFBswSRN1cJ*****zzFvR" },
           value: "",
         },
         {
           key: "SC_MAIL_NOTIFY",
           desc: t("ADMIN_CONFIG_ITEM_SC_MAIL_NOTIFY"),
-          ph: `${EXAMPLE()}true`,
+          ph: { prefix: EXAMPLE, ph: "true" },
           value: "",
         },
       ],
@@ -672,56 +674,56 @@ function createSettings(): SettingGroup[] {
         {
           key: "SENDER_EMAIL",
           desc: t("ADMIN_CONFIG_ITEM_SENDER_EMAIL"),
-          ph: `${EXAMPLE()}blog@imaegoo.com`,
+          ph: { prefix: EXAMPLE, ph: "blog@imaegoo.com" },
           value: "",
         },
         {
           key: "SENDER_NAME",
           desc: t("ADMIN_CONFIG_ITEM_SENDER_NAME"),
-          ph: `${EXAMPLE()}虹墨空间站评论提醒`,
+          ph: { prefix: EXAMPLE, ph: "虹墨空间站评论提醒" },
           value: "",
         },
         {
           key: "SMTP_SERVICE",
           desc: t("ADMIN_CONFIG_ITEM_SMTP_SERVICE"),
-          ph: `${EXAMPLE()}QQ`,
+          ph: { prefix: EXAMPLE, ph: "QQ" },
           value: "",
         },
         {
           key: "SMTP_HOST",
           desc: t("ADMIN_CONFIG_ITEM_SMTP_HOST"),
-          ph: `${EXAMPLE()}smtp.qq.com`,
+          ph: { prefix: EXAMPLE, ph: "smtp.qq.com" },
           value: "",
         },
         {
           key: "SMTP_PORT",
           desc: t("ADMIN_CONFIG_ITEM_SMTP_PORT"),
-          ph: `${EXAMPLE()}465`,
+          ph: { prefix: EXAMPLE, ph: "465" },
           value: "",
         },
         {
           key: "SMTP_SECURE",
           desc: t("ADMIN_CONFIG_ITEM_SMTP_SECURE"),
-          ph: `${EXAMPLE()}true`,
+          ph: { prefix: EXAMPLE, ph: "true" },
           value: "",
         },
         {
           key: "SMTP_USER",
           desc: t("ADMIN_CONFIG_ITEM_SMTP_USER"),
-          ph: `${EXAMPLE()}blog@imaegoo.com`,
+          ph: { prefix: EXAMPLE, ph: "blog@imaegoo.com" },
           value: "",
         },
         {
           key: "SMTP_PASS",
           desc: t("ADMIN_CONFIG_ITEM_SMTP_PASS"),
-          ph: `${EXAMPLE()}password`,
+          ph: { prefix: EXAMPLE, ph: "password" },
           value: "",
           secret: true,
         },
         {
           key: "MAIL_SUBJECT",
           desc: t("ADMIN_CONFIG_ITEM_MAIL_SUBJECT"),
-          ph: `${EXAMPLE()}您在虹墨空间站上的评论收到了回复`,
+          ph: { prefix: EXAMPLE, ph: "您在虹墨空间站上的评论收到了回复" },
           value: "",
         },
         {
@@ -734,7 +736,7 @@ function createSettings(): SettingGroup[] {
         {
           key: "MAIL_SUBJECT_ADMIN",
           desc: t("ADMIN_CONFIG_ITEM_MAIL_SUBJECT_ADMIN"),
-          ph: `${EXAMPLE()}虹墨空间站上有新评论了`,
+          ph: { prefix: EXAMPLE, ph: "虹墨空间站上有新评论了" },
           value: "",
         },
         {
