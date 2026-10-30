@@ -71,6 +71,9 @@ importers:
       astro-expressive-code:
         specifier: ^0.44.2
         version: 0.44.2(astro@6.4.8(@types/node@26.6.5)(jiti@2.7.0)(lightningcss@1.33.0)(rollup@4.65.0)(sass@1.80.4)(stylus@0.64.0)(terser@5.51.2)(yaml@2.8.2))
+      astro-html-minifier-next:
+        specifier: ^5.1.0
+        version: 5.1.0(astro@6.4.8(@types/node@26.6.5)(jiti@2.7.0)(lightningcss@1.33.0)(rollup@4.65.0)(sass@1.80.4)(stylus@0.64.0)(terser@5.51.2)(yaml@2.8.2))
       astro-icon:
         specifier: ^1.2.0
         version: 1.2.0
@@ -2520,6 +2523,12 @@ packages:
     peerDependencies:
       astro: ^4.0.0-beta || ^5.0.0-beta || ^3.3.0 || ^6.0.0-beta || ^7.0.0
 
+  astro-html-minifier-next@5.1.0:
+    resolution: {integrity: sha512-KdLualFwY5EPLy3Pw86kvVNB8jElVkMFqhBf6RJhjzrzxMs3DeVXIGVnKlo2X67Iz4N85Ju0sRDTfyEylEfPxg==}
+    engines: {node: '>=22.13'}
+    peerDependencies:
+      astro: ^5.0.0 || ^6.0.0 || ^7.0.0
+
   astro-icon@1.2.0:
     resolution: {integrity: sha512-0848V2WZuTPhqGSqLeZimLJZ5wmamMtWYzvA2kvg8s2DrUPZ3/nrTcHJWN0eJHt62jy7uvNxgTNiUJGIr7JNxg==}
     engines: {node: '>=22.12.0'}
@@ -3422,6 +3431,16 @@ packages:
 
   html-escaper@3.0.3:
     resolution: {integrity: sha512-RuMffC89BOWQoY0WKGpIhn5gX3iI54O6nRA0yC124NYVtzjmFWBIiFd8M0x+ZdX0P9R4lADg1mgP8C7PxGOWuQ==}
+
+  html-minifier-next@8.11.0:
+    resolution: {integrity: sha512-DOdvMAS4B2mrIiy5M8sMVtp/Z8Z4K1cSon58i4pPxl4gY0eCb0/7IZs2B97IQI0zKvHej3wEnWabri4UN/8XGw==}
+    engines: {node: '>=22.13'}
+    hasBin: true
+    peerDependencies:
+      '@swc/core': ^1.15.7
+    peerDependenciesMeta:
+      '@swc/core':
+        optional: true
 
   html-void-elements@3.0.0:
     resolution: {integrity: sha512-bEqo66MRXsUGxWHV5IP0PUiAWwoEjba4VCzg0LjFJBpchPaTfyfCKTG6bc5F8ucKec3q5y6qOdGyYTSBEvhCrg==}
@@ -8268,6 +8287,13 @@ snapshots:
       rehype-expressive-code: 0.44.3
       url-extras: 0.1.0
 
+  astro-html-minifier-next@5.1.0(astro@6.4.8(@types/node@26.6.5)(jiti@2.7.0)(lightningcss@1.33.0)(rollup@4.65.0)(sass@1.80.4)(stylus@0.64.0)(terser@5.51.2)(yaml@2.8.2)):
+    dependencies:
+      astro: 6.4.8(@types/node@26.6.5)(jiti@2.7.0)(lightningcss@1.33.0)(rollup@4.65.0)(sass@1.80.4)(stylus@0.64.0)(terser@5.51.2)(yaml@2.8.2)
+      html-minifier-next: 8.11.0
+    transitivePeerDependencies:
+      - '@swc/core'
+
   astro-icon@1.2.0:
     dependencies:
       '@iconify/tools': 5.0.14
@@ -9438,6 +9464,14 @@ snapshots:
   hookable@5.5.3: {}
 
   html-escaper@3.0.3: {}
+
+  html-minifier-next@8.11.0:
+    dependencies:
+      commander: 15.0.0
+      entities: 8.1.0
+      lightningcss: 1.33.0
+      svgo: 4.1.0
+      terser: 5.51.2
 
   html-void-elements@3.0.0: {}
 

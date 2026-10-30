@@ -15,6 +15,7 @@ import remarkGithubAdmonitionsToDirectives from "remark-github-admonitions-to-di
 import remarkMath from "remark-math";
 import remarkSectionize from "remark-sectionize";
 import rehypeExternalLinks from 'rehype-external-links';
+import htmlMinifier from "astro-html-minifier-next";
 import { expressiveCodeConfig } from "./src/config.ts";
 import { pluginCustomCopyButton } from "./src/plugins/expressive-code/custom-copy-button.js";
 import { pluginLanguageBadge } from "./src/plugins/expressive-code/language-badge.ts";
@@ -115,6 +116,12 @@ export default defineConfig({
                 async: true,
             },
         },
+        }), htmlMinifier({
+            removeComments: true,
+            collapseWhitespace: true,
+            minifyCSS: true,
+            minifyJS: true,
+            minifySVG: true,
         }), sitemap(), vue()],
     markdown: {
         remarkPlugins: [
@@ -174,6 +181,12 @@ export default defineConfig({
     vite: {
         plugins: [tailwindcss()],
         build: {
+            minify: "terser",
+            sourcemap: false,
+            terserOptions: {
+                format: { comments: false },
+                compress: { drop_console: true, passes: 2 },
+            },
             assetsInlineLimit: 0,
             rollupOptions: {
                 onwarn(warning, warn) {
