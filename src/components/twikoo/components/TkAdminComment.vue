@@ -58,7 +58,7 @@
             >)&nbsp;
           </span>
           <span v-if="comment.isSpam">{{ t("ADMIN_COMMENT_IS_SPAM_SUFFIX") }}&nbsp;</span>
-          <span class="tk-time">{{ displayCreated(comment) }}&nbsp;</span>
+          <span class="tk-time">{{ computed(() => (displayCreated(comment))) }}&nbsp;</span>
           <span :title="comment.ua">{{ comment.ipRegion }}</span>
         </div>
         <!-- 管理端正文：服务端已消毒，客户端再走一次 sanitizeHtml 双保险 -->
@@ -154,7 +154,8 @@
 
 <script setup lang="ts">
 import { nextTick, onMounted, reactive, ref } from "vue";
-import { VERSION } from "@twikoojs/shared";
+// import { VERSION } from "@twikoojs/shared";
+const VERSION = "2.0.17";
 import TkAvatar from "./TkAvatar.vue";
 import TkPagination from "./TkPagination.vue";
 import TkButton from "../components/TkButton.vue";
@@ -176,6 +177,7 @@ import { getAppState, getResponse, getErrorMessage, TwikooResponseError } from "
 import { getServerConfig } from "../utils/state";
 import { vLoading } from "../utils/directives";
 import type { CommentDto, ServerConfig } from "../types";
+import { computed } from "vue";
 
 /**
  * 管理端评论记录。

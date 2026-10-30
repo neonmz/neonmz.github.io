@@ -7,12 +7,13 @@
   <div class="tk-footer">
     Powered by
     <a href="https://twikoo.js.org" target="_blank" rel="noopener noreferrer">Twikoo</a>
-    v{{ version }}
+    <!-- v{{ version }} -->
   </div>
 </template>
 
 <script setup lang="ts">
-import { VERSION } from "@twikoojs/shared";
+// import { VERSION } from "@twikoojs/shared";
+const VERSION = "2.0.17";
 
 /** 当前版本（构建期注入；仓库内为 `0.0.0`） */
 const version = VERSION;

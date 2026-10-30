@@ -94,7 +94,8 @@
 
 <script setup lang="ts">
 import { onMounted, onUnmounted, reactive, ref } from "vue";
-import { VERSION } from "@twikoojs/shared";
+// import { VERSION } from "@twikoojs/shared";
+const VERSION = "2.0.17";
 import TkButton from "../components/TkButton.vue";
 import TkInput from "../components/TkInput.vue";
 import { call, logger, t } from "../utils";

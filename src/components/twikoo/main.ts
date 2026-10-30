@@ -10,7 +10,8 @@
  *   经 {@link setCloudbaseProvider} 覆盖 SDK 来源。
  * 这样「是否内置 SDK」由**入口文件**决定，代码里不出现 `if (isAll)` 分支（设计要求）。
  */
-import { VERSION } from "@twikoojs/shared";
+// import { VERSION } from "@twikoojs/shared";
+const VERSION = "2.0.17";
 import { install, type TcbInstance } from "./utils/tcb";
 import { render } from "./render";
 import {
@@ -22,6 +23,7 @@ import {
   getVisitorsCountApi,
   updateVisitorsCount,
 } from "./utils";
+import { resetLazyLoadStatus } from "./utils/http";
 
 /** init 选项（前端配置项集合的入口形态）*/
 export interface TwikooOptions {
@@ -124,5 +126,41 @@ export async function getVisitorsCount(options: TwikooOptions = {}): Promise<unk
 
 /** 当前版本（来自 @twikoojs/shared 占位符，发布时注入）*/
 export { VERSION as version };
-
+export const twikooOptions: TwikooOptions = {
+  envId: "https://twk.yice.eu.org/", // 腾讯云环境填 envId；Vercel 环境填地址（https://xxx.vercel.app）
+  el: "#tcomment", // 容器元素
+  // region: 'ap-guangzhou', // 环境地域，默认为 ap-shanghai，腾讯云环境填 ap-shanghai 或 ap-guangzhou；Vercel 环境不填
+  // path: location.pathname, // 用于区分不同文章的自定义 js 路径，如果您的文章路径不是 location.pathname，需传此参数
+  // lang: 'zh-CN', // 用于手动设定评论区语言，支持的语言列表 https://github.com/twikoojs/twikoo/blob/main/packages/client/src/i18n/index.ts
+}
 export default init;
+export function reInit() {
+  init(twikooOptions);
+  resetLazyLoadStatus(location.pathname);
+}
+
+// Run on initial load 
+
+// if (document.readyState === 'loading') { 
+//   document.addEventListener('DOMContentLoaded', reInit); 
+// } else { 
+//   reInit(); 
+// } 
+
+// // Swup integration
+// function setupSwup() {
+//   if (window.swup && window.swup.hooks) {
+//     // Register hook for content replacement
+//     window.swup.hooks.on('content:replace', reInit);
+//   }
+// }
+
+// if (window.swup) {
+//   setupSwup();
+// } else {
+//   document.addEventListener('swup:enable', setupSwup);
+// }
+
+// // Legacy Swup support
+// document.addEventListener('swup:contentReplaced', reInit);
+

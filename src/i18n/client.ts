@@ -13,6 +13,7 @@ import { zh_CN } from "./languages/zh_CN";
 import { zh_TW } from "./languages/zh_TW";
 import type { Translation } from "./translation";
 import { debug } from "node_modules/astro/dist/core/logger/core";
+import { loadLanguage as twikooLoadLanguage } from "@components/twikoo/i18n";
 
 export const supportedLanguages = [
 	{ code: "zh_CN", label: "简体中文" },
@@ -131,10 +132,11 @@ export function applyLanguage(lang: SupportedLanguage): void {
 			}
 		}
 	}
-	if (window.twikoo && window.twikoo.reInit) {
-		window.twikoo.twikooOptions.lang = langCodeMapTwikoo[lang];
-		window.twikoo.reInit();
-	}
+	// if (window.twikoo && window.twikoo.reInit) {
+	// 	window.twikoo.twikooOptions.lang = langCodeMapTwikoo[lang];
+	// 	window.twikoo.reInit();
+	// }
+	twikooLoadLanguage({lang: langCodeMapTwikoo[lang]});
 }
 
 export function setLanguage(lang: SupportedLanguage): void {

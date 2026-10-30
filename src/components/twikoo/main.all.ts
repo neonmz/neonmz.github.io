@@ -8,13 +8,13 @@
  * SDK 子路径导入与 1.x 一致（`app` + `auth` + `functions` + `storage` 四个模块），
  * 保证 `app.callFunction` / `app.uploadFile` / `auth.*` 能力齐全。
  */
-import cloudbase from "@cloudbase/js-sdk/app";
-import "@cloudbase/js-sdk/auth";
-import "@cloudbase/js-sdk/functions";
-import "@cloudbase/js-sdk/storage";
-import { setCloudbaseProvider } from "./main";
+// import cloudbase from "@cloudbase/js-sdk/app";
+// import "@cloudbase/js-sdk/auth";
+// import "@cloudbase/js-sdk/functions";
+// import "@cloudbase/js-sdk/storage";
+// import { setCloudbaseProvider } from "./main";
 
-setCloudbaseProvider(() => cloudbase);
+// setCloudbaseProvider(() => cloudbase);
 
-export * from "./main";
-export { default } from "./main";
+// export * from "./main";
+// export { default } from "./main";

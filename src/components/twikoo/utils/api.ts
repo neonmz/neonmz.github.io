@@ -8,6 +8,7 @@
  *   CLIENT_ERROR/SERVER_ERROR/UNKNOWN，携带 httpStatus/rawMessage/requestId。
  */
 
+import { twikooOptions } from "../config";
 import { fetchText, TwikooFetchTimeoutError } from "./http";
 
 /** TwikooError kind 八分类（分类表）*/
@@ -140,7 +141,7 @@ export type TcbInstance = { app: TcbApp; auth?: TcbAuth } | null;
 /** 全局应用状态（view 渲染时注入；Options API 全局属性对齐）*/
 const appState: { tcb: TcbInstance; options: Record<string, unknown> } = {
   tcb: null,
-  options: {},
+  options: twikooOptions,
 };
 
 /**

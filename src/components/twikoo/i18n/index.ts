@@ -12,15 +12,23 @@
  * **用法**：`init()` 内先 `await loadLanguage(options)` 再挂载，因此组件渲染时语言已就位，
  * 不需要「加载完成后重新渲染」。运行中切换语言可再次调用 `loadLanguage`。
  */
-import zhCN from "./locales/zh-CN.json";
+import zh_CN from "./locales/zh-CN.json";
 import en from "./locales/en.json";
+import zh_HK from "./locales/zh-HK.json";
+import zh_TW from "./locales/zh-TW.json";
+import uz_UZ from "./locales/uz-UZ.json";
+import ja_JP from "./locales/ja-JP.json";
+import ko_KR from "./locales/ko-KR.json";
+import vi_VN from "./locales/vi-VN.json";
+import id_ID from "./locales/id-ID.json";
 import keys from "./locales/_keys.json";
+import { ref, computed } from 'vue';
 
 /** 单个语言的词表 */
 type Locale = Record<string, string>;
 
 /** 翻译键真相源（从 zh-CN 键集派生，缺键 tsc 报错） */
-export type TranslationKey = keyof typeof zhCN;
+export type TranslationKey = keyof typeof zh_CN;
 
 /** 全部翻译键清单（键集 diff 校验用） */
 export const TRANSLATION_KEYS = keys as TranslationKey[];
@@ -30,20 +38,19 @@ const FALLBACK = "en";
 
 /** 内置语言（打进主产物，无需网络） */
 const BUILTIN: Record<string, Locale> = {
-  "zh-CN": zhCN,
-  en,
+  "zh-CN": zh_CN,
+  "en": en,
+  "zh-HK": zh_HK,
+  "zh-TW": zh_TW,
+  "uz-UZ": uz_UZ,
+  "ja-JP": ja_JP,
+  "ko-KR": ko_KR,
+  "vi-VN": vi_VN,
+  "id-ID": id_ID,
 };
 
 /** 需要按需加载的语言（分片文件名与语言标识同名） */
-export const LAZY_LOCALES = [
-  "zh-HK",
-  "zh-TW",
-  "uz-UZ",
-  "ja-JP",
-  "ko-KR",
-  "vi-VN",
-  "id-ID",
-] as const;
+export const LAZY_LOCALES = [] as const;
 
 /** 已加载的分片语言 */
 const loadedLocales: Record<string, Locale> = {};
@@ -70,7 +77,7 @@ const LANG_ALIASES: Record<string, string> = {
 };
 
 /** 当前语言（初始化后生效） */
-let currentLang = FALLBACK;
+export const currentLang = ref(FALLBACK);
 
 /** 分片基址（显式覆写优先；否则从主脚本 URL 推导） */
 let localeBaseUrl = "";
@@ -126,7 +133,8 @@ function resolveLanguage(options: { lang?: string } = {}): string {
  * @param options 前端选项（lang）
  */
 export function setLanguage(options: { lang?: string } = {}): void {
-  currentLang = resolveLanguage(options);
+  currentLang.value = resolveLanguage(options);
+  loadLanguage({ lang: currentLang.value });
 }
 
 /**
@@ -134,7 +142,7 @@ export function setLanguage(options: { lang?: string } = {}): void {
  * @returns 语言标识（如 `zh-CN`）
  */
 export function getLanguage(): string {
-  return currentLang;
+  return currentLang.value;
 }
 
 /**
@@ -148,7 +156,7 @@ export async function loadLanguage(
   options: { lang?: string; localeBaseUrl?: string } = {},
 ): Promise<void> {
   const target = resolveLanguage(options);
-  currentLang = target;
+  currentLang.value = target;
   if (BUILTIN[target] || loadedLocales[target]) return;
   // 必须用 `||` 而非 `??`：localeBaseUrl 的初值是空串（语义为「未设置」），
   // 而 `??` 只对 null / undefined 回退 —— 空串会直接短路，detectLocaleBaseUrl()
@@ -188,8 +196,12 @@ export async function loadLanguage(
  * @param lang 目标语言（缺省用当前语言）
  * @returns 翻译文案
  */
-export function t(key: TranslationKey, lang?: string): string {
-  const target = (lang && LANG_ALIASES[lang.toLowerCase()]) || currentLang;
+export function translate(key: TranslationKey, lang?: string): string {
+  const target = (lang && LANG_ALIASES[lang.toLowerCase()]) || currentLang.value;
   const table = loadedLocales[target] ?? BUILTIN[target];
   return table?.[key] ?? BUILTIN[FALLBACK]?.[key] ?? "";
+}
+
+export function t(key: TranslationKey, lang?: string) {
+  return computed(() => translate(key, lang));
 }

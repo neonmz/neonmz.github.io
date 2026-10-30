@@ -26,6 +26,8 @@ import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
 
 import sitemap from "@astrojs/sitemap";
 
+import vue from "@astrojs/vue";
+
 // const site =
 // 	process.env.SITE ||
 // 	(process.env.GITHUB_ACTIONS === "true"
@@ -56,14 +58,14 @@ export default defineConfig({
         updateHead: false,
         updateBodyClass: false,
         globalInstance: true,
-		}), icon({
+        }), icon({
         include: {
             "preprocess: vitePreprocess(),": ["*"],
             "fa6-brands": ["*"],
             "fa6-regular": ["*"],
             "fa6-solid": ["*"],
         },
-		}), expressiveCode({
+        }), expressiveCode({
         themes: [expressiveCodeConfig.theme, expressiveCodeConfig.theme],
         plugins: [
             pluginCollapsibleSections(),
@@ -107,13 +109,13 @@ export default defineConfig({
         frames: {
             showCopyToClipboardButton: false,
         },
-		}), svelte({
+        }), svelte({
         compilerOptions: {
             experimental: {
                 async: true,
             },
         },
-		}), sitemap()],
+        }), sitemap(), vue()],
     markdown: {
         remarkPlugins: [
             remarkMath,
@@ -172,6 +174,7 @@ export default defineConfig({
     vite: {
         plugins: [tailwindcss()],
         build: {
+            assetsInlineLimit: 0,
             rollupOptions: {
                 onwarn(warning, warn) {
                     // temporarily suppress this warning

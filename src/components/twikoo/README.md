@@ -1,3 +1,5 @@
+>This component is based on [twikoo@2.0.17/packages/client](https://github.com/twikoojs/twikoo/tree/2.0.17/packages/client)
+
 # twikoo
 
 💬 一个简洁、安全、免费的静态网站评论系统 —— **前端库**（UMD 产物）。服务端需另行部署。
@@ -34,3 +36,4 @@
 
 > 浏览器基线 ES2022（Chrome/Edge 94+、Firefox 93+、Safari 15.4+）。想锁版本就把 CDN 地址里的
 > `latest` 换成具体版本号。
+

@@ -11,7 +11,7 @@
  */
 import { call, getAppState, getResponse, type TcbInstance } from "./api";
 import { logger } from "./logger";
-import { t } from "../i18n";
+import { t } from "../i18n/";
 
 export { logger } from "./logger";
 export { t, setLanguage, getLanguage, loadLanguage, setLocaleBaseUrl } from "../i18n";
@@ -100,14 +100,14 @@ export function timeago(date?: number | Date): string {
         const leave2 = leave1 % 3600000;
         const minutes = Math.floor(leave2 / 60000);
         if (minutes === 0) {
-          return `${Math.round((leave2 % 60000) / 1000)} ${t("TIMEAGO_SECONDS")}`;
+          return `${Math.round((leave2 % 60000) / 1000)} ${t("TIMEAGO_SECONDS").value}`;
         }
-        return `${minutes} ${t("TIMEAGO_MINUTES")}`;
+        return `${minutes} ${t("TIMEAGO_MINUTES").value}`;
       }
-      return `${hours} ${t("TIMEAGO_HOURS")}`;
+      return `${hours} ${t("TIMEAGO_HOURS").value}`;
     }
-    if (days < 0) return t("TIMEAGO_NOW");
-    if (days < 8) return `${days} ${t("TIMEAGO_DAYS")}`;
+    if (days < 0) return t("TIMEAGO_NOW").value;
+    if (days < 8) return `${days} ${t("TIMEAGO_DAYS").value}`;
     return dateFormat(value);
   } catch (error) {
     logger.warn("timeago 计算失败", error);

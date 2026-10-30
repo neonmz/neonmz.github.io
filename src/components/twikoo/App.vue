@@ -22,6 +22,8 @@ import TkComments from "./components/TkComments.vue";
 import TkFooter from "./components/TkFooter.vue";
 import TkAdmin from "./components/TkAdmin.vue";
 import { EVENT_SHOW_ADMIN_ENTRY, off as busOff, on as busOn } from "./utils/bus";
+import { twikooOptions } from "./config.ts";
+import { resetLazyLoadStatus } from "./utils/http.ts";
 
 /** 管理面板是否展开 */
 const showAdmin = ref(false);
@@ -36,7 +38,15 @@ function onShowAdminEntry(show: unknown): void {
   showAdminEntry.value = show === true;
 }
 
+function setLanguage(lang: string): void {
+  twikooOptions.lang = lang;
+  document.getElementById("twikoo")?.remove();
+  
+}
+
 onMounted(() => {
+  resetLazyLoadStatus(location.pathname);
+  window.twikoo = { setLanguage: (lang: string) => twikooOptions.lang = lang };
   busOn(EVENT_SHOW_ADMIN_ENTRY, onShowAdminEntry);
 });
 
