@@ -150,4 +150,5 @@ export const en: Translation = {
 	[Key.allRightsReserved]: "All Rights Reserved.",
 	[Key.poweredBy]: "Powered by",
 	[Key.siteSource]: "Source available on",
+	[Key.siteSourceAfter]: "",
 };

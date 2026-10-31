@@ -149,7 +149,8 @@ export const ja: Translation = {
 	[Key.author]: "作者",
 	[Key.publishedAt]: "公開日",
 	[Key.license]: "ライセンス",
-	[Key.allRightsReserved]: "全著作権所有。",
+	[Key.allRightsReserved]: "All Rights Reserved.",
 	[Key.poweredBy]: "Powered by",
-	[Key.siteSource]: "このサイトのソースは",
+	[Key.siteSource]: "ソースコードは",
+	[Key.siteSourceAfter]: "で公開しています",
 };

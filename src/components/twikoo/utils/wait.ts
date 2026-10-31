@@ -39,11 +39,15 @@ export class AsyncCondition {
 
   reset(path : string): void {
     if (path === this._path) return;
-    this.reject(new Error("Page changed"));
+    if (this._rejects.length)
+    {
+      const reason = new Error("Page changed");
+      this._rejects.forEach(r => void(r(reason)));
+    }
     this._flag = false;
     this._error = null;
-    //this._resolves = [];
-    // this._rejects = [];
+    this._resolves = [];
+    this._rejects = [];
     this._path = "";
     if (this._cb) this._cb();
   }

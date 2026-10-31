@@ -1,4 +1,3 @@
-# Hi here!
 # neon是谁？
 neon是一个人（）
 

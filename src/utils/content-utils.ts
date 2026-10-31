@@ -18,6 +18,12 @@ export async function getAboutMultiLanguage() {
 	return allAboutPages;
 }
 
+export async function getStatusPages() {
+	const statusPages = await getCollection("status");
+
+	return statusPages;
+}
+
 
 // // Retrieve posts and sort them by publication date
 async function getRawSortedPosts() {

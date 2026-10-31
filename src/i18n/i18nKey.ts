@@ -144,6 +144,7 @@ enum I18nKey {
 	allRightsReserved = "allRightsReserved",
 	poweredBy = "poweredBy",
 	siteSource = "siteSource",
+	siteSourceAfter = 'siteSourceAfter',
 }
 
 export default I18nKey;

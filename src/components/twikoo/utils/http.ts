@@ -39,19 +39,24 @@ async function fetchTextWait(
   return await fetchTextOri(url, options);
 }
 
+let el : HTMLDivElement | null;
+
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       cond.notify();
       observer.unobserve(entry.target);
+      el = null;
     }
   });
 }, {
   rootMargin: '100px 0px'
 });
 const opt = twikooOptions;
+
 function observe_el() {
-  const el = document.querySelector((opt.el as string) || "#twikoo");
+  if (el) observer.unobserve(el);
+  el = document.querySelector((opt.el as string) || "#twikoo");
   
   if (!el) {
     cond.reject(new Error(`Twikoo container not found: ${opt.el}`));

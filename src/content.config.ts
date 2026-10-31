@@ -47,8 +47,18 @@ const specCollection = defineCollection({
 	schema: z.object({}),
 });
 
+const statusCollection = defineCollection({
+	loader: glob({
+		pattern: "**/[^_]*.{md,mdx}",
+		base: "./src/content/status",
+	}),
+	schema: z.object({}),
+});
+
+
 export const collections = {
 	about: aboutCollection,
 	posts: postsCollection,
 	spec: specCollection,
+	status: statusCollection,
 };
