@@ -1,0 +1,1443 @@
+/* ===== TkAction.vue (css) ===== */
+.twikoo {
+  position: relative;
+}
+.twikoo svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+/* 全局 CSS（1.x 同名保留） */
+.twikoo .tk-expand {
+  width: 100%;
+  cursor: pointer;
+  padding: 0.75em;
+  text-align: center;
+  transition: all 0.5s;
+  box-sizing: border-box;
+}
+.twikoo .tk-expand:hover {
+  background-color: rgba(0, 0, 0, 0.13);
+}
+.twikoo .tk-expand:active {
+  background-color: rgba(0, 0, 0, 0.19);
+}
+/*
+ * display: inline-block 必须显式声明：不少博客主题 / 框架的全局重置会写
+ * `img { display: block }`（如 VitePress 的 `img,svg,video,canvas,audio,iframe,
+ * embed,object{display:block}`），会把图片变成块级元素 —— 表情图片会每个独占一行、
+ * 普通图片也不再是 1.x 的行内表现。这里显式锁定为行内（对齐 1.x）。
+ */
+.twikoo .tk-content img {
+  display: inline-block;
+  max-width: 300px;
+  max-height: 300px;
+  vertical-align: middle;
+}
+.twikoo .tk-owo-emotion,
+.twikoo .OwO-item img {
+  display: inline-block;
+  width: 3em;
+  height: auto;
+  vertical-align: middle;
+}
+.twikoo .tk-admin-warn {
+  padding: 1rem 1.5rem;
+  background-color: #fff7d0;
+  border-left: 0.5rem solid #e7c000;
+  color: #6b5900;
+  align-self: stretch;
+  box-sizing: border-box;
+}
+
+/* v-loading 遮罩（替代 element-ui Loading；1.x 的覆盖段取值：透明底 + 20% 模糊） */
+.twikoo .tk-loading-parent--relative {
+  position: relative;
+}
+.twikoo .tk-loading-mask {
+  position: absolute;
+  z-index: 2000;
+  background-color: transparent;
+  backdrop-filter: opacity(20%);
+  margin: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transition: opacity 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.twikoo .tk-loading-spinner .circular {
+  height: 42px;
+  width: 42px;
+  animation: tk-loading-rotate 2s linear infinite;
+}
+.twikoo .tk-loading-spinner .path {
+  animation: tk-loading-dash 1.5s ease-in-out infinite;
+  stroke: #409eff;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+@keyframes tk-loading-rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes tk-loading-dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -40px;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -120px;
+  }
+}
+
+
+/* ===== TkAction.vue (css) ===== */
+.twikoo .tk-action {
+  display: flex;
+  align-items: center;
+}
+.twikoo .tk-action-link {
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  margin: 0;
+  margin-left: 0.5rem;
+  color: #409eff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+.twikoo .tk-action-link .tk-action-icon-solid {
+  display: none;
+}
+.twikoo .tk-action-link.tk-liked .tk-action-icon,
+.twikoo .tk-action-link:hover .tk-action-icon {
+  display: none;
+}
+.twikoo .tk-action-link.tk-liked .tk-action-icon-solid,
+.twikoo .tk-action-link:hover .tk-action-icon-solid {
+  display: block;
+}
+.twikoo .tk-action-link.tk-disliked .tk-action-icon,
+.twikoo .tk-action-link.tk-disliked:hover .tk-action-icon {
+  display: none;
+}
+.twikoo .tk-action-link.tk-disliked .tk-action-icon-solid,
+.twikoo .tk-action-link.tk-disliked:hover .tk-action-icon-solid {
+  display: block;
+}
+.twikoo .tk-action-count {
+  margin-left: 0.25rem;
+  font-size: 0.75rem;
+  height: 1.5rem;
+  line-height: 1.5rem;
+}
+.twikoo .tk-action-icon {
+  display: inline-block;
+  height: 1em;
+  width: 1em;
+  line-height: 0;
+  color: #409eff;
+}
+
+
+/* ===== TkAdmin.vue (css) ===== */
+.twikoo .tk-admin-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+.twikoo .tk-admin {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  pointer-events: all;
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.85);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  transition: all 0.5s ease;
+  visibility: hidden;
+}
+.twikoo .tk-admin::-webkit-scrollbar {
+  width: 5px;
+  background-color: transparent;
+}
+.twikoo .tk-admin::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+.twikoo .tk-admin::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.31);
+}
+.twikoo .tk-admin.__show {
+  left: 0;
+  visibility: visible;
+}
+.twikoo .tk-admin-close {
+  appearance: none;
+  background: none;
+  border: none;
+  margin: 0;
+  text-decoration: none;
+  cursor: pointer;
+  position: sticky;
+  display: block;
+  top: 0;
+  left: calc(100% - 3rem);
+  width: 1rem;
+  height: 1rem;
+  padding: 1rem;
+  box-sizing: content-box;
+  color: #ffffff;
+  line-height: 0;
+  z-index: 1;
+}
+.twikoo .tk-login,
+.twikoo .tk-regist {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 0 2rem;
+  box-sizing: border-box;
+}
+.twikoo .tk-login-title {
+  color: #ffffff;
+  font-size: 1.25rem;
+  text-align: center;
+  margin-top: 10rem;
+}
+.twikoo .tk-login form,
+.twikoo .tk-regist form {
+  width: 100%;
+  text-align: center;
+}
+.twikoo .tk-password,
+.twikoo .tk-login-msg {
+  color: #ffffff;
+  width: 80%;
+  text-align: center;
+  margin-top: 1rem;
+}
+.twikoo .tk-password .tk-input__inner {
+  min-width: 100px;
+}
+.twikoo .tk-password .tk-input-group__prepend {
+  color: #ffffff;
+}
+.twikoo .tk-login-msg a {
+  color: #ffffff;
+  margin-left: 1em;
+  text-decoration: underline;
+}
+.twikoo .tk-regist-button {
+  margin-top: 1rem;
+}
+.twikoo .tk-panel {
+  color: #ffffff;
+  padding: 2rem;
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+.twikoo .tk-panel-title {
+  font-size: 1.5rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+.twikoo .tk-panel-logout {
+  color: #ffffff;
+  font-size: 1rem;
+  text-decoration: underline;
+}
+.twikoo .tk-panel .tk-tabs {
+  display: flex;
+  margin-bottom: 1em;
+  border-bottom: 2px solid #c0c4cc;
+}
+.twikoo .tk-panel .tk-tab {
+  color: #c0c4cc;
+  cursor: pointer;
+  line-height: 2em;
+  margin-right: 2em;
+  margin-bottom: -2px;
+}
+.twikoo .tk-panel .tk-tab.__active {
+  color: #ffffff;
+  border-bottom: 2px solid #ffffff;
+}
+.twikoo .tk-admin-warn {
+  padding: 1rem 1.5rem;
+  background-color: #fff7d0;
+  border-left: 0.5rem solid #e7c000;
+  color: #6b5900;
+  align-self: stretch;
+  box-sizing: border-box;
+}
+
+
+/* ===== TkAdminComment.vue (css) ===== */
+.twikoo .tk-admin-comment {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.twikoo .tk-admin-comment a {
+  color: currentColor;
+  text-decoration: underline;
+}
+.twikoo .tk-admin-warn {
+  margin-bottom: 1em;
+}
+.twikoo .tk-admin-security-alert {
+  position: relative;
+  padding-right: 2.5rem;
+  margin-bottom: 0;
+}
+.twikoo .tk-admin-security-alert .tk-admin-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  float: none;
+  width: 1rem;
+  height: 1rem;
+  padding: 0.5rem;
+  margin: 0;
+  line-height: 0;
+}
+.twikoo .tk-admin-security-alert-message {
+  margin-bottom: 0.5em;
+}
+.twikoo .tk-admin-security-alert-url {
+  word-break: break-all;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 0.5em;
+  border-radius: 4px;
+  margin-bottom: 0.5em;
+}
+.twikoo .tk-admin-comment-filter {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.twikoo .tk-admin-comment-filter-keyword {
+  flex: 1;
+}
+.twikoo .tk-admin-comment-filter-type {
+  height: 32px;
+  margin: 0 0.5em;
+  padding: 0 0.5em;
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(144, 147, 153, 0.31);
+  border-radius: 4px;
+  position: relative;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+.twikoo .tk-admin-comment-filter-type:focus {
+  border-color: #409eff;
+}
+.twikoo .tk-admin-comment-filter-type option {
+  color: initial;
+}
+.twikoo .tk-admin-comment-list {
+  margin-top: 1em;
+}
+.twikoo .tk-admin-comment-list,
+.twikoo .tk-admin-comment-item {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+}
+.twikoo .tk-admin-comment-item {
+  padding-bottom: 0.5em;
+  margin-bottom: 0.5em;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+.twikoo .tk-admin-comment-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 0.5em;
+}
+.twikoo .tk-admin-comment .tk-avatar {
+  margin-right: 0.5em;
+}
+.twikoo .tk-admin-comment .tk-content {
+  max-height: none;
+}
+.twikoo .tk-admin-actions {
+  display: flex;
+}
+.twikoo .tk-admin-comment-editor {
+  margin-top: 0.5em;
+}
+.twikoo .tk-admin-comment-editor-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5em;
+  margin-top: 0.5em;
+}
+
+
+/* ===== TkAdminConfig.vue (css) ===== */
+.twikoo .tk-admin-config-groups {
+  overflow-y: auto;
+  padding-right: 0.5em;
+  position: relative;
+}
+.twikoo .tk-admin-config-groups .tk-admin-config-group,
+.twikoo .tk-admin-config-groups .tk-admin-config-group-title {
+  background: transparent;
+}
+.twikoo .tk-admin-config-group-title {
+  margin-top: 1em;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+.twikoo .tk-admin-config-item {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 30% 70%;
+  margin-top: 1em;
+  position: relative;
+}
+.twikoo .tk-admin-config-title {
+  text-align: right;
+  margin-right: 1em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.twikoo .tk-admin-config-input {
+  position: relative;
+}
+.twikoo .tk-admin-config-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: none;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 8.825L1.175 4 2.238 2.938 6 6.7l3.763-3.762L10.825 4z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  border-radius: 4px;
+  border: 1px solid rgba(144, 147, 153, 0.31);
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-block;
+  font-size: inherit;
+  height: 32px;
+  line-height: 32px;
+  outline: none;
+  padding: 0 30px 0 10px;
+  transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  width: 100%;
+}
+.twikoo .tk-admin-config-select:focus {
+  border-color: rgba(255, 255, 255, 0.6);
+}
+.twikoo .tk-admin-config-select option {
+  color: #fff;
+  background: #333;
+}
+.twikoo .tk-admin-config-desc {
+  margin-top: 0.5em;
+  font-size: 0.75em;
+  overflow-wrap: break-word;
+}
+.twikoo .tk-admin-config-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1em;
+}
+.twikoo .tk-admin-config-message {
+  margin-top: 0.5em;
+  text-align: center;
+}
+.twikoo .tk-admin-config-email-test-desc {
+  margin: 1em 0;
+}
+
+
+/* ===== TkAdminImport.vue (css) ===== */
+.twikoo .tk-admin-import {
+  display: flex;
+  flex-direction: column;
+}
+.twikoo .tk-admin-import-label {
+  margin-top: 1em;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+.twikoo .tk-admin-import select,
+.twikoo .tk-admin-import input,
+.twikoo .tk-admin-import .tk-button,
+.twikoo .tk-admin-import .tk-input {
+  margin-top: 1em;
+}
+.twikoo .tk-admin-import-actions {
+  display: flex;
+}
+.twikoo .tk-admin-import-actions .tk-button {
+  flex: 1;
+}
+.twikoo .tk-admin-import select {
+  height: 32px;
+  padding: 0 0.5em;
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(144, 147, 153, 0.31);
+  border-radius: 4px;
+}
+.twikoo .tk-admin-import select option {
+  color: initial;
+}
+
+
+/* ===== TkAvatar.vue (css) ===== */
+.tk-avatar-img {
+  margin: 0;
+}
+.twikoo .tk-avatar {
+  flex-shrink: 0;
+  height: 2.5rem;
+  width: 2.5rem;
+  overflow: hidden;
+  text-align: center;
+  border-radius: 5px;
+  margin-right: 1rem;
+}
+.twikoo .tk-comment .tk-submit .tk-avatar,
+.twikoo .tk-replies .tk-avatar {
+  height: 1.6rem;
+  width: 1.6rem;
+}
+.twikoo .tk-avatar.tk-has-avatar {
+  background-color: rgba(144, 147, 153, 0.13);
+}
+.twikoo .tk-avatar.tk-clickable {
+  cursor: pointer;
+}
+.twikoo .tk-avatar .tk-avatar-img {
+  height: 2.5rem;
+  line-height: 2.5rem;
+  color: #c0c4cc;
+}
+/*
+ * 无头像时回退的 user-circle 图标要铺满整个头像框（1.x 由全局
+ * `.twikoo svg { width: 100%; height: 100% }` 作用于 .tk-avatar-img 达成）。
+ * tk-icon 默认高度是 1em，在 2.5rem / 1.6rem 的头像框里会明显偏小，故此处显式撑满。
+ */
+.twikoo .tk-avatar .tk-avatar-img .tk-icon,
+.twikoo .tk-avatar .tk-avatar-img .tk-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.twikoo .tk-avatar .tk-avatar-img img,
+.twikoo .tk-avatar img.tk-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.twikoo .tk-comment .tk-submit .tk-avatar .tk-avatar-img,
+.twikoo .tk-replies .tk-avatar .tk-avatar-img {
+  height: 1.6rem;
+  line-height: 1.6rem;
+}
+
+
+/* ===== TkButton.vue (css) ===== */
+.twikoo .tk-button {
+  display: inline-block;
+  padding: 12px 20px;
+  line-height: 1;
+  font-size: 0.875rem;
+  border-radius: 4px;
+  border: 1px solid rgba(144, 147, 153, 0.31);
+  background-color: rgba(144, 147, 153, 0.063);
+  color: currentColor;
+  cursor: pointer;
+  transition: all 0.1s;
+  white-space: nowrap;
+}
+.twikoo .tk-button:not(.tk-button--primary):not(.tk-button--text):not(.is-disabled):active,
+.twikoo .tk-button:not(.tk-button--primary):not(.tk-button--text):not(.is-disabled):focus,
+.twikoo .tk-button:not(.tk-button--primary):not(.tk-button--text):not(.is-disabled):hover {
+  color: #409eff;
+  background-color: rgba(64, 158, 255, 0.063);
+  border-color: rgba(64, 158, 255, 0.5);
+}
+.twikoo .tk-button--primary {
+  background: #409eff;
+  border-color: #409eff;
+  color: #ffffff;
+}
+.twikoo .tk-button--primary:not(.is-disabled):focus,
+.twikoo .tk-button--primary:not(.is-disabled):hover {
+  background: #66b1ff;
+  border-color: #66b1ff;
+  color: #ffffff;
+}
+/*
+ * 主按钮的**按下**态：element-ui 用独立的 `.el-button--primary:active{background:#3a8ee6}`，
+ * 比悬停的 #66b1ff 更深，形成「按下去」的反馈。1.x 的覆盖段带 `:not(.el-button--primary)`，
+ * 特意把主按钮排除在外，所以这条在 v1 里**是生效的**，必须单独还原。
+ */
+.twikoo .tk-button--primary:not(.is-disabled):active {
+  background: #3a8ee6;
+  border-color: #3a8ee6;
+  color: #ffffff;
+}
+.twikoo .tk-button--primary.is-disabled,
+.twikoo .tk-button--primary.is-disabled:active,
+.twikoo .tk-button--primary.is-disabled:focus,
+.twikoo .tk-button--primary.is-disabled:hover {
+  color: rgba(255, 255, 255, 0.63);
+  background-color: rgba(64, 158, 255, 0.5);
+  border-color: transparent;
+}
+/*
+ * `type="info"` 对齐 1.x 的**实际渲染结果**，而不是 element-ui 的原始值。
+ *
+ * 1.x 的覆盖段 `.twikoo .el-button:not(.el-button--primary):not(.el-button--text)`
+ * 含 4 个类（特异性 0,4,0），高于 element-ui 的 `.el-button--info`（0,1,0，连
+ * `:focus`/`:hover`/`.is-disabled` 也只有 0,2,0~0,3,0），所以 info 按钮在 v1 里
+ * 从头到尾都渲染成「默认按钮」：半透明灰底 + currentColor + 常规边框。
+ * 保持这里的取值与 `.tk-button` 基础规则一致，就是为了复现这个结果。
+ */
+.twikoo .tk-button--info {
+  color: currentColor;
+  background-color: rgba(144, 147, 153, 0.063);
+  border-color: rgba(144, 147, 153, 0.31);
+}
+/*
+ * 尺寸与类型修饰符的**顺序**照 element-ui 原样：尺寸在前、`--text` 在后。
+ * 因为尺寸类用的是 `padding` 简写（会一并重置纵向/横向），`--text` 只清左右内边距
+ * （`padding-left/right: 0`），必须排在后面才能生效，否则会被尺寸类覆盖回去——
+ * 那正是「mini 按钮本该 `7px 0`、却变成 `0 7px`」的原因。
+ *
+ * 取值对齐 1.x element-ui 的**实际渲染值**（`.el-button--small` 与 `--mini` 在 1.x 共用
+ * 同一条规则 `{ font-size: 12px; border-radius: 3px }`，padding 分别 `9px 15px` / `7px 15px`）：
+ * 12px 字号 + 1px 边框下，small 高 32px、mini 高 28px。
+ */
+.twikoo .tk-button--large {
+  padding: 13px 20px;
+  font-size: 1rem;
+}
+.twikoo .tk-button--small {
+  padding: 9px 15px;
+  font-size: 0.75rem;
+  border-radius: 3px;
+}
+.twikoo .tk-button--mini {
+  padding: 7px 15px;
+  font-size: 0.75rem;
+  border-radius: 3px;
+}
+.twikoo .tk-button--text {
+  border-color: transparent;
+  background: transparent;
+  padding-left: 0;
+  padding-right: 0;
+  color: #409eff;
+}
+.twikoo .tk-button--text:not(.is-disabled):focus,
+.twikoo .tk-button--text:not(.is-disabled):hover {
+  color: #66b1ff;
+  background: transparent;
+}
+/*
+ * 文字按钮的**按下**态：同主按钮，element-ui 有独立的 `.el-button--text:active{color:#3a8ee6}`，
+ * 且 1.x 的覆盖段用 `:not(.el-button--text)` 排除在外 → v1 里生效。管理面板的查看/隐藏/
+ * 置顶/删除都是这一类，缺了它按下去就没有任何反馈。
+ */
+.twikoo .tk-button--text:not(.is-disabled):active {
+  color: #3a8ee6;
+}
+.twikoo .tk-button.is-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.twikoo .tk-button.is-loading {
+  pointer-events: none;
+  opacity: 0.7;
+  cursor: wait;
+}
+.twikoo .tk-button__spinner {
+  margin-right: 4px;
+}
+.twikoo .tk-button__spinner svg {
+  animation: tk-spin 0.8s linear infinite;
+}
+/*
+ * 相邻按钮间距：1.x element-ui 里是 `.el-button + .el-button { margin-left: 10px }`，
+ * 这里取与本组件 `.tk-meta-input .tk-input + .tk-input` 一致的 0.5rem，保持站内统一。
+ * （`.tk-row.actions` 是 flex，元素间的模板空白本来就被忽略，间距只能靠 margin 给。）
+ */
+.twikoo .tk-button + .tk-button {
+  margin-left: 0.5rem;
+}
+.twikoo .tk-input-group__append .tk-button,
+.twikoo .tk-input-group__prepend .tk-button {
+  font-size: inherit;
+}
+/* 输入框 append 插槽内的按钮：与输入框合为一体（1.x element-ui 行为）。
+   必须把纵向 padding 归零——它靠 `height: 100%` 填满输入框，基础按钮的
+   `padding: 12px 20px` 会让盒子高出输入框 24px。 */
+.twikoo .tk-input-group__append .tk-button {
+  height: 100%;
+  padding: 0 15px;
+  margin: -1px -1rem;
+  border: 0;
+  border-radius: 0 3px 3px 0;
+  background: transparent;
+  color: currentColor;
+}
+.twikoo .tk-input-group__append .tk-button:hover {
+  color: #409eff;
+}
+@keyframes tk-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* ===== TkComment.vue (css) ===== */
+.twikoo .tk-main {
+  flex: 1;
+  width: 0;
+}
+.twikoo .tk-row {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.twikoo .tk-nick-link {
+  color: inherit;
+  text-decoration: none;
+}
+.twikoo .tk-replies .tk-nick-link {
+  font-size: 0.9em;
+}
+.twikoo .tk-nick-link:hover {
+  color: #409eff;
+}
+.twikoo .tk-actions {
+  display: none;
+  margin-left: 1em;
+}
+.twikoo .tk-actions button {
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  display: inline;
+  color: #409eff;
+  cursor: pointer;
+}
+.twikoo .tk-comment:hover .tk-actions {
+  display: inline;
+}
+/*
+ * 间距补丁：1.x 的昵称 / tag / 时间、以及悬停出现的管理按钮之间，都靠模板里的
+ * 换行空白分隔（Vue 2 会保留成一个空格）。Vue 3 默认把「两侧都是元素且含换行」
+ * 的纯空白节点整段删除，间距随之消失，故改用 CSS 显式给出。
+ */
+.twikoo .tk-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25em;
+}
+.twikoo .tk-actions button + button {
+  margin-left: 0.25em;
+}
+.twikoo .tk-extras {
+  color: #999999;
+  font-size: 0.875em;
+  display: flex;
+  flex-wrap: wrap;
+}
+.twikoo .tk-extra {
+  margin-top: 0.5rem;
+  margin-right: 0.75rem;
+  display: flex;
+  align-items: center;
+}
+.twikoo .tk-icon.__comment {
+  display: inline-flex;
+  height: 1em;
+  width: 1em;
+  line-height: 1;
+}
+.twikoo .tk-extra-text {
+  line-height: 1;
+}
+.twikoo .tk-tag {
+  display: inline-block;
+  padding: 0 0.5em;
+  font-size: 0.75em;
+  background-color: #f2f6fc;
+}
+.twikoo .tk-tag-green {
+  background-color: rgba(103, 194, 58, 0.13);
+  border: 1px solid rgba(103, 194, 58, 0.5);
+  border-radius: 2px;
+  color: #67c23a;
+}
+.twikoo .tk-tag-yellow {
+  background-color: rgba(230, 162, 60, 0.13);
+  border: 1px solid rgba(230, 162, 60, 0.5);
+  border-radius: 2px;
+  color: #e6a23c;
+}
+.twikoo .tk-tag-blue {
+  background-color: rgba(64, 158, 255, 0.13);
+  border: 1px solid rgba(64, 158, 255, 0.5);
+  border-radius: 2px;
+  color: #409eff;
+}
+.twikoo .tk-tag-red {
+  background-color: rgba(245, 108, 108, 0.13);
+  border: 1px solid rgba(245, 108, 108, 0.5);
+  border-radius: 2px;
+  color: #f56c6c;
+}
+.twikoo .tk-comment {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  word-break: break-all;
+}
+.twikoo .tk-content {
+  margin-top: 0.5rem;
+  overflow: hidden;
+  max-height: 500px;
+  position: relative;
+}
+.twikoo .tk-content-expand {
+  max-height: none;
+}
+.twikoo .tk-replies .tk-content {
+  font-size: 0.9em;
+}
+.twikoo .tk-comment .vemoji {
+  max-height: 2em;
+  vertical-align: middle;
+}
+.twikoo .tk-replies {
+  max-height: 200px;
+  overflow: hidden;
+  position: relative;
+}
+.twikoo .tk-replies-expand {
+  max-height: none;
+  overflow: unset;
+}
+.twikoo .tk-submit {
+  margin-top: 1rem;
+}
+.twikoo .tk-expand {
+  font-size: 0.75em;
+}
+.twikoo .tk-lightbox {
+  display: block;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.3);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+}
+.twikoo .tk-lightbox-image {
+  min-width: 100px;
+  min-height: 30px;
+  width: auto;
+  height: auto;
+  max-width: 95%;
+  max-height: 95%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(90deg, #eeeeee 50%, #e3e3e3 0);
+  background-size: 40px 100%;
+}
+
+
+/* ===== TkComments.vue (css) ===== */
+.twikoo .tk-comments-search {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.twikoo .tk-comments-search .tk-input {
+  flex: 1;
+}
+@media (max-width: 480px) {
+  .twikoo .tk-comments-search {
+    flex-wrap: wrap;
+  }
+  .twikoo .tk-comments-search .tk-input {
+    flex-basis: 100%;
+  }
+}
+.twikoo .tk-comments-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  line-height: 1;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+.twikoo .tk-comments-count.__hidden {
+  visibility: hidden;
+}
+.twikoo .tk-comments-count {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.twikoo .tk-comments-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  white-space: nowrap;
+}
+.twikoo .tk-comments-container {
+  min-height: 10rem;
+  display: flex;
+  flex-direction: column;
+}
+.twikoo .tk-comments-no {
+  flex: 1;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.twikoo .tk-comments-sort {
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+  margin-right: 0.5em;
+  line-height: 1;
+}
+.twikoo .tk-sort-item {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.75rem;
+  line-height: 1;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  color: rgba(64, 158, 255, 0.6);
+}
+.twikoo .tk-sort-item.__active {
+  color: #409eff;
+}
+.twikoo .tk-sort-item:focus {
+  outline: none;
+  color: #409eff;
+}
+.twikoo .tk-icon.__comments {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  height: 0.75rem;
+  width: 0.75rem;
+  line-height: 0;
+  flex-shrink: 0;
+  cursor: pointer;
+  color: #409eff;
+}
+.twikoo .tk-icon.__comments.__active {
+  color: #ffffff;
+  background: #409eff;
+  border-radius: 0.125rem;
+  box-shadow: 0 0 0 0.2rem #409eff;
+}
+.twikoo .tk-icon.__comments svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.twikoo div.code-toolbar {
+  position: relative;
+  border-radius: 0.3em;
+}
+.twikoo .tk-content pre,
+.twikoo .tk-preview-container pre {
+  overflow-x: auto;
+  max-width: 100%;
+}
+.twikoo .tk-content pre code,
+.twikoo .tk-preview-container pre code {
+  white-space: pre;
+  word-break: normal;
+}
+.twikoo div.code-toolbar > .toolbar {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  display: flex;
+}
+.twikoo div.code-toolbar > .toolbar > .toolbar-item {
+  margin-left: 0.3em;
+}
+.twikoo div.code-toolbar > .toolbar > .toolbar-item > a,
+.twikoo div.code-toolbar > .toolbar > .toolbar-item > button,
+.twikoo div.code-toolbar > .toolbar > .toolbar-item > span {
+  padding: 2px 4px;
+  border-radius: 0.3em;
+}
+.twikoo div.code-toolbar > .toolbar > .toolbar-item > button {
+  border: 1px solid rgba(128, 128, 128, 0.31);
+}
+.twikoo div.code-toolbar > .toolbar > .toolbar-item > button:hover {
+  cursor: pointer;
+}
+
+
+/* ===== TkError.vue (css) ===== */
+.twikoo .tk-error {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid rgba(245, 108, 108, 0.5);
+  background-color: rgba(245, 108, 108, 0.13);
+  border-radius: 4px;
+  color: #f56c6c;
+}
+.twikoo .tk-error__icon svg {
+  width: 20px;
+  height: 20px;
+}
+.twikoo .tk-error__title {
+  font-weight: 600;
+}
+.twikoo .tk-error__toggle {
+  border: none;
+  background: none;
+  color: currentColor;
+  opacity: 0.7;
+  cursor: pointer;
+  font-size: 0.75rem;
+  padding: 0;
+  margin-top: 4px;
+}
+.twikoo .tk-error__detail {
+  margin-top: 6px;
+  font-size: 0.75rem;
+  color: currentColor;
+  opacity: 0.7;
+  word-break: break-all;
+}
+.twikoo .tk-error__raw {
+  white-space: pre-wrap;
+  margin: 4px 0 0;
+}
+
+
+/* ===== TkFooter.vue (css) ===== */
+.twikoo .tk-footer {
+  width: 100%;
+  text-align: end;
+  font-size: 0.75em;
+  color: #999999;
+  margin-top: 1em;
+}
+
+
+/* ===== TkIcon.vue (css) ===== */
+.twikoo .tk-icon {
+  display: inline-block;
+  line-height: 1;
+}
+.twikoo .tk-icon svg {
+  height: 1em;
+  vertical-align: -0.125em;
+  fill: currentColor;
+}
+
+
+/* ===== TkInput.vue (css) ===== */
+.twikoo .tk-input {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  /* 与 1.x `.el-input { font-size: 14px }` 对齐：prepend / append 插槽里的文字
+     靠继承取字号，不声明就会跟着宿主页面走（管理面板登录框曾因此明显偏大） */
+  font-size: 0.875rem;
+}
+.twikoo .tk-input--group {
+  display: inline-flex;
+}
+.twikoo .tk-input__inner {
+  display: inline-block;
+  width: 100%;
+  padding: 0 12px;
+  height: 32px;
+  line-height: 32px;
+  font-size: 0.875rem;
+  border: 1px solid rgba(144, 147, 153, 0.31);
+  border-radius: 4px;
+  color: currentColor;
+  background-color: transparent;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.twikoo .tk-input__inner:hover {
+  border-color: rgba(144, 147, 153, 0.5);
+}
+.twikoo .tk-input__inner:focus {
+  border-color: #409eff;
+}
+.twikoo .tk-input--small .tk-input__inner {
+  height: 32px;
+  line-height: 32px;
+  font-size: 0.8125rem;
+}
+.twikoo .tk-input--mini .tk-input__inner {
+  height: 28px;
+  line-height: 28px;
+  font-size: 0.75rem;
+}
+.twikoo .tk-textarea .tk-input__inner {
+  height: auto;
+  min-height: 66px;
+  line-height: 1.5;
+  padding: 6px 12px;
+  resize: vertical;
+}
+.twikoo .tk-input.is-disabled .tk-input__inner {
+  background-color: rgba(144, 147, 153, 0.06);
+  cursor: not-allowed;
+}
+.twikoo .tk-input__inner[readonly] {
+  cursor: default;
+}
+.twikoo .tk-input input:invalid {
+  border-color: #f56c6c;
+}
+/* type=number：隐藏原生调节箭头（1.x 对分页输入框的样式保留） */
+.twikoo .tk-input__inner[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+.twikoo .tk-input__inner[type="number"]::-webkit-inner-spin-button,
+.twikoo .tk-input__inner[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+.twikoo .tk-input__suffix {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #c0c4cc;
+}
+.twikoo .tk-input__icon {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  line-height: 0;
+}
+.twikoo .tk-input__icon:hover {
+  color: #909399;
+}
+.twikoo .tk-input__count {
+  position: absolute;
+  right: 10px;
+  bottom: 5px;
+  font-size: 0.75rem;
+  /* 1.x 覆盖段把字数统计改成 currentColor（跟随正文颜色，夜间模式自动适配），
+     而非 element-ui 默认的灰色 #909399 */
+  color: currentColor;
+  background: transparent;
+}
+.twikoo .tk-input-group__prepend,
+.twikoo .tk-input-group__append {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 1rem;
+  height: 32px;
+  line-height: 32px;
+  box-sizing: border-box;
+  white-space: nowrap;
+  color: currentColor;
+  background-clip: padding-box;
+  background-color: rgba(144, 147, 153, 0.13);
+  border: 1px solid rgba(144, 147, 153, 0.31);
+  border-radius: 4px;
+}
+.twikoo .tk-input-group__prepend {
+  border-right: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.twikoo .tk-input-group__append {
+  border-left: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.twikoo .tk-input--group .tk-input__inner {
+  border-radius: 0;
+}
+/*
+ * 输入框保留自己的左边框（与 1.x element-ui 一致）：prepend 已经去掉右边框，
+ * 这条 1px 边框既是分组内的分隔线，也是聚焦时左侧那一道蓝色描边。
+ * 若去掉它，聚焦态会缺左边、且与 1.x 视觉不一致。
+ */
+.twikoo .tk-input--small .tk-input-group__prepend,
+.twikoo .tk-input--small .tk-input-group__append {
+  height: 32px;
+  line-height: 32px;
+  font-size: 0.8125rem;
+}
+.twikoo .tk-input--mini .tk-input-group__prepend,
+.twikoo .tk-input--mini .tk-input-group__append {
+  height: 28px;
+  line-height: 28px;
+  font-size: 0.75rem;
+}
+
+
+/* ===== TkLoading.vue (css) ===== */
+.twikoo .tk-loading-mask {
+  position: absolute;
+  inset: 0;
+  // background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+.twikoo .tk-loading-spinner__circle {
+  color: #12addb;
+  animation: tk-spin 0.8s linear infinite;
+  display: inline-block;
+}
+.twikoo .tk-loading-spinner__circle svg {
+  width: 28px;
+  height: 28px;
+}
+.twikoo .tk-loading-text {
+  color: #12addb;
+  font-size: 0.8125rem;
+}
+@keyframes tk-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* ===== TkMetaInput.vue (css) ===== */
+.twikoo .tk-meta-input {
+  display: flex;
+}
+.twikoo .tk-meta-input .tk-input {
+  width: auto;
+  width: calc((100% - 1rem) / 3); /* Fix Safari */
+  flex: 1;
+}
+.twikoo .tk-meta-input .tk-input + .tk-input {
+  margin-left: 0.5rem;
+}
+.twikoo .tk-meta-input .tk-input-group__prepend {
+  padding: 0 1rem;
+}
+@media screen and (max-width: 767px) {
+  .twikoo .tk-meta-input {
+    flex-direction: column;
+  }
+  .twikoo .tk-meta-input .tk-input {
+    width: auto;
+  }
+  .twikoo .tk-meta-input .tk-input + .tk-input {
+    margin-left: 0;
+    margin-top: 0.5rem;
+  }
+}
+
+
+/* ===== TkPagination.vue (css) ===== */
+.twikoo .tk-pagination,
+.twikoo .tk-pagination-pagers {
+  display: flex;
+}
+.twikoo .tk-pagination {
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.twikoo .tk-pagination-options {
+  display: flex;
+  align-items: center;
+}
+.twikoo .tk-pagination-pager {
+  width: 2em;
+  height: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.twikoo .tk-pagination-pager.__current {
+  background-color: #409eff;
+  color: #ffffff;
+  pointer-events: none;
+}
+.twikoo .tk-pagination-size,
+.twikoo .tk-pagination-goto {
+  width: 50px;
+  margin: 0 0.5em;
+}
+.twikoo .tk-pagination .tk-input__inner {
+  padding: 0;
+  /* 1.x 分页输入框显式压到 28px（比普通输入框矮一档），2.0 需保留同一观感 */
+  height: 28px;
+  text-align: center;
+}
+
+
+/* ===== TkSubmit.vue (css) ===== */
+.twikoo .tk-submit {
+  display: flex;
+  flex-direction: column;
+}
+.twikoo .tk-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.twikoo .tk-meta-input {
+  margin-bottom: 0.5rem;
+}
+.twikoo .tk-row.actions {
+  position: relative;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  margin-left: 3.5rem;
+  align-items: center;
+  justify-content: flex-end;
+}
+.twikoo .tk-row-actions-start {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+.twikoo .tk-submit-action-icon {
+  align-self: center;
+  display: inline-block;
+  width: 1.25em;
+  line-height: 0;
+  margin-right: 10px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.twikoo .tk-submit-action-icon svg:hover {
+  opacity: 0.8;
+}
+/*
+ * 提交栏图标按按钮宽度等比铺开（1.x 由全局 `.twikoo svg { width:100%; height:100% }` 达成）。
+ * tk-icon 默认按 1em 定高，会让图片 / Markdown 图标比 1.x 小一圈；
+ * 这里改成宽度撑满、高度按 SVG 比例自适应。
+ */
+.twikoo .tk-submit-action-icon .tk-icon,
+.twikoo .tk-submit-action-icon .tk-icon svg {
+  width: 100%;
+}
+.twikoo .tk-submit-action-icon .tk-icon svg {
+  height: auto;
+}
+.twikoo .tk-submit-action-icon.__markdown {
+  color: #909399;
+}
+.twikoo .tk-input-image {
+  display: none;
+}
+.twikoo .tk-input {
+  flex: 1;
+}
+.twikoo .tk-input .tk-textarea__inner {
+  background-position: right bottom;
+  background-repeat: no-repeat;
+}
+.twikoo .tk-turnstile-container,
+.twikoo .tk-geetest-container,
+.twikoo .tk-cap-container {
+  position: absolute;
+  right: 0;
+  bottom: -75px;
+  z-index: 1;
+}
+.twikoo .tk-turnstile {
+  display: flex;
+  flex-direction: column;
+}
+.twikoo .tk-preview-container {
+  margin-left: 3rem;
+  margin-bottom: 1rem;
+  padding: 5px 15px;
+  border: 1px solid rgba(128, 128, 128, 0.31);
+  border-radius: 4px;
+  word-break: break-word;
+}
+.twikoo .tk-fade-in {
+  animation: tkFadeIn 0.3s;
+}
+@keyframes tkFadeIn {
+  0% {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

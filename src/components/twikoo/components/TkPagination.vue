@@ -102,7 +102,7 @@ function generatePager(): void {
  * @param pageNum 目标页码（字符串或数字）
  */
 function currentChange(pageNum: number | string): void {
-  currentPage.value = parseInt(String(pageNum), 10) || 1;
+  currentPage.value = Number.parseInt(String(pageNum), 10) || 1;
   if (currentPage.value > pageCount.value) currentPage.value = pageCount.value;
   if (currentPage.value < 1) currentPage.value = 1;
   userInput.value = 0;
@@ -116,7 +116,7 @@ function currentChange(pageNum: number | string): void {
  */
 function onPageSizeChange(size: number | string): void {
   userPageSize.value = 0;
-  emit("page-size-change", parseInt(String(size), 10));
+  emit("page-size-change", Number.parseInt(String(size), 10));
 }
 
 /**
@@ -124,7 +124,7 @@ function onPageSizeChange(size: number | string): void {
  * @param pageNum 输入值
  */
 function handleInput(pageNum: number | string): void {
-  userInput.value = parseInt(String(pageNum), 10);
+  userInput.value = Number.parseInt(String(pageNum), 10);
 }
 
 /**
@@ -132,7 +132,7 @@ function handleInput(pageNum: number | string): void {
  * @param size 输入值
  */
 function handleInputPageSize(size: number | string): void {
-  userPageSize.value = parseInt(String(size), 10);
+  userPageSize.value = Number.parseInt(String(size), 10);
 }
 
 /**
@@ -145,44 +145,3 @@ function onTotalChange(): void {
 watch(() => props.total, onTotalChange, { immediate: true });
 watch(() => props.pageSize, onTotalChange);
 </script>
-
-<style>
-.twikoo .tk-pagination,
-.twikoo .tk-pagination-pagers {
-  display: flex;
-}
-.twikoo .tk-pagination {
-  width: 100%;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-.twikoo .tk-pagination-options {
-  display: flex;
-  align-items: center;
-}
-.twikoo .tk-pagination-pager {
-  width: 2em;
-  height: 2em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-.twikoo .tk-pagination-pager.__current {
-  background-color: #409eff;
-  color: #ffffff;
-  pointer-events: none;
-}
-.twikoo .tk-pagination-size,
-.twikoo .tk-pagination-goto {
-  width: 50px;
-  margin: 0 0.5em;
-}
-.twikoo .tk-pagination .tk-input__inner {
-  padding: 0;
-  /* 1.x 分页输入框显式压到 28px（比普通输入框矮一档），2.0 需保留同一观感 */
-  height: 28px;
-  text-align: center;
-}
-</style>

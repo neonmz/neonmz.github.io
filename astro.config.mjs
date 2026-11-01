@@ -190,6 +190,8 @@ export default defineConfig({
                 compress: { drop_console: true, passes: 2 },
             },
             assetsInlineLimit: 0,
+            cssCodeSplit: false,
+            cssMinify: 'lightningcss',
             rollupOptions: {
                 onwarn(warning, warn) {
                     // temporarily suppress this warning

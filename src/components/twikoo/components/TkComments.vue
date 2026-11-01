@@ -302,11 +302,11 @@ async function onExpand(): Promise<void> {
  * @returns 最旧时间戳；无可参考项时返回 undefined
  */
 function getOldestCreated(): number | undefined {
-  let min = Infinity;
+  let min = Number.POSITIVE_INFINITY;
   for (const item of comments.value) {
-    if (!item.top && (item.created ?? Infinity) < min) min = item.created ?? Infinity;
+    if (!item.top && (item.created ?? Number.POSITIVE_INFINITY) < min) min = item.created ?? Number.POSITIVE_INFINITY;
   }
-  return min === Infinity ? undefined : min;
+  return min === Number.POSITIVE_INFINITY ? undefined : min;
 }
 
 /**
@@ -423,142 +423,3 @@ onUnmounted(() => {
   busOff(EVENT_CONFIG_UPDATED, onConfigRefresh);
 });
 </script>
-
-<style>
-.twikoo .tk-comments-search {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-.twikoo .tk-comments-search .tk-input {
-  flex: 1;
-}
-@media (max-width: 480px) {
-  .twikoo .tk-comments-search {
-    flex-wrap: wrap;
-  }
-  .twikoo .tk-comments-search .tk-input {
-    flex-basis: 100%;
-  }
-}
-.twikoo .tk-comments-title {
-  font-size: 1.25rem;
-  font-weight: bold;
-  line-height: 1;
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-}
-.twikoo .tk-comments-count.__hidden {
-  visibility: hidden;
-}
-.twikoo .tk-comments-count {
-  flex-shrink: 0;
-  white-space: nowrap;
-}
-.twikoo .tk-comments-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.5em;
-  white-space: nowrap;
-}
-.twikoo .tk-comments-container {
-  min-height: 10rem;
-  display: flex;
-  flex-direction: column;
-}
-.twikoo .tk-comments-no {
-  flex: 1;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.twikoo .tk-comments-sort {
-  display: flex;
-  align-items: center;
-  gap: 0.75em;
-  margin-right: 0.5em;
-  line-height: 1;
-}
-.twikoo .tk-sort-item {
-  display: inline-flex;
-  align-items: center;
-  font-size: 0.75rem;
-  line-height: 1;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  cursor: pointer;
-  color: rgba(64, 158, 255, 0.6);
-}
-.twikoo .tk-sort-item.__active {
-  color: #409eff;
-}
-.twikoo .tk-sort-item:focus {
-  outline: none;
-  color: #409eff;
-}
-.twikoo .tk-icon.__comments {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  vertical-align: middle;
-  height: 0.75rem;
-  width: 0.75rem;
-  line-height: 0;
-  flex-shrink: 0;
-  cursor: pointer;
-  color: #409eff;
-}
-.twikoo .tk-icon.__comments.__active {
-  color: #ffffff;
-  background: #409eff;
-  border-radius: 0.125rem;
-  box-shadow: 0 0 0 0.2rem #409eff;
-}
-.twikoo .tk-icon.__comments svg {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-.twikoo div.code-toolbar {
-  position: relative;
-  border-radius: 0.3em;
-}
-.twikoo .tk-content pre,
-.twikoo .tk-preview-container pre {
-  overflow-x: auto;
-  max-width: 100%;
-}
-.twikoo .tk-content pre code,
-.twikoo .tk-preview-container pre code {
-  white-space: pre;
-  word-break: normal;
-}
-.twikoo div.code-toolbar > .toolbar {
-  position: absolute;
-  right: 4px;
-  top: 4px;
-  font-size: 0.8125rem;
-  font-weight: 500;
-  display: flex;
-}
-.twikoo div.code-toolbar > .toolbar > .toolbar-item {
-  margin-left: 0.3em;
-}
-.twikoo div.code-toolbar > .toolbar > .toolbar-item > a,
-.twikoo div.code-toolbar > .toolbar > .toolbar-item > button,
-.twikoo div.code-toolbar > .toolbar > .toolbar-item > span {
-  padding: 2px 4px;
-  border-radius: 0.3em;
-}
-.twikoo div.code-toolbar > .toolbar > .toolbar-item > button {
-  border: 1px solid rgba(128, 128, 128, 0.31);
-}
-.twikoo div.code-toolbar > .toolbar > .toolbar-item > button:hover {
-  cursor: pointer;
-}
-</style>

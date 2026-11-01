@@ -346,7 +346,7 @@ function handleView(comment: AdminCommentDto): void {
     if (url.hostname !== window.location.hostname) {
       securityAlert.value = {
         commentId: comment._id,
-        message: t("ADMIN_COMMENT_SECURITY_ALERT"),
+        message: t("ADMIN_COMMENT_SECURITY_ALERT").value,
         url: targetUrl,
       };
       return;
@@ -360,7 +360,7 @@ function handleView(comment: AdminCommentDto): void {
     } catch {
       securityAlert.value = {
         commentId: comment._id,
-        message: t("ADMIN_COMMENT_PARSE_ERROR"),
+        message: t("ADMIN_COMMENT_PARSE_ERROR").value,
         url: comment.url,
       };
     }
@@ -405,7 +405,7 @@ function closeEditor(): void {
 function cancelEdit(): void {
   if (
     editingText.value !== editingOriginal.value &&
-    !confirm(t("ADMIN_COMMENT_EDIT_DISCARD_CONFIRM"))
+    !confirm(t("ADMIN_COMMENT_EDIT_DISCARD_CONFIRM").value)
   ) {
     return;
   }
@@ -450,7 +450,7 @@ async function saveEdit(comment: AdminCommentDto): Promise<void> {
  * @param comment 评论
  */
 async function handleDelete(comment: AdminCommentDto): Promise<void> {
-  if (!confirm(t("ADMIN_COMMENT_DELETE_CONFIRM"))) return;
+  if (!confirm(t("ADMIN_COMMENT_DELETE_CONFIRM").value)) return;
   await updateComment("COMMENT_DELETE_FOR_ADMIN", { id: comment._id });
 }
 
@@ -515,110 +515,3 @@ onMounted(async () => {
   applyRendering(commentListRef.value);
 });
 </script>
-
-<style>
-.twikoo .tk-admin-comment {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.twikoo .tk-admin-comment a {
-  color: currentColor;
-  text-decoration: underline;
-}
-.twikoo .tk-admin-warn {
-  margin-bottom: 1em;
-}
-.twikoo .tk-admin-security-alert {
-  position: relative;
-  padding-right: 2.5rem;
-  margin-bottom: 0;
-}
-.twikoo .tk-admin-security-alert .tk-admin-close {
-  position: absolute;
-  top: 0;
-  right: 0;
-  float: none;
-  width: 1rem;
-  height: 1rem;
-  padding: 0.5rem;
-  margin: 0;
-  line-height: 0;
-}
-.twikoo .tk-admin-security-alert-message {
-  margin-bottom: 0.5em;
-}
-.twikoo .tk-admin-security-alert-url {
-  word-break: break-all;
-  background: rgba(0, 0, 0, 0.2);
-  padding: 0.5em;
-  border-radius: 4px;
-  margin-bottom: 0.5em;
-}
-.twikoo .tk-admin-comment-filter {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.twikoo .tk-admin-comment-filter-keyword {
-  flex: 1;
-}
-.twikoo .tk-admin-comment-filter-type {
-  height: 32px;
-  margin: 0 0.5em;
-  padding: 0 0.5em;
-  color: #ffffff;
-  background-color: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(144, 147, 153, 0.31);
-  border-radius: 4px;
-  position: relative;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-}
-.twikoo .tk-admin-comment-filter-type:focus {
-  border-color: #409eff;
-}
-.twikoo .tk-admin-comment-filter-type option {
-  color: initial;
-}
-.twikoo .tk-admin-comment-list {
-  margin-top: 1em;
-}
-.twikoo .tk-admin-comment-list,
-.twikoo .tk-admin-comment-item {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: stretch;
-}
-.twikoo .tk-admin-comment-item {
-  padding-bottom: 0.5em;
-  margin-bottom: 0.5em;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-}
-.twikoo .tk-admin-comment-meta {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  margin-bottom: 0.5em;
-}
-.twikoo .tk-admin-comment .tk-avatar {
-  margin-right: 0.5em;
-}
-.twikoo .tk-admin-comment .tk-content {
-  max-height: none;
-}
-.twikoo .tk-admin-actions {
-  display: flex;
-}
-.twikoo .tk-admin-comment-editor {
-  margin-top: 0.5em;
-}
-.twikoo .tk-admin-comment-editor-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.5em;
-  margin-top: 0.5em;
-}
-</style>

@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, reactive, watch } from "vue";
+import { computed, onMounted, onUnmounted, reactive, watch, type ComputedRef } from "vue";
 import TkInput from "../components/TkInput.vue";
 import { call, isQQ, t } from "../utils";
 import {
@@ -76,7 +76,7 @@ interface MetaData {
 }
 
 /** 输入项定义（含 i18n 标签） */
-const metaInputs: Array<{ key: MetaKey; locale: string; name: string; type: string }> = [
+const metaInputs: Array<{ key: MetaKey; locale: string | ComputedRef<string>; name: string; type: string }> = [
   { key: "nick", locale: t("META_INPUT_NICK"), name: "nick", type: "text" },
   { key: "mail", locale: t("META_INPUT_MAIL"), name: "mail", type: "email" },
   { key: "link", locale: t("META_INPUT_LINK"), name: "link", type: "text" },
@@ -241,32 +241,3 @@ onUnmounted(() => {
   busOff(EVENT_INIT_META, initMeta);
 });
 </script>
-
-<style>
-.twikoo .tk-meta-input {
-  display: flex;
-}
-.twikoo .tk-meta-input .tk-input {
-  width: auto;
-  width: calc((100% - 1rem) / 3); /* Fix Safari */
-  flex: 1;
-}
-.twikoo .tk-meta-input .tk-input + .tk-input {
-  margin-left: 0.5rem;
-}
-.twikoo .tk-meta-input .tk-input-group__prepend {
-  padding: 0 1rem;
-}
-@media screen and (max-width: 767px) {
-  .twikoo .tk-meta-input {
-    flex-direction: column;
-  }
-  .twikoo .tk-meta-input .tk-input {
-    width: auto;
-  }
-  .twikoo .tk-meta-input .tk-input + .tk-input {
-    margin-left: 0;
-    margin-top: 0.5rem;
-  }
-}
-</style>

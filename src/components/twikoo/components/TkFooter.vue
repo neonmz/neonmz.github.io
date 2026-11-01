@@ -18,13 +18,3 @@ const VERSION = "2.0.17";
 /** 当前版本（构建期注入；仓库内为 `0.0.0`） */
 const version = VERSION;
 </script>
-
-<style>
-.twikoo .tk-footer {
-  width: 100%;
-  text-align: end;
-  font-size: 0.75em;
-  color: #999999;
-  margin-top: 1em;
-}
-</style>

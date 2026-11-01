@@ -27,15 +27,3 @@ const svg = computed<string>(() => {
   return content;
 });
 </script>
-
-<style>
-.twikoo .tk-icon {
-  display: inline-block;
-  line-height: 1;
-}
-.twikoo .tk-icon svg {
-  height: 1em;
-  vertical-align: -0.125em;
-  fill: currentColor;
-}
-</style>

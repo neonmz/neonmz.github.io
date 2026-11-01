@@ -103,7 +103,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onMounted, onUnmounted, ref, watch } from "vue";
+import { computed, nextTick, onMounted, onUnmounted, ref, watch, unref, type ComputedRef } from "vue";
 import TkAvatar from "./TkAvatar.vue";
 import TkMetaInput from "./TkMetaInput.vue";
 import TkButton from "../components/TkButton.vue";
@@ -255,7 +255,7 @@ const commentPlaceholder = computed(() => {
 
 /** 最大长度（`LIMIT_LENGTH` ≤0 表示不限长） */
 const maxLength = computed(() => {
-  let limitLength = parseInt(String(props.config.LIMIT_LENGTH), 10);
+  let limitLength = Number.parseInt(String(props.config.LIMIT_LENGTH), 10);
   if (Number.isNaN(limitLength)) limitLength = 500;
   return limitLength > 0 ? limitLength : undefined;
 });
@@ -642,7 +642,7 @@ async function send(): Promise<void> {
   error.value = undefined;
   try {
     if (comment.value.match(new RegExp(`!\\[${t("IMAGE_UPLOAD_PLACEHOLDER")}.+\\]\\(\\)`))) {
-      throw new Error(t("IMAGE_UPLOAD_PLEASE_WAIT"));
+      throw new Error(t("IMAGE_UPLOAD_PLEASE_WAIT").value);
     }
     /** 页面标题（init 选项优先，缺省取 document.title） */
     const pageTitle = getAppState().options.title;
@@ -686,7 +686,7 @@ async function send(): Promise<void> {
     } else {
       throw new TwikooError(
         result.code !== undefined ? "REJECTED" : "UNKNOWN",
-        result.message ?? t("COMMENT_FAILED"),
+        result.message ?? t("COMMENT_FAILED").value,
         { rawMessage: result.message ?? "" },
       );
     }
@@ -901,10 +901,10 @@ function uploadCompleted(
  * @param fileType 文件类型
  * @param reason 失败原因
  */
-function uploadFailed(fileIndex: string, fileType: string, reason: string): void {
+function uploadFailed(fileIndex: string, fileType: string, reason: string | ComputedRef<string>): void {
   comment.value = comment.value.replace(
     getImagePlaceholder(fileIndex, fileType),
-    `_${t("IMAGE_UPLOAD_FAILED")}: ${reason}_`,
+    `_${t("IMAGE_UPLOAD_FAILED")}: ${unref(reason)}_`,
   );
   if (inputFileRef.value) inputFileRef.value.value = "";
 }
@@ -939,7 +939,7 @@ function getImagePlaceholder(fileIndex: string, fileType: string): string {
 /** 按 `COMMENT_BG_IMG` 设置 textarea 背景图（1.x onBgImgChange 对齐） */
 function onBgImgChange(): void {
   if (props.config.COMMENT_BG_IMG && textarea.value) {
-    textarea.value.style["background-image"] = `url("${String(props.config.COMMENT_BG_IMG)}")`;
+    textarea.value.style.backgroundImage = `url("${String(props.config.COMMENT_BG_IMG)}")`;
   }
 }
 
@@ -997,99 +997,3 @@ onUnmounted(() => {
   textarea.value?.removeEventListener("paste", onPaste);
 });
 </script>
-
-<style>
-.twikoo .tk-submit {
-  display: flex;
-  flex-direction: column;
-}
-.twikoo .tk-col {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-.twikoo .tk-meta-input {
-  margin-bottom: 0.5rem;
-}
-.twikoo .tk-row.actions {
-  position: relative;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  margin-left: 3.5rem;
-  align-items: center;
-  justify-content: flex-end;
-}
-.twikoo .tk-row-actions-start {
-  flex: 1;
-  display: flex;
-  align-items: center;
-}
-.twikoo .tk-submit-action-icon {
-  align-self: center;
-  display: inline-block;
-  width: 1.25em;
-  line-height: 0;
-  margin-right: 10px;
-  cursor: pointer;
-  flex-shrink: 0;
-}
-.twikoo .tk-submit-action-icon svg:hover {
-  opacity: 0.8;
-}
-/*
- * 提交栏图标按按钮宽度等比铺开（1.x 由全局 `.twikoo svg { width:100%; height:100% }` 达成）。
- * tk-icon 默认按 1em 定高，会让图片 / Markdown 图标比 1.x 小一圈；
- * 这里改成宽度撑满、高度按 SVG 比例自适应。
- */
-.twikoo .tk-submit-action-icon .tk-icon,
-.twikoo .tk-submit-action-icon .tk-icon svg {
-  width: 100%;
-}
-.twikoo .tk-submit-action-icon .tk-icon svg {
-  height: auto;
-}
-.twikoo .tk-submit-action-icon.__markdown {
-  color: #909399;
-}
-.twikoo .tk-input-image {
-  display: none;
-}
-.twikoo .tk-input {
-  flex: 1;
-}
-.twikoo .tk-input .tk-textarea__inner {
-  background-position: right bottom;
-  background-repeat: no-repeat;
-}
-.twikoo .tk-turnstile-container,
-.twikoo .tk-geetest-container,
-.twikoo .tk-cap-container {
-  position: absolute;
-  right: 0;
-  bottom: -75px;
-  z-index: 1;
-}
-.twikoo .tk-turnstile {
-  display: flex;
-  flex-direction: column;
-}
-.twikoo .tk-preview-container {
-  margin-left: 3rem;
-  margin-bottom: 1rem;
-  padding: 5px 15px;
-  border: 1px solid rgba(128, 128, 128, 0.31);
-  border-radius: 4px;
-  word-break: break-word;
-}
-.twikoo .tk-fade-in {
-  animation: tkFadeIn 0.3s;
-}
-@keyframes tkFadeIn {
-  0% {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-</style>

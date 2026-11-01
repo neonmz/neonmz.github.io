@@ -76,7 +76,7 @@ async function exportConfig(): Promise<void> {
 function downloadJson(fileName: string, json: unknown): void {
   const jsonStr = json instanceof Object ? JSON.stringify(json, null, 2) : String(json);
   const blob = new Blob([jsonStr]);
-  const saveLink = document.createElementNS("http://www.w3.org/1999/xhtml", "a");
+  const saveLink = document.createElementNS("http://www.w3.org/1999/xhtml", "a") as HTMLAnchorElement;
   saveLink.href = URL.createObjectURL(blob);
   saveLink.download = fileName;
   saveLink.click();

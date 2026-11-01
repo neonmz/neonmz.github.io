@@ -43,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-import { nextTick, reactive, ref } from "vue";
+import { nextTick, reactive, ref, unref, type ComputedRef } from "vue";
 import TkButton from "../components/TkButton.vue";
 import TkInput from "../components/TkInput.vue";
 import { call, readAsText, t } from "../utils";
@@ -58,9 +58,9 @@ const source = ref("");
 const logText = ref("");
 /** 各来源的提示文案（1.x warnText 同表） */
 const warnText = reactive<Record<string, string>>({
-  valine: t("ADMIN_IMPORT_TIP_VALINE"),
-  disqus: t("ADMIN_IMPORT_TIP_DISQUS"),
-  artalk: t("ADMIN_IMPORT_TIP_ARTALK"),
+  valine: t("ADMIN_IMPORT_TIP_VALINE").value,
+  disqus: t("ADMIN_IMPORT_TIP_DISQUS").value,
+  artalk: t("ADMIN_IMPORT_TIP_ARTALK").value,
   artalk2: "",
   twikoo: "",
 });
@@ -73,8 +73,8 @@ const logTextAreaRef = ref<{ inputEl?: HTMLInputElement | HTMLTextAreaElement }>
  * 追加一行日志并滚动到底（1.x log 对齐）。
  * @param message 日志内容
  */
-function log(message: string): void {
-  logText.value += `${new Date().toLocaleString()} ${message}\n`;
+function log(message: string | ComputedRef<string>): void {
+  logText.value += `${new Date().toLocaleString()} ${unref(message)}\n`;
   void nextTick(() => {
     const el = logTextAreaRef.value?.inputEl;
     if (el) el.scrollTop = el.scrollHeight;
@@ -224,38 +224,3 @@ async function importConfig(): Promise<void> {
   }
 }
 </script>
-
-<style>
-.twikoo .tk-admin-import {
-  display: flex;
-  flex-direction: column;
-}
-.twikoo .tk-admin-import-label {
-  margin-top: 1em;
-  font-size: 1.25rem;
-  font-weight: bold;
-}
-.twikoo .tk-admin-import select,
-.twikoo .tk-admin-import input,
-.twikoo .tk-admin-import .tk-button,
-.twikoo .tk-admin-import .tk-input {
-  margin-top: 1em;
-}
-.twikoo .tk-admin-import-actions {
-  display: flex;
-}
-.twikoo .tk-admin-import-actions .tk-button {
-  flex: 1;
-}
-.twikoo .tk-admin-import select {
-  height: 32px;
-  padding: 0 0.5em;
-  color: #ffffff;
-  background-color: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(144, 147, 153, 0.31);
-  border-radius: 4px;
-}
-.twikoo .tk-admin-import select option {
-  color: initial;
-}
-</style>

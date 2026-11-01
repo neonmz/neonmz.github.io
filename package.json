@@ -73,6 +73,7 @@
     "vue": "^3.5.44"
   },
   "devDependencies": {
+    "postcss-combine-duplicated-selectors": "^11.0.0",
     "@astrojs/ts-plugin": "^1.10.6",
     "@biomejs/biome": "2.6.2",
     "@fortawesome/fontawesome-free": "^7.3.1",
