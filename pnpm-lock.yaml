@@ -110,9 +110,6 @@ importers:
       postcss:
         specifier: ^8.5.31
         version: 8.5.31
-      postcss-combine-duplicated-selectors:
-        specifier: ^11.0.0
-        version: 11.0.0(postcss@8.5.31)
       prismjs:
         specifier: ^1.30.0
         version: 1.30.0
@@ -198,6 +195,9 @@ importers:
       '@types/sanitize-html':
         specifier: ^2.16.2
         version: 2.16.2
+      postcss-combine-duplicated-selectors:
+        specifier: ^11.0.0
+        version: 11.0.0(postcss@8.5.31)
       postcss-import:
         specifier: ^17.0.1
         version: 17.0.1(postcss@8.5.31)
