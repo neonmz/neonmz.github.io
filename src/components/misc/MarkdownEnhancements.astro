@@ -19,9 +19,7 @@ function loadStylesheet(href: string) {
     document.head.appendChild(link);
     loadedStylesheets.add(href);
 }
-</script>
 
-<script>
 if (!window.__fuwariCopyButtonBound) {
     window.__fuwariCopyButtonBound = true;
 
@@ -51,9 +49,7 @@ if (!window.__fuwariCopyButtonBound) {
         }
     });
 }
-</script>
 
-<script>
 let codeFontPromise;
 
 async function loadCodeFont() {
@@ -70,9 +66,7 @@ async function loadCodeFont() {
 if (document.querySelector(".custom-md pre code, .custom-md code")) {
     loadCodeFont();
 }
-</script>
 
-<script>
 let katexCssPromise;
 
 async function loadKatexStyles() {
@@ -86,9 +80,7 @@ async function loadKatexStyles() {
 if (document.querySelector(".custom-md .katex, .custom-md .katex-display")) {
     loadKatexStyles();
 }
-</script>
 
-<script>
 let lightbox;
 let photoSwipeLightboxPromise;
 const gallerySelector = ".custom-md img, #post-cover img";
