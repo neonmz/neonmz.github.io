@@ -19,7 +19,7 @@ export async function getAboutMultiLanguage() {
 }
 
 export async function getStatusPages() {
-	const statusPages = await getCollection("status");
+	const statusPages = await getCollection("http");
 
 	return statusPages;
 }

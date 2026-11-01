@@ -128,6 +128,14 @@ declare module 'astro:content' {
   rendered?: RenderedContent;
   filePath?: string;
 }>;
+"http": Record<string, {
+  id: string;
+  body?: string;
+  collection: "http";
+  data: InferEntrySchema<"http">;
+  rendered?: RenderedContent;
+  filePath?: string;
+}>;
 "posts": Record<string, {
   id: string;
   body?: string;
@@ -141,14 +149,6 @@ declare module 'astro:content' {
   body?: string;
   collection: "spec";
   data: InferEntrySchema<"spec">;
-  rendered?: RenderedContent;
-  filePath?: string;
-}>;
-"status": Record<string, {
-  id: string;
-  body?: string;
-  collection: "status";
-  data: InferEntrySchema<"status">;
   rendered?: RenderedContent;
   filePath?: string;
 }>;

@@ -47,10 +47,10 @@ const specCollection = defineCollection({
 	schema: z.object({}),
 });
 
-const statusCollection = defineCollection({
+const httpStatusCollection = defineCollection({
 	loader: glob({
 		pattern: "**/[^_]*.{md,mdx}",
-		base: "./src/content/status",
+		base: "./src/content/http",
 	}),
 	schema: z.object({}),
 });
@@ -60,5 +60,5 @@ export const collections = {
 	about: aboutCollection,
 	posts: postsCollection,
 	spec: specCollection,
-	status: statusCollection,
+	http: httpStatusCollection,
 };

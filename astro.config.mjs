@@ -122,7 +122,9 @@ export default defineConfig({
             minifyCSS: true,
             minifyJS: true,
             minifySVG: true,
-        }), sitemap(), vue()],
+        }), sitemap({
+            filter: (page) => !page.startsWith(site + '/http/'),
+        }), vue()],
     markdown: {
         remarkPlugins: [
             remarkMath,
