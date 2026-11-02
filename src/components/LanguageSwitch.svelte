@@ -1,5 +1,7 @@
 <script lang="ts">
 import I18nKey from "@i18n/i18nKey";
+// @ts-ignore virtual module
+import 'virtual:iconify-bundle';
 import Icon from "@iconify/svelte";
 import { onMount } from "svelte";
 import {

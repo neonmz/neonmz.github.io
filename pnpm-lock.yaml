@@ -183,6 +183,9 @@ importers:
       '@fortawesome/fontawesome-free':
         specifier: ^7.3.1
         version: 7.3.1
+      '@kirchdev/vite-plugin-iconify-bundle':
+        specifier: ^0.4.0
+        version: 0.4.0(vite@7.3.7(@types/node@26.6.5)(jiti@2.7.0)(lightningcss@1.33.0)(sass@1.80.4)(stylus@0.64.0)(terser@5.51.2)(yaml@2.8.2))
       '@types/hast':
         specifier: ^3.0.4
         version: 3.0.4
@@ -1503,6 +1506,16 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
+
+  '@kirchdev/vite-plugin-iconify-bundle@0.4.0':
+    resolution: {integrity: sha512-CfWLkcgqyWn3BFpGYlRyIYFB5hAP8UOt2MHuhBSYbLzn33i+ybOoZUdIU/YAz5/0WzQzmTVU0L5IM0oaUaArGg==}
+    engines: {node: '>=24'}
+    peerDependencies:
+      '@iconify/vue': '*'
+      vite: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
+    peerDependenciesMeta:
+      '@iconify/vue':
+        optional: true
 
   '@napi-rs/lzma-linux-x64-gnu@1.5.1':
     resolution: {integrity: sha512-oTXEIha4SsuXdTA4Iyskj0kpdx2yVXdhd75c2v3xGrHFfVMsbhTPZU/nMPL4sWKo4pBHm3aucLaqGlF696dTyQ==}
@@ -7295,6 +7308,12 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.6.0
+
+  '@kirchdev/vite-plugin-iconify-bundle@0.4.0(vite@7.3.7(@types/node@26.6.5)(jiti@2.7.0)(lightningcss@1.33.0)(sass@1.80.4)(stylus@0.64.0)(terser@5.51.2)(yaml@2.8.2))':
+    dependencies:
+      '@iconify/types': 2.0.0
+      '@iconify/utils': 3.1.7
+      vite: 7.3.7(@types/node@26.6.5)(jiti@2.7.0)(lightningcss@1.33.0)(sass@1.80.4)(stylus@0.64.0)(terser@5.51.2)(yaml@2.8.2)
 
   '@napi-rs/lzma-linux-x64-gnu@1.5.1':
     optional: true

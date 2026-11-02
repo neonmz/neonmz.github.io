@@ -1,4 +1,6 @@
 <script lang="ts">
+	// @ts-ignore virtual module
+	import 'virtual:iconify-bundle';
 	import Icon from "@iconify/svelte";
 	import { language, translate } from "@/i18n/client";
 	import Key from "@/i18n/i18nKey";

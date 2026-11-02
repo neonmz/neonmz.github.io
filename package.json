@@ -73,14 +73,15 @@
     "vue": "^3.5.44"
   },
   "devDependencies": {
-    "postcss-combine-duplicated-selectors": "^11.0.0",
     "@astrojs/ts-plugin": "^1.10.6",
     "@biomejs/biome": "2.6.2",
     "@fortawesome/fontawesome-free": "^7.3.1",
+    "@kirchdev/vite-plugin-iconify-bundle": "^0.4.0",
     "@types/hast": "^3.0.4",
     "@types/markdown-it": "^14.2.0",
     "@types/mdast": "^4.0.4",
     "@types/sanitize-html": "^2.16.2",
+    "postcss-combine-duplicated-selectors": "^11.0.0",
     "postcss-import": "^17.0.1",
     "rollup": "^4.65.0"
   },

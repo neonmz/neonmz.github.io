@@ -16,6 +16,7 @@ import remarkMath from "remark-math";
 import remarkSectionize from "remark-sectionize";
 import rehypeExternalLinks from 'rehype-external-links';
 import htmlMinifier from "astro-html-minifier-next";
+import { iconifyBundlePlugin } from '@kirchdev/vite-plugin-iconify-bundle';
 import { expressiveCodeConfig } from "./src/config.ts";
 import { pluginCustomCopyButton } from "./src/plugins/expressive-code/custom-copy-button.js";
 import { pluginLanguageBadge } from "./src/plugins/expressive-code/language-badge.ts";
@@ -181,7 +182,15 @@ export default defineConfig({
         ],
     },
     vite: {
-        plugins: [tailwindcss()],
+        plugins: [
+            tailwindcss(),
+            iconifyBundlePlugin({
+                sourceDir: 'src',
+                collections: ['material-symbols', 'fa6-solid', 'fa6-brands', 'fa6-regular'],
+                extensions: ['.svelte'],
+                runtime: '@iconify/svelte',
+            }),
+        ],
         build: {
             minify: "terser",
             sourcemap: false,
