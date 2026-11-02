@@ -18,6 +18,9 @@ try {
     format: {
       comments: false,
     },
+    mangle: {
+      toplevel: true,
+    },
   });
 
   writeFileSync(dstPath, result.code);
