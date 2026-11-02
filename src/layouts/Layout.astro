@@ -138,6 +138,9 @@ const bannerOffset =
 			offset = offset - offset % 4;
 			document.documentElement.style.setProperty('--banner-height-extend', `${offset}px`);
 		</script>
+		<script>
+			import "../sw/sw-register";
+		</script>
 
 		<slot name="head"></slot>
 

@@ -46,7 +46,7 @@ const site = "https://neonmz.github.io"
 export default defineConfig({
     site,
     // base,
-    trailingSlash: "always",
+    trailingSlash: "ignore",
     integrations: [swup({
         theme: false,
         animationClass: "transition-swup-", // see https://swup.js.org/options/#animationselector
@@ -195,8 +195,14 @@ export default defineConfig({
             minify: "terser",
             sourcemap: false,
             terserOptions: {
-                format: { comments: false },
-                compress: { drop_console: true, passes: 2 },
+                format: {
+                    comments: false,
+                },
+                compress: {
+                    drop_console: true,
+                    drop_debugger: true,
+                    passes: 2,
+                },
             },
             assetsInlineLimit: 0,
             cssCodeSplit: false,

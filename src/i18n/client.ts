@@ -137,6 +137,7 @@ export function applyLanguage(lang: SupportedLanguage): void {
 	// 	window.twikoo.reInit();
 	// }
 	twikooLoadLanguage({lang: langCodeMapTwikoo[lang]});
+	window.swSetLang(lang);
 }
 
 export function setLanguage(lang: SupportedLanguage): void {

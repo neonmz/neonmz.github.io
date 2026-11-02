@@ -6,7 +6,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "check": "astro check",
-    "build": "astro build && pagefind --site dist",
+    "build": "astro build && pagefind --site dist && node ./scripts/generate-hash.mjs",
     "preview": "astro preview",
     "astro": "astro",
     "type-check": "tsc --noEmit --isolatedDeclarations",
@@ -83,7 +83,8 @@
     "@types/sanitize-html": "^2.16.2",
     "postcss-combine-duplicated-selectors": "^11.0.0",
     "postcss-import": "^17.0.1",
-    "rollup": "^4.65.0"
+    "rollup": "^4.65.0",
+    "terser": "^5.51.2"
   },
   "packageManager": "pnpm@9.14.4"
 }
