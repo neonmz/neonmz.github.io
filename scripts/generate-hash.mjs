@@ -1,44 +1,6 @@
 import { readdirSync, readFileSync, writeFileSync, statSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import path from 'node:path';
-import { rollup } from 'rollup';
-import terser from '@rollup/plugin-terser'; 
-
-const swPath = "./src/sw/sw.js";
-const dstPath = "./dist/sw.js";
-
-async function buildSw() {
-  // 1. 让 Rollup 先做死代码消除和常量折叠
-  const bundle = await rollup({
-    input: swPath,
-    output: dstPath,
-  });
-
-  // 2. 输出，并顺手交给 Terser 压扁
-  await bundle.write({
-    file: dstPath,
-    format: 'es',
-    plugins: [
-      terser({
-        compress: {
-          drop_console: true,
-          drop_debugger: true,
-          passes: 2,
-          toplevel: true, // 让 Terser 配合 Rollup 把顶层也扬了
-        },
-        mangle: {
-          toplevel: true,
-        },
-        format: {
-          comments: false,
-        },
-      })
-    ]
-  });
-  
-  console.log(`${swPath} => ${dstPath}`);
-}
-await buildSw().catch(console.error);
 
 const distDir = './dist';
 

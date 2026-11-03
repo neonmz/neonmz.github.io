@@ -14,6 +14,7 @@ import { zh_TW } from "./languages/zh_TW";
 import type { Translation } from "./translation";
 import { debug } from "node_modules/astro/dist/core/logger/core";
 import { loadLanguage as twikooLoadLanguage } from "@components/twikoo/i18n";
+import { setLanguage as swSetLanguage } from "@/sw/register";
 
 export const supportedLanguages = [
 	{ code: "zh_CN", label: "简体中文" },
@@ -137,7 +138,7 @@ export function applyLanguage(lang: SupportedLanguage): void {
 	// 	window.twikoo.reInit();
 	// }
 	twikooLoadLanguage({lang: langCodeMapTwikoo[lang]});
-	window.swSetLang(lang);
+	swSetLanguage(lang);
 }
 
 export function setLanguage(lang: SupportedLanguage): void {

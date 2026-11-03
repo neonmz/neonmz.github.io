@@ -139,7 +139,11 @@ const bannerOffset =
 			document.documentElement.style.setProperty('--banner-height-extend', `${offset}px`);
 		</script>
 		<script>
-			import "../sw/sw-register";
+			import { registerSW } from '@/sw/register';
+
+			const lang = localStorage.getItem('language') ?? 'zh-cn'; // storage 由业务侧管
+
+			registerSW({ url: '/sw.js', scope: '/', language: lang });
 		</script>
 
 		<slot name="head"></slot>
