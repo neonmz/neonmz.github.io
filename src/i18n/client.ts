@@ -106,37 +106,7 @@ export function applyLanguage(lang: SupportedLanguage): void {
 			element.setAttribute("aria-label", translate(key, lang));
 		}
 	}
-	const segments = location.pathname.split("/") //.filter(Boolean);
-	// if (segments[segments.length - 1] !== "") segments.push("");
-	// if (segments[0] !== "") segments.unshift("");
-	const langCode = segments[segments.length - 2];
-	const pageInfo = window.pageInfo ?? { path: "", languages: [], siteLanguage: "en" };
-	const isLangIndexPage = pageInfo.languages.indexOf(langCode) < 0;
-	const isLangSupported = pageInfo.languages.indexOf(lang.toLowerCase()) > -1;
-	if (langCode !== lang.toLowerCase() && (pageInfo.path === location.pathname || !isLangIndexPage && pageInfo.path === [...segments.slice(0, -2),...segments.slice(-1)].join("/"))) {
-
-
-		if (isLangSupported)
-		{
-			if (isLangIndexPage) {
-				segments[segments.length - 1] = lang.toLowerCase();
-				segments[segments.length] = "";
-			} else {
-				segments[segments.length - 2] = lang.toLowerCase();
-			}
-			console.log(segments.join("/"));
-			if (window.swup && typeof window.swup.navigate === 'function') {
-				window.swup.navigate(segments.join("/"));
-
-			} else {
-				location.pathname = segments.join("/");
-			}
-		}
-	}
-	// if (window.twikoo && window.twikoo.reInit) {
-	// 	window.twikoo.twikooOptions.lang = langCodeMapTwikoo[lang];
-	// 	window.twikoo.reInit();
-	// }
+	
 	twikooLoadLanguage({lang: langCodeMapTwikoo[lang]});
 	swSetLanguage(lang);
 }

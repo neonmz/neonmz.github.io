@@ -13,6 +13,8 @@ const MSG = {
   SKIP_WAITING: "sw:skip-waiting",
   STATUS: "sw:status",
   CLEAR: "sw:clear",
+  NET_RESET: "sw:net-reset",
+  ROUTING_SET: "sw:routing-set",
   SECURITY: "sw:security",
   SECURITY_SET: "sw:security-set"
 };
@@ -221,11 +223,17 @@ function applyUpdate() {
 function clearAll() {
   void post({ type: MSG.CLEAR });
 }
+function setRouting(patch) {
+  void post({ type: MSG.ROUTING_SET, routing: patch });
+}
 function setSecurity(patch) {
   void post({ type: MSG.SECURITY_SET, security: patch });
 }
 function getSecurity(reset = false) {
   void post({ type: MSG.SECURITY, reset });
+}
+function retryOrigin(origin) {
+  void post({ type: MSG.NET_RESET, origin });
 }
 function precache() {
   void post({ type: MSG.PRECACHE });
@@ -246,7 +254,9 @@ export {
   refresh,
   registerSW,
   reloadHeaders,
+  retryOrigin,
   setLanguage,
+  setRouting,
   setSecurity,
   syncNow,
   unregisterSW,
