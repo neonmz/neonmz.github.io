@@ -148,4 +148,5 @@ export const zh_CN: Translation = {
 	[Key.allRightsReserved]: "保留所有权利。",
 	[Key.poweredBy]: "由",
 	[Key.siteSource]: "本站开源在",
+	[Key.siteSourceAfter]: "",
 };

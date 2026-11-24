@@ -1,10 +1,10 @@
 ---
 import MusicPlayer from "@components/MusicPlayer.svelte";
-import { MusicConfig } from "@/config";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import MainGridLayout from "@layouts/MainGridLayout.astro";
 import { getMusicItems } from "@utils/music";
+import { MusicConfig } from "@/config";
 
 const { items, errorMessage } = await getMusicItems();
 ---

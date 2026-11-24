@@ -1,5 +1,5 @@
 <script lang="ts">
-	// @ts-ignore virtual module
+	// @ts-expect-error virtual module
 	import 'virtual:iconify-bundle';
 	import Icon from "@iconify/svelte";
 	import { language, translate } from "@/i18n/client";
@@ -7,8 +7,6 @@
 	import { loadLrcLines, type MusicLyricLine } from "@/utils/music-lrc";
 	import type { MusicTrack } from "@/utils/music";
 	import { tick } from "svelte";
-	import { cubicOut } from "svelte/easing";
-	import { slide } from "svelte/transition";
 
 	export let tracks: MusicTrack[] = [];
 	export let musicPageUrl = "/music/";

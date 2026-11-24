@@ -150,4 +150,5 @@ export const ko: Translation = {
 	[Key.allRightsReserved]: "모든 권리 보유.",
 	[Key.poweredBy]: "Powered by",
 	[Key.siteSource]: "사이트 소스는",
+	[Key.siteSourceAfter]: "",
 };

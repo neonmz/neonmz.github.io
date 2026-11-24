@@ -150,4 +150,5 @@ export const tr: Translation = {
 	[Key.allRightsReserved]: "Tüm hakları saklıdır.",
 	[Key.poweredBy]: "Powered by",
 	[Key.siteSource]: "Site kaynağı",
+	[Key.siteSourceAfter]: "",
 };

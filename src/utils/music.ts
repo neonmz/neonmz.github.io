@@ -52,7 +52,10 @@ function normalizeAssetUrl(value?: string): string | undefined {
 	return url(value.startsWith("/") ? value : `/${value}`);
 }
 
-function normalizeTrack(item: MusicTrackInput, index: number): MusicTrack | null {
+function normalizeTrack(
+	item: MusicTrackInput,
+	index: number,
+): MusicTrack | null {
 	const sourceUrl = normalizeAssetUrl(item.url);
 	if (!sourceUrl) return null;
 
@@ -86,9 +89,12 @@ function parseMusicPayload(payload: unknown): MusicTrack[] {
 
 async function getMusicFromJson(): Promise<MusicResult> {
 	try {
-		const file = await readFile(path.resolve(process.cwd(), MusicConfig.jsonPath), {
-			encoding: "utf-8",
-		});
+		const file = await readFile(
+			path.resolve(process.cwd(), MusicConfig.jsonPath),
+			{
+				encoding: "utf-8",
+			},
+		);
 		const payload = JSON.parse(file) as unknown;
 		return {
 			items: parseMusicPayload(payload),

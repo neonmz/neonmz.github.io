@@ -1,22 +1,9 @@
 ---
-import type { GetStaticPaths } from "astro";
-import path from "node:path";
-import License from "@components/misc/License.astro";
+import { getEntry, render } from "astro:content";
 import Markdown from "@components/misc/Markdown.astro";
-import MarkdownEnhancements from "@components/misc/MarkdownEnhancements.astro";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import MainGridLayout from "@layouts/MainGridLayout.astro";
-import { getAboutMultiLanguage } from "@utils/content-utils";
-import { getPostUrlBySlug } from "@utils/url-utils";
-import { Icon } from "astro-icon/components";
-import { licenseConfig } from "src/config";
-import ImageWrapper from "../../components/misc/ImageWrapper.astro";
-import PostMetadata from "../../components/PostMeta.astro";
-import { profileConfig, siteConfig } from "../../config";
-import { formatDateToYYYYMMDD } from "../../utils/date-utils";
-import { getEntry, render } from "astro:content";
-import { readonly } from "astro:schema";
 
 // export async function getStaticPaths() {
 // 	const aboutEntries = await getAboutMultiLanguage();
@@ -26,12 +13,12 @@ import { readonly } from "astro:schema";
 // 	}));
 // }
 export async function getStaticPaths() {
-    return [
-        {
-            params: { slug: "about" },
-            props: { entry: await getEntry("spec", "about") }
-        }
-    ]
+	return [
+		{
+			params: { slug: "about" },
+			props: { entry: await getEntry("spec", "about") },
+		},
+	];
 }
 
 const { entry } = Astro.props;
@@ -47,8 +34,6 @@ const { entry } = Astro.props;
 if (!entry) {
 	throw new Error("About page content not found");
 }
-
-
 
 const { Content } = await render(entry);
 ---

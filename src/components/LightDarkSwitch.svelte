@@ -1,7 +1,7 @@
 <script lang="ts">
 import { AUTO_MODE, DARK_MODE, LIGHT_MODE } from "@constants/constants.ts";
 import I18nKey from "@i18n/i18nKey";
-// @ts-ignore virtual module
+// @ts-expect-error virtual module
 import 'virtual:iconify-bundle';
 import Icon from "@iconify/svelte";
 import {

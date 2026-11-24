@@ -150,4 +150,5 @@ export const vi: Translation = {
 	[Key.allRightsReserved]: "Bảo lưu mọi quyền.",
 	[Key.poweredBy]: "Được xây dựng bằng",
 	[Key.siteSource]: "Mã nguồn trang web tại",
+	[Key.siteSourceAfter]: "",
 };

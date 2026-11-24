@@ -64,23 +64,26 @@ function parseFansPayload(payload: FansJsonPayload): FanItem[] {
 		return [];
 	}
 
-	if (typeof payload.code === "number" && payload.code !== 0) {
+	// 联合类型里有的分支没有 code/message，先收窄成宽松的记录再逐项判断
+	const raw: Record<string, unknown> = payload;
+
+	if (typeof raw.code === "number" && raw.code !== 0) {
 		throw new Error(
-			typeof payload.message === "string"
-				? payload.message
-				: `Bilibili code ${payload.code}`,
+			typeof raw.message === "string"
+				? raw.message
+				: `Bilibili code ${raw.code}`,
 		);
 	}
 
-	if (Array.isArray(payload.list)) {
-		return payload.list as FanItem[];
+	if (Array.isArray(raw.list)) {
+		return raw.list as FanItem[];
 	}
 
-	if (Array.isArray(payload.data)) {
-		return payload.data as FanItem[];
+	if (Array.isArray(raw.data)) {
+		return raw.data as FanItem[];
 	}
 
-	const data = payload.data;
+	const data = raw.data;
 	if (isRecord(data) && Array.isArray(data.list)) {
 		return data.list as FanItem[];
 	}

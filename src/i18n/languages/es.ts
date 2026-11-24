@@ -153,4 +153,5 @@ export const es: Translation = {
 	[Key.allRightsReserved]: "Todos los derechos reservados.",
 	[Key.poweredBy]: "Desarrollado con",
 	[Key.siteSource]: "Código fuente disponible en",
+	[Key.siteSourceAfter]: "",
 };

@@ -122,23 +122,26 @@ function parseDynamicPayload(payload: DynamicJsonPayload): DynamicItem[] {
 		return [];
 	}
 
-	if (typeof payload.code === "number" && payload.code !== 0) {
+	// 联合类型里有的分支没有 code/message，先收窄成宽松的记录再逐项判断
+	const raw: Record<string, unknown> = payload;
+
+	if (typeof raw.code === "number" && raw.code !== 0) {
 		throw new Error(
-			typeof payload.message === "string"
-				? payload.message
-				: `Bilibili code ${payload.code}`,
+			typeof raw.message === "string"
+				? raw.message
+				: `Bilibili code ${raw.code}`,
 		);
 	}
 
-	if (Array.isArray(payload.items)) {
-		return payload.items as DynamicItem[];
+	if (Array.isArray(raw.items)) {
+		return raw.items as DynamicItem[];
 	}
 
-	if (Array.isArray(payload.data)) {
-		return payload.data as DynamicItem[];
+	if (Array.isArray(raw.data)) {
+		return raw.data as DynamicItem[];
 	}
 
-	const data = payload.data;
+	const data = raw.data;
 	if (isRecord(data) && Array.isArray(data.items)) {
 		return data.items as DynamicItem[];
 	}
@@ -202,7 +205,9 @@ export async function getDynamicItems(): Promise<DynamicResult> {
 
 	if (!dynamicItemsPromise) {
 		dynamicItemsPromise =
-			DynamicConfig.source === "api" ? getDynamicFromApi() : getDynamicFromJson();
+			DynamicConfig.source === "api"
+				? getDynamicFromApi()
+				: getDynamicFromJson();
 	}
 	return dynamicItemsPromise;
 }

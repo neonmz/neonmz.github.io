@@ -6,7 +6,7 @@ import { getCategoryUrl } from "@utils/url-utils.ts";
 async function getRawAboutMultiLanguage() {
 	const allLanguages = await getCollection("about");
 
-	return allLanguages //.filter((entry) => entry.id.startsWith("about/"));
+	return allLanguages; //.filter((entry) => entry.id.startsWith("about/"));
 }
 
 export async function getAboutMultiLanguage() {
@@ -23,7 +23,6 @@ export async function getStatusPages() {
 
 	return statusPages;
 }
-
 
 // // Retrieve posts and sort them by publication date
 async function getRawSortedPosts() {
@@ -50,12 +49,13 @@ let _getSortedPosts = async () => {
 		sorted[i].data.prevSlug = sorted[i + 1].id;
 		sorted[i].data.prevTitle = sorted[i + 1].data.title;
 	}
-	if (import.meta.env.PROD)
-		_getSortedPosts = async () => sorted;
+	if (import.meta.env.PROD) _getSortedPosts = async () => sorted;
 
 	return sorted;
+};
+export async function getSortedPosts() {
+	return await _getSortedPosts();
 }
-export async function getSortedPosts() { return await _getSortedPosts(); }
 
 export type PostForList = {
 	slug: string;
@@ -109,7 +109,7 @@ export async function getCategoryList(): Promise<Category[]> {
 	const allBlogPosts = await getCollection<"posts">("posts", ({ data }) => {
 		return import.meta.env.PROD ? data.draft !== true : true;
 	});
-	const count: { [key: string]: {count : number, I18nKey: string} } = {};
+	const count: { [key: string]: { count: number; I18nKey: string } } = {};
 	allBlogPosts.forEach((post: { data: { category: string | null } }) => {
 		if (!post.data.category) {
 			const ucKey = i18n(I18nKey.uncategorized);

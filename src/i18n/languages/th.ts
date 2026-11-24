@@ -149,4 +149,5 @@ export const th: Translation = {
 	[Key.allRightsReserved]: "สงวนลิขสิทธิ์",
 	[Key.poweredBy]: "ขับเคลื่อนโดย",
 	[Key.siteSource]: "ซอร์สของเว็บไซต์อยู่ที่",
+	[Key.siteSourceAfter]: "",
 };

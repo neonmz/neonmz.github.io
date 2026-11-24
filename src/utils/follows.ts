@@ -105,7 +105,9 @@ export async function getFollowItems(): Promise<FollowsResult> {
 
 	if (!followItemsPromise) {
 		followItemsPromise =
-			FollowsConfig.source === "api" ? getFollowsFromApi() : getFollowsFromJson();
+			FollowsConfig.source === "api"
+				? getFollowsFromApi()
+				: getFollowsFromJson();
 	}
 	return followItemsPromise;
 }

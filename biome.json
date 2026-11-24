@@ -11,6 +11,12 @@
 			"**",
 			"!**/src/**/*.css",
 			"!**/src/public/**/*",
+			"!**/src/sw/register.js",
+			"!**/src/sw/register.d.ts",
+			"!**/src/components/twikoo/**/*",
+			"**/src/components/twikoo/twikoo.scss",
+			"!**/src/data/**/*",
+			"!**/src/content/**/*",
 			"!**/dist/**/*",
 			"!**/node_modules/**/*"
 		]
@@ -55,6 +61,21 @@
 					"correctness": {
 						"noUnusedVariables": "off",
 						"noUnusedImports": "off"
+					}
+				}
+			}
+		},
+		{
+			"includes": ["**/*.svelte"],
+			"formatter": { "enabled": false },
+			"assist": { "enabled": false }
+		},
+		{
+			"includes": ["**/src/components/twikoo/twikoo.scss"],
+			"linter": {
+				"rules": {
+					"style": {
+						"noDescendingSpecificity": "off"
 					}
 				}
 			}

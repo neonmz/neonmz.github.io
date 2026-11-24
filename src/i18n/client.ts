@@ -1,5 +1,7 @@
+import { loadLanguage as twikooLoadLanguage } from "@components/twikoo/i18n";
 import { type Writable, writable } from "svelte/store";
 import { siteConfig } from "@/config";
+import { setLanguage as swSetLanguage } from "@/sw/register";
 import type I18nKey from "./i18nKey";
 import { en } from "./languages/en";
 import { es } from "./languages/es";
@@ -12,9 +14,6 @@ import { vi } from "./languages/vi";
 import { zh_CN } from "./languages/zh_CN";
 import { zh_TW } from "./languages/zh_TW";
 import type { Translation } from "./translation";
-import { debug } from "node_modules/astro/dist/core/logger/core";
-import { loadLanguage as twikooLoadLanguage } from "@components/twikoo/i18n";
-import { setLanguage as swSetLanguage } from "@/sw/register";
 
 export const supportedLanguages = [
 	{ code: "zh_CN", label: "简体中文" },
@@ -30,16 +29,16 @@ export const supportedLanguages = [
 ] as const;
 
 const langCodeMapTwikoo = {
-	"zh_CN": "zh-CN",
-	"zh_TW": "zh-TW",
-	"en": "en",
-	"ja": "ja-JP",
-	"ko": "ko-KR",
-	"es": undefined,
-	"th": undefined,
-	"vi": "vi-VN",
-	"tr": undefined,
-	"id": "id-ID",
+	zh_CN: "zh-CN",
+	zh_TW: "zh-TW",
+	en: "en",
+	ja: "ja-JP",
+	ko: "ko-KR",
+	es: undefined,
+	th: undefined,
+	vi: "vi-VN",
+	tr: undefined,
+	id: "id-ID",
 };
 
 export type SupportedLanguage = (typeof supportedLanguages)[number]["code"];
@@ -106,8 +105,8 @@ export function applyLanguage(lang: SupportedLanguage): void {
 			element.setAttribute("aria-label", translate(key, lang));
 		}
 	}
-	
-	twikooLoadLanguage({lang: langCodeMapTwikoo[lang]});
+
+	twikooLoadLanguage({ lang: langCodeMapTwikoo[lang] });
 	swSetLanguage(lang);
 }
 

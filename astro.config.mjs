@@ -216,6 +216,10 @@ export default defineConfig({
                     ) {
                         return;
                     }
+                    // zod 4.6 源码里有 rollup 无法解析的注释标注，来自依赖本身，改不了
+                    if (warning.code === "INVALID_ANNOTATION") {
+                        return;
+                    }
                     warn(warning);
                 },
             },

@@ -14,7 +14,10 @@ const postsCollection = defineCollection({
 		draft: z.boolean().optional().default(false),
 		description: z.string().optional().default(""),
 		image: z.string().optional().default(""),
-		tagsI18nIDs: z.array(z.object({tag: z.string(), id: z.string()})).optional().default([]),
+		tagsI18nIDs: z
+			.array(z.object({ tag: z.string(), id: z.string() }))
+			.optional()
+			.default([]),
 		tags: z.array(z.string()).optional().default([]),
 		category: z.string().optional().nullable().default(""),
 		lang: z.string().optional().default(""),
@@ -24,7 +27,7 @@ const postsCollection = defineCollection({
 		prevSlug: z.string().default(""),
 		nextTitle: z.string().default(""),
 		nextSlug: z.string().default(""),
-		languages: z.array(z.string()).default([]),		
+		languages: z.array(z.string()).default([]),
 	}),
 });
 
@@ -54,7 +57,6 @@ const httpStatusCollection = defineCollection({
 	}),
 	schema: z.object({}),
 });
-
 
 export const collections = {
 	about: aboutCollection,

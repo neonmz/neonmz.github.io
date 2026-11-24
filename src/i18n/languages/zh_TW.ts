@@ -148,4 +148,5 @@ export const zh_TW: Translation = {
 	[Key.allRightsReserved]: "保留所有權利。",
 	[Key.poweredBy]: "由",
 	[Key.siteSource]: "本站開源於",
+	[Key.siteSourceAfter]: "",
 };

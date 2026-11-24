@@ -150,4 +150,5 @@ export const id: Translation = {
 	[Key.allRightsReserved]: "Hak cipta dilindungi.",
 	[Key.poweredBy]: "Didukung oleh",
 	[Key.siteSource]: "Sumber situs tersedia di",
+	[Key.siteSourceAfter]: "",
 };

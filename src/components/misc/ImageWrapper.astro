@@ -53,9 +53,10 @@ if (isLocal) {
 		.normalize(path.join("../../", getDir(basePath), src))
 		.replace(/\\/g, "/")
 		.toLowerCase();
-	const imageKey = Object.keys(files).find(
-  		(key) => {const lowerKey = key.toLowerCase(); return lowerKey === normalizedPath || lowerKey === normalizedPath2}
-	);
+	const imageKey = Object.keys(files).find((key) => {
+		const lowerKey = key.toLowerCase();
+		return lowerKey === normalizedPath || lowerKey === normalizedPath2;
+	});
 
 	const file = imageKey ? files[imageKey] : undefined;
 	if (!file) {

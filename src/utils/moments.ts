@@ -2,8 +2,8 @@ import sanitizeHtml from "sanitize-html";
 import { MomentsConfig } from "@/config";
 import I18nKey from "@/i18n/i18nKey";
 import { i18n } from "@/i18n/translation";
-import { fetchWithTimeout } from "@/utils/request-utils";
 import type { MomentsFeedSource } from "@/types/config";
+import { fetchWithTimeout } from "@/utils/request-utils";
 
 export type MomentItem = {
 	title: string;

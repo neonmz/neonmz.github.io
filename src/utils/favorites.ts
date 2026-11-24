@@ -104,13 +104,14 @@ function parseFavoriteFoldersPayload(
 		return [];
 	}
 
-	parseApiError(payload);
+	const raw: Record<string, unknown> = payload;
+	parseApiError(raw);
 
-	if (Array.isArray(payload.list)) {
-		return payload.list as FavoriteFolder[];
+	if (Array.isArray(raw.list)) {
+		return raw.list as FavoriteFolder[];
 	}
 
-	const data = payload.data;
+	const data = raw.data;
 	if (isRecord(data) && Array.isArray(data.list)) {
 		return data.list as FavoriteFolder[];
 	}
@@ -130,16 +131,17 @@ function parseFavoriteResourcesPayload(payload: FavoriteResourcesJsonPayload): {
 		return { folder: null, items: [] };
 	}
 
-	parseApiError(payload);
+	const raw: Record<string, unknown> = payload;
+	parseApiError(raw);
 
-	if (Array.isArray(payload.medias)) {
+	if (Array.isArray(raw.medias)) {
 		return {
-			folder: isRecord(payload.info) ? (payload.info as FavoriteFolder) : null,
-			items: payload.medias as FavoriteMedia[],
+			folder: isRecord(raw.info) ? (raw.info as FavoriteFolder) : null,
+			items: raw.medias as FavoriteMedia[],
 		};
 	}
 
-	const data = payload.data;
+	const data = raw.data;
 	if (isRecord(data)) {
 		return {
 			folder: isRecord(data.info) ? (data.info as FavoriteFolder) : null,
@@ -352,15 +354,15 @@ export async function getFavoriteResources(
 		return { folder: null, items: [], errorMessage: "" };
 	}
 
-	if (!favoriteResourcesPromiseMap.has(mediaId)) {
-		favoriteResourcesPromiseMap.set(
-			mediaId,
+	let promise = favoriteResourcesPromiseMap.get(mediaId);
+	if (!promise) {
+		promise =
 			FavoritesConfig.detailSource === "api"
 				? getFavoriteResourcesFromApi(mediaId)
-				: getFavoriteResourcesFromJson(mediaId),
-		);
+				: getFavoriteResourcesFromJson(mediaId);
+		favoriteResourcesPromiseMap.set(mediaId, promise);
 	}
-	return favoriteResourcesPromiseMap.get(mediaId)!;
+	return promise;
 }
 
 export function getFavoriteFolderUrl(folder: FavoriteFolder): string {

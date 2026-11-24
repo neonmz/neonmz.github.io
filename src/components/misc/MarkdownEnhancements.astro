@@ -1,6 +1,9 @@
 <script>
 import { url } from "../../utils/url-utils";
 
+type PhotoSwipeLightboxClass = (typeof import("photoswipe/lightbox"))["default"];
+type PhotoSwipeLightboxInstance = InstanceType<PhotoSwipeLightboxClass>;
+
 const loadedStylesheets = new Set<string>();
 
 function loadStylesheet(href: string) {
@@ -50,7 +53,7 @@ if (!window.__fuwariCopyButtonBound) {
     });
 }
 
-let codeFontPromise;
+let codeFontPromise: Promise<unknown> | undefined;
 
 async function loadCodeFont() {
     if (!codeFontPromise) {
@@ -67,7 +70,7 @@ if (document.querySelector(".custom-md pre code, .custom-md code")) {
     loadCodeFont();
 }
 
-let katexCssPromise;
+let katexCssPromise: Promise<void> | undefined;
 
 async function loadKatexStyles() {
     if (!katexCssPromise) {
@@ -81,8 +84,8 @@ if (document.querySelector(".custom-md .katex, .custom-md .katex-display")) {
     loadKatexStyles();
 }
 
-let lightbox;
-let photoSwipeLightboxPromise;
+let lightbox: PhotoSwipeLightboxInstance | undefined;
+let photoSwipeLightboxPromise: Promise<PhotoSwipeLightboxClass> | undefined;
 const gallerySelector = ".custom-md img, #post-cover img";
 
 async function loadPhotoSwipeLightbox() {

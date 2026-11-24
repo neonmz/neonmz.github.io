@@ -42,7 +42,8 @@ export function parseLrc(content: string): MusicLyricLine[] {
 		for (const timestamp of timestamps) {
 			const time = Math.max(
 				0,
-				parseTimestamp(timestamp[1], timestamp[2], timestamp[3]) + offsetSeconds,
+				parseTimestamp(timestamp[1], timestamp[2], timestamp[3]) +
+					offsetSeconds,
 			);
 			lyricLines.push({
 				time,

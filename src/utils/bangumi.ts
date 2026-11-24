@@ -115,7 +115,9 @@ export async function getBangumiItems(): Promise<BangumiResult> {
 
 	if (!bangumiItemsPromise) {
 		bangumiItemsPromise =
-			BangumiConfig.source === "api" ? getBangumiFromApi() : getBangumiFromJson();
+			BangumiConfig.source === "api"
+				? getBangumiFromApi()
+				: getBangumiFromJson();
 	}
 	return bangumiItemsPromise;
 }
