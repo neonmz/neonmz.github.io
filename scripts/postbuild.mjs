@@ -1,5 +1,6 @@
 
 const scripts = [
+    "./postbuild/copy-404.mjs",
     "./postbuild/merge-ec-css.mjs",
     "./postbuild/generate-hash.mjs",
 ];

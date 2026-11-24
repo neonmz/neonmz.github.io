@@ -161,6 +161,30 @@ export const linksConfig: FriendLink[] = [
 		avatar: "https://mobellling.github.io/images/photo.jpg",
 		desc: "你好，我是晓钟Mobell 来自西电",
 	},
+	{
+		name: "jcshan709",
+		url: "https://jcshan709.github.io",
+		avatar: "https://jcshan709.github.io/favicon.svg",
+		desc: "👨‍🎓 University freshman. Opensource enthusiast. ACG Lover.",
+	},
+	{
+		name: "Reverier",
+		url: "https://www.woooo.tech/zh-cn/blog/",
+		avatar: "https://www.woooo.tech/favicon.svg",
+		desc: "Creating Reality with Idealism.",
+	},
+	{
+		name: "nkAnF",
+		url: "https://kanglives.top",
+		avatar: "https://avatars.githubusercontent.com/u/172456830?v=4",
+		desc: "Maybe an explorer...",
+	},
+	{
+		name: "林林杂语",
+		url: "https://www.xiaozonglin.cn",
+		avatar: "https://www.xiaozonglin.cn/img/favicon.jpg",
+		desc: "如果每个人的心中都有一盏灯，世界将不会黑暗。",
+	},
 	// {
 	// 	name: "GitHub",
 	// 	url: "https://github.com",
