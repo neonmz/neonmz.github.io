@@ -71,15 +71,15 @@ lang: 'zh_CN'
 
 - 提权走 Authorization Services 的系统密码框，不是 `sudo`。可选的 Touch ID 模式会装一个 root LaunchDaemon helper，之后提权改弹指纹 ~~（其实之前neon写过一个指纹版的sudo的，但为了不通用，neon让AI又写了一个Vantage专用版）~~；helper 只接受「控制台用户 + 管理员 + 代码签名 CDHash 与自己一致 ~~（其实helper就是Vantage主程序的binary本身，所以AI就大胆的设置了很严格的验证...但是neon还是又审过一遍了，把TOCTOU给修了...）~~」的客户端，并且只放行 `ifconfig`、`route`、`launchctl` 和 App 自己的隐藏写入模式。 ~~（本来AI写的还有的，但是neon把实际上没有用到的删了）~~ 
 
-采集层是独立的：`vantage` 命令行和 `vantage-mcp`（stdio JSON-RPC，给 Claude Desktop / Cursor 这类客户端用）复用的是同一套 C 采集，不需要 GUI 在跑。另外还有一份 AppleScript 字典。
+- 采集层是独立的：`vantage` 命令行和 `vantage-mcp`（stdio JSON-RPC，给 Claude Desktop / Cursor 这类客户端用）复用的是同一套 C 采集，不需要 GUI 在跑。另外还有一份 AppleScript 字典。
 
-**task port降级** Vantage大部分数据均不需要task port，所以在SIP完全开启的状态下也能获取很多信息。（其实是neon给AI太强调不使用Task Port了，导致AI非常保守，使用Task Port作增强的代码都不好好写了...）~~（所以不是降级，是基本没有更高级的...）~~
+- **task port降级** Vantage大部分数据均不需要task port，所以在SIP完全开启的状态下也能获取很多信息。（其实是neon给AI太强调不使用Task Port了，导致AI非常保守，使用Task Port作增强的代码都不好好写了...）~~（所以不是降级，是基本没有更高级的...）~~
 
-**私有接口只做可选增强。** IOReport、AppleSMC、IOHIDEventSystem 都是 `dlopen` / `dlsym` 运行时解析的，任何一个符号缺失就整条链路降级，不会导致 App 启动失败。（AI代码的典型特征，基本都用dlopen，并实现降级~~（如果neon自己写的话，肯定直接不管直接手动声明导入了...）~~）
+- **私有接口只做可选增强。** IOReport、AppleSMC、IOHIDEventSystem 都是 `dlopen` / `dlsym` 运行时解析的，任何一个符号缺失就整条链路降级，不会导致 App 启动失败。（AI代码的典型特征，基本都用dlopen，并实现降级 ~~（如果neon自己写的话，肯定直接不管直接手动声明导入了...）~~）
 
-**慢的东西不放在刷新路径上。** 详情页采集本来就慢（一个进程几十个 FD、上千个 VM region），所以做了惰性加载和分级缓存：FD / socket / pipe 缓存 2 秒，环境 / 镜像 / 映射 / 签名缓存 60 秒，⌘R 强制重采。~~（初始版本的Vantage CPU利用率比AM还恐怖...）~~
+- **慢的东西不放在刷新路径上。** 详情页采集本来就慢（一个进程几十个 FD、上千个 VM region），所以做了惰性加载和分级缓存：FD / socket / pipe 缓存 2 秒，环境 / 镜像 / 映射 / 签名缓存 60 秒，⌘R 强制重采。~~（初始版本的Vantage CPU利用率比AM还恐怖...）~~
 
-**采集和界面彻底分开。** C 层（`CProc`）只负责把数据填进结构体，`VantageKit` 做共享封装，AppKit 只负责显示。这样 CLI 和 MCP 服务不需要链接 AppKit，也能拿到和检查器完全一样的数据。~~（AI好像把结构重写了好多次...）~~
+- **采集和界面彻底分开。** C 层（`CProc`）只负责把数据填进结构体，`VantageKit` 做共享封装，AppKit 只负责显示。这样 CLI 和 MCP 服务不需要链接 AppKit，也能拿到和检查器完全一样的数据。~~（AI好像把结构重写了好多次...）~~
 
 # 结语
 
