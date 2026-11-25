@@ -18,7 +18,7 @@ lang: 'zh_CN'
 
 所以 neon 用AI写了一个替代品：**Vantage** ~~（虽然似乎性能开销还是挺大的，但至少比AM快...）~~。
 
-::github{repo="nanacaret"}
+::github{repo="nanacaret/Vantage"}
 
 # Vantage的构造
 
