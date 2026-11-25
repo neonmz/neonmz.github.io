@@ -1,9 +1,0 @@
-{
-  "newFileLocation": "folder",
-  "newFileFolderPath": "src/content/posts",
-  "attachmentFolderPath": "src/assets",
-  "userIgnoreFilters": [
-    "dist/",
-    "node_modules/"
-  ]
-}
