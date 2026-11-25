@@ -18,21 +18,21 @@ lang: 'zh_CN'
 ### UPX 加密逆向
 
 ## 解题步骤：
-IDA:![](res/upx_ida_before.png)
+IDA:![IDA 中打开加壳后的 chall9.3，main 里只有无法识别的壳代码](res/upx_ida_before.png)
 可以看到，我们什么都看不到...
 
 Shift+F12，查看字符串，发现：
-![](res/upx_strings.png)得出此题使用了UPX壳。
+![Shift+F12 字符串窗口里出现的 UPX 特征字符串](res/upx_strings.png)得出此题使用了UPX壳。
 尝试脱壳：`upx -d chall9.3`
-![](res/upx_failed.png)
-脱壳失败，怀疑壳被篡改。用二进制查看：![](res/upx_hex_cmp.png)（左侧为[Ultra Potato Xplosion](https://ctf.xidian.edu.cn/games/37/challenges?challenge=1318) UPX壳程序样本）
+![终端执行 upx -d 报错 CantUnpackException: l_info corrupted](res/upx_failed.png)
+脱壳失败，怀疑壳被篡改。用二进制查看：![十六进制对比，左侧为正常 UPX 样本，右侧 chall9.3 中被改写的区段](res/upx_hex_cmp.png)（左侧为[Ultra Potato Xplosion](https://ctf.xidian.edu.cn/games/37/challenges?challenge=1318) UPX壳程序样本）
 对比选中部分发现异常内容：PJYoung likes walking
 
 从正常样本中复制过来替换掉chall9.3的异常部分，保存，再次执行`upx -d chall9.3`，成功脱壳：
-![](res/upx_success.png)
-再次IDA：![](res/upx_ida_after.png)符号出现了！
-反编译main，看到密文和校验逻辑：![](res/upx_main.png)
-反编译encrypt，看到其简单的加密逻辑![](res/upx_encrypt.png)
+![替换被篡改的字节后 upx -d 脱壳成功，Unpacked 1 file](res/upx_success.png)
+再次IDA：![脱壳后重新用 IDA 分析，函数符号已恢复](res/upx_ida_after.png)符号出现了！
+反编译main，看到密文和校验逻辑：![main 函数反编译：读入 48 字节输入，拆成 6 个 uint64 调用 encrypt，再与 6 个常量比较](res/upx_main.png)
+反编译encrypt，看到其简单的加密逻辑![encrypt 函数反编译：循环左移、异或与加减的组合](res/upx_encrypt.png)
 其中rol64为循环左移。根据算法的对称性，即可写出decrypt函数。
 ```c
 // chall9.3-solve.c: Ultato Polosion Xptra
@@ -92,7 +92,7 @@ int main()
 moectf{M0d1fi3d_UPX_Comb1ned_w1Th_Littl3_Crypt0}
 
 ## 补充：样本 rol64 实现中的隐藏问题
-此题目中的rol64实现中存在语义错误，（好在使用时未触发错误路径）：![](res/upx_rol64.png)
+此题目中的rol64实现中存在语义错误，（好在使用时未触发错误路径）：![rol64 反编译结果：截断写成 r & 0x40，结果只可能是 0 或 64](res/upx_rol64.png)
 函数原想在r超过64后截断r，但是截断写法出错...
 正确写法：
 ```c
