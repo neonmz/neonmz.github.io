@@ -8,10 +8,9 @@ import { url } from "../utils/url-utils";
 const currentYear = new Date().getFullYear();
 ---
 
-<div class="transition border-t border-black/10 dark:border-white/15 my-10 border-dashed mx-32"></div>
+<div class="transition border-t border-black/10 dark:border-white/15 mt-10 mb-14 border-dashed mx-32"></div>
 <div class="card-base transition border-dashed border-[oklch(85%_0.01_var(--hue))] dark:border-white/15 rounded-2xl mb-12 flex flex-col items-center justify-center px-6">
-    <div class="transition text-50 text-sm text-center">
-        <br />
+    <div class="transition text-50 text-sm text-center my-4">
         <img src="https://count.getloli.com/@neonmz-blog?theme=gelbooru&padding=5&offset=0&align=top&scale=1.0&pixelated=1&darkmode=auto" width="340" height="150" alt="Counter" fetchpriority="low" loading="lazy" decoding="async" />
         &copy; <span id="copyright-year">{currentYear}</span> {profileConfig.name}. <span data-i18n-key={I18nKey.allRightsReserved}>{i18n(I18nKey.allRightsReserved)}</span> /
         <a class="transition link text-[var(--primary)] font-medium" target="_blank" href={url('rss.xml')}>RSS</a> /
@@ -22,6 +21,5 @@ const currentYear = new Date().getFullYear();
         <span data-i18n-key={I18nKey.siteSource}>{i18n(I18nKey.siteSource)}</span>
         <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://github.com/neonmz/neonmz.github.io">GitHub</a>
         <span data-i18n-key={I18nKey.siteSourceAfter}>{i18n(I18nKey.siteSourceAfter)}</span>
-        <br /><div style="opacity: 0;">Only for new line...</div>
     </div>
 </div>
