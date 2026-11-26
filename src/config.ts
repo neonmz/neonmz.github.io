@@ -165,7 +165,7 @@ export const linksConfig: FriendLink[] = [
 		name: "jcshan709",
 		url: "https://jcshan709.github.io",
 		avatar: "https://jcshan709.github.io/favicon.svg",
-		desc: "👨‍🎓 University freshman. Opensource enthusiast. ACG Lover.",
+		desc: "我后边的这位是神",
 	},
 	{
 		name: "Reverier",
